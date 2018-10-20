@@ -1,0 +1,37 @@
+class User{
+  firstName;
+  lastName;
+  username;
+  password;
+  email;
+  phoneNum;
+}
+
+class ServiceProvider{
+  isA  User;
+  *--1 Admin;
+  Service[] service;
+  String [] availability;
+  int rating;
+  
+}
+
+class Service{
+  *--1 ServiceProvider;
+  serviceName;
+  double rate;
+}
+
+class Admin{
+ isA User;
+ 1--10..* Service;
+}
+
+class HomeOwner{
+  isA User;
+  *--1 Admin;
+  address;
+  long creditCardNum;
+  creditCardExpiry;
+}
+
