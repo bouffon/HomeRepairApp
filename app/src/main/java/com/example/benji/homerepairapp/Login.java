@@ -10,4 +10,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
     }
+
+    //TODO LITERALLY EVERYTHING! Need to search DB to see if username and password belong to an account, and action depending on if there is
+    //TODO or not. Also provide implementation of create account button linking to create account activity.
 }
