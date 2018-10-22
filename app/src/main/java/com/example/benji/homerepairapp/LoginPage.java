@@ -1,12 +1,13 @@
 package com.example.benji.homerepairapp;
 
+import android.accounts.Account;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.EditText;
 import android.view.View;
-import android.content.Intent;
+import android.widget.EditText;
 
-public class Login extends AppCompatActivity {
+public class LoginPage extends AppCompatActivity {
 
     EditText usernameBox;
     EditText passwordBox;
@@ -23,6 +24,8 @@ public class Login extends AppCompatActivity {
     }
 
     public void createAccount(View view){
+        Intent intent = new Intent(this, AccountCreation.class);
+        startActivity(intent);
     }
     //TODO LITERALLY EVERYTHING! Need to search DB to see if username and password belong to an account, and action depending on if there is
     //TODO or not. Also provide implementation of create account button linking to create account activity.
