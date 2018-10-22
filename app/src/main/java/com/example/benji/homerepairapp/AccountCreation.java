@@ -1,5 +1,6 @@
 package com.example.benji.homerepairapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -47,6 +48,8 @@ public class AccountCreation extends AppCompatActivity {
     }
 
     public void cancel(View view){
+        Intent intent = new Intent(this, Login.class);
+        startActivity(intent);
         //TODO provide implementation for canceling account creation and returning to login screen
     }
 
