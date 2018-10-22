@@ -21,9 +21,10 @@ public class LoginPage extends AppCompatActivity {
     }
 
     public void login(View view){
-        User activeUser;
+        User activeUser = new Admin("admin","admin","admin","admin","admin","admin");
 
         Intent intent = new Intent(this, Homepage.class);
+        intent.putExtra("ActiveUser", activeUser);
         startActivity(intent);
     }
 

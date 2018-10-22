@@ -50,7 +50,6 @@ public class AccountCreation extends AppCompatActivity {
     public void cancel(View view){
         Intent intent = new Intent(this, LoginPage.class);
         startActivity(intent);
-        //TODO provide implementation for canceling account creation and returning to login screen
     }
 
 }

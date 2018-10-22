@@ -3,6 +3,7 @@ package com.example.benji.homerepairapp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.content.Intent;
 
 public class Homepage extends AppCompatActivity {
 
@@ -13,6 +14,8 @@ public class Homepage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
         status = findViewById(R.id.statusDisplay);
-        status.setText("hello");
+        Intent i = getIntent();
+        User activeUser = (User)i.getSerializableExtra("ActiveUser");
+        status.setText(activeUser.getUsername() + " is a " + activeUser.getClass());
     }
 }

@@ -1,6 +1,10 @@
 package com.example.benji.homerepairapp;
 
-public class User {
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     private String username;
     private String password;
