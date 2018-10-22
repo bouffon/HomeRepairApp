@@ -21,12 +21,15 @@ public class LoginPage extends AppCompatActivity {
     }
 
     public void login(View view){
+        User activeUser;
+
+        Intent intent = new Intent(this, Homepage.class);
+        startActivity(intent);
     }
 
     public void createAccount(View view){
         Intent intent = new Intent(this, AccountCreation.class);
         startActivity(intent);
     }
-    //TODO LITERALLY EVERYTHING! Need to search DB to see if username and password belong to an account, and action depending on if there is
-    //TODO or not. Also provide implementation of create account button linking to create account activity.
+    //TODO LITERALLY EVERYTHING! Need to search DB to see if username and password belong to an account, and action depending on if there is or not
 }
