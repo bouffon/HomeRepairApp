@@ -44,8 +44,11 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         Integer sp = 0;
-        if (user.getClass() == ServiceProvider.class){ //checks if user is of type ServiceProvider
+        if (user.getClass() == ServiceProvider.class) { //checks if user is of type ServiceProvider
             sp = 1;
+        }
+         else if (user.getClass() == Admin.class){ //checks if user is of type ServiceProvider
+            sp = 2;
         }
         values.put(COLUMN_USERNAME, user.getUsername());
         values.put(COLUMN_PASSWORD, user.getPassword());
@@ -69,11 +72,16 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
 
-            if (Integer.parseInt(cursor.getString(7)) == 0) { //checks if the account is of type homeowner
-                user = new Homeowner(cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                    cursor.getString(4), cursor.getString(5), cursor.getString(6));
-            } else {
+            user = null;
+
+            if (Integer.parseInt(cursor.getString(7)) == 1) {
                 user = new ServiceProvider(cursor.getString(1), cursor.getString(2), cursor.getString(3),
+                        cursor.getString(4), cursor.getString(5), cursor.getString(6));
+            } if (Integer.parseInt(cursor.getString(7)) == 2) {
+                user = new Admin(cursor.getString(1), cursor.getString(2), cursor.getString(3),
+                        cursor.getString(4), cursor.getString(5), cursor.getString(6));
+            } if (Integer.parseInt(cursor.getString(7)) == 0) { //checks if the account is of type homeowner
+                user = new Homeowner(cursor.getString(1), cursor.getString(2), cursor.getString(3),
                         cursor.getString(4), cursor.getString(5), cursor.getString(6));
             }
         } else {
@@ -81,6 +89,29 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         db.close();
         return user;
+    }
+
+    public boolean deleteUser(String username, String password) {
+        boolean result = false;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "Select * FROM " + TABLE_USERS + " WHERE " +
+                COLUMN_USERNAME + " = \"" + username + "\"" + " AND " + COLUMN_PASSWORD + " = \"" + password + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            String idStr = cursor.getString(0);
+            db.delete(TABLE_USERS, COLUMN_ID + " = " + idStr, null);
+            cursor.close();
+            result = true;
+        }
+        db.close();
+        return result;
+    }
+
+    public void clearTable(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_USERS,null,null);
     }
 
 }

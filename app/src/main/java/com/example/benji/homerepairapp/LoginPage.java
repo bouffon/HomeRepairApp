@@ -18,9 +18,6 @@ public class LoginPage extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         usernameBox = findViewById(R.id.usernameLogin);
         passwordBox = findViewById(R.id.passwordLogin);
-        DBHandler db = new DBHandler(this);
-        Admin admin = new Admin("admin","admin",null,null,null,null);
-        db.addUser(admin);
     }
 
     public void login(View view){
