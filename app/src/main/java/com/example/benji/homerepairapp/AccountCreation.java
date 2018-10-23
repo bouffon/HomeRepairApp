@@ -31,6 +31,8 @@ public class AccountCreation extends AppCompatActivity {
     }
 
     public void newUser(View view){
+        DBHandler db = new DBHandler(this);
+
         String fName = fNameBox.getText().toString();
         String lName = lNameBox.getText().toString();
         String username = usernameBox.getText().toString();
@@ -39,12 +41,20 @@ public class AccountCreation extends AppCompatActivity {
         String phone = phoneBox.getText().toString();
         Boolean switchResult = serviceProviderSwitch.isChecked();
 
-        if (switchResult) { //depending on if switch is flipped creates Homeowner vs ServiceProvider
-            ServiceProvider user = new ServiceProvider(username,password,fName,lName,email,phone);
-        } else {
-            Homeowner user = new Homeowner(username,password,fName,lName,email,phone);
+        if (db.findUser(username, password) == null) {
+
+            if (switchResult) { //depending on if switch is flipped creates Homeowner vs ServiceProvider
+                ServiceProvider user = new ServiceProvider(username, password, fName, lName, email, phone);
+                db.addUser(user);
+                Intent intent = new Intent(this, LoginPage.class);
+                startActivity(intent);
+            } else {
+                Homeowner user = new Homeowner(username, password, fName, lName, email, phone);
+                db.addUser(user);
+                Intent intent = new Intent(this, LoginPage.class);
+                startActivity(intent);
+            }
         }
-        //TODO still need to implement database! (add the created account to the database) ALSO need to check to see if account already exists!
     }
 
     public void cancel(View view){

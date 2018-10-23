@@ -18,19 +18,25 @@ public class LoginPage extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         usernameBox = findViewById(R.id.usernameLogin);
         passwordBox = findViewById(R.id.passwordLogin);
+        DBHandler db = new DBHandler(this);
+        Admin admin = new Admin("admin","admin",null,null,null,null);
+        db.addUser(admin);
     }
 
     public void login(View view){
-        User activeUser = new Admin("admin","admin","admin","admin","admin","admin");
+        DBHandler db = new DBHandler(this);
+        User activeUser = db.findUser(usernameBox.getText().toString(),passwordBox.getText().toString());
 
-        Intent intent = new Intent(this, Homepage.class);
-        intent.putExtra("ActiveUser", activeUser);
-        startActivity(intent);
+        if (activeUser != null) {
+            Intent intent = new Intent(this, Homepage.class);
+            intent.putExtra("ActiveUser", activeUser);
+            startActivity(intent);
+        }
+
     }
 
     public void createAccount(View view){
         Intent intent = new Intent(this, AccountCreation.class);
         startActivity(intent);
     }
-    //TODO LITERALLY EVERYTHING! Need to search DB to see if username and password belong to an account, and action depending on if there is or not
 }
