@@ -44,9 +44,9 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         Integer sp = 0;
-        //if (user.getClass() == ServiceProvider.class){ //checks if user is of type ServiceProvider
-        //    sp = 1;
-        //}
+        if (user.getClass() == ServiceProvider.class){ //checks if user is of type ServiceProvider
+            sp = 1;
+        }
         values.put(COLUMN_USERNAME, user.getUsername());
         values.put(COLUMN_PASSWORD, user.getPassword());
         values.put(COLUMN_FNAME, user.getfName());
