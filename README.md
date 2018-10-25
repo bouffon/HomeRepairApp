@@ -7,3 +7,5 @@ It allows users to connect with services providers such as plumbers, electrician
 has the ability to view all the accounts in the database. 
 
 Authors: Ben Morrison (300025533), Joongho Kim (300043500), Stephen Chen (300033450), Muhammed Izol(300043365), Ethan Lee (300026957)
+
+GitHub Link: https://github.com/bouffon/HomeRepairApp.git
