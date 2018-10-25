@@ -113,7 +113,7 @@ public class AccountCreation extends AppCompatActivity {
             cPasswordBox.setError("Field cannot be empty!");
             return false;
         }
-        else if (cPassword != passwordBox.getText().toString()){
+        else if (!(cPassword.equals(passwordBox.getText().toString()))){
             cPasswordBox.setError("Passwords do not match");
             return false;
         }
