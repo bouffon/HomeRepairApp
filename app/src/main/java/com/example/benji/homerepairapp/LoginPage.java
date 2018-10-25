@@ -31,9 +31,16 @@ public class LoginPage extends AppCompatActivity {
         User activeUser = db.findUser(usernameBox.getText().toString(),passwordBox.getText().toString());
 
         if (activeUser != null) {
-            Intent intent = new Intent(this, Homepage.class);
-            intent.putExtra("ActiveUser", activeUser);
-            startActivity(intent);
+            if (usernameBox.getText().toString().equals("admin") && passwordBox.getText().toString().equals("admin")){
+                Intent intent = new Intent(this, AdminHomepage.class);
+                intent.putExtra("ActiveUser", activeUser);
+                startActivity(intent);
+            }
+            else{
+                Intent intent = new Intent(this, Homepage.class);
+                intent.putExtra("ActiveUser", activeUser);
+                startActivity(intent);
+            }
         }
 
     }
