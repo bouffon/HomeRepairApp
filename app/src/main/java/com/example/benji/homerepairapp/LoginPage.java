@@ -22,6 +22,12 @@ public class LoginPage extends AppCompatActivity {
 
     public void login(View view){
         DBHandler db = new DBHandler(this);
+
+        if (db.findUser("admin", "admin") == null){
+            Admin user = new Admin("admin", "admin", "admin", "admin", "admin@admin.ca", "9059059055");
+            db.addUser(user);
+        }
+
         User activeUser = db.findUser(usernameBox.getText().toString(),passwordBox.getText().toString());
 
         if (activeUser != null) {
