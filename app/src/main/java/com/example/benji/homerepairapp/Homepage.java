@@ -18,6 +18,6 @@ public class Homepage extends AppCompatActivity {
         status = findViewById(R.id.statusDisplay);
         Intent i = getIntent();
         activeUser = (User)i.getSerializableExtra("ActiveUser");
-        status.setText("Welcome " + activeUser.getUsername() + " you are logged in as " + activeUser.getClass());
+        status.setText("Welcome " + activeUser.getUsername() + " you are logged in as " + activeUser.getClass().toString().substring(activeUser.getClass().toString().lastIndexOf('.')+1));
     }
 }
