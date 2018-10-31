@@ -22,7 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Homepage"></activity>
+        <activity android:name=".Homepage" />
+        <activity android:name=".AdminUserList" />
+        <activity android:name=".AdminHomepage"></activity>
     </application>
 
 </manifest>

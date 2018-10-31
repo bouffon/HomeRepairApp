@@ -1,12 +1,12 @@
 package com.example.benji.homerepairapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.content.Intent;
 
-public class Homepage extends AppCompatActivity {
+public class AdminHomepage extends AppCompatActivity {
 
     TextView status;
     User activeUser;
@@ -14,10 +14,15 @@ public class Homepage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homepage);
-        status = findViewById(R.id.statusDisplay);
+        setContentView(R.layout.activity_admin_homepage);
+        status = findViewById(R.id.adminWelcome);
         Intent i = getIntent();
         activeUser = (User)i.getSerializableExtra("ActiveUser");
         status.setText("Welcome " + activeUser.getUsername() + " you are logged in as " + activeUser.getClass().toString().substring(activeUser.getClass().toString().lastIndexOf('.')+1));
+    }
+
+    public void userList (View view){
+        Intent intent = new Intent(this, AdminUserList.class);
+        startActivity(intent);
     }
 }

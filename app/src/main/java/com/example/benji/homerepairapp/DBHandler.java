@@ -109,6 +109,12 @@ public class DBHandler extends SQLiteOpenHelper {
         return result;
     }
 
+    public Cursor getDBContents(){
+        SQLiteDatabase dB = this.getWritableDatabase();
+        Cursor users = dB.rawQuery("SELECT * FROM " + TABLE_USERS, null);
+        return users;
+    }
+
     public void clearTable(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_USERS,null,null);

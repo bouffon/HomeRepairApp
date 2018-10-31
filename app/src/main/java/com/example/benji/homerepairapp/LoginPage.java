@@ -22,12 +22,25 @@ public class LoginPage extends AppCompatActivity {
 
     public void login(View view){
         DBHandler db = new DBHandler(this);
+
+        if (db.findUser("admin", "admin") == null){
+            Admin user = new Admin("admin", "admin", "admin", "admin", "admin@admin.ca", "9059059055");
+            db.addUser(user);
+        }
+
         User activeUser = db.findUser(usernameBox.getText().toString(),passwordBox.getText().toString());
 
         if (activeUser != null) {
-            Intent intent = new Intent(this, Homepage.class);
-            intent.putExtra("ActiveUser", activeUser);
-            startActivity(intent);
+            if (usernameBox.getText().toString().equals("admin") && passwordBox.getText().toString().equals("admin")){
+                Intent intent = new Intent(this, AdminHomepage.class);
+                intent.putExtra("ActiveUser", activeUser);
+                startActivity(intent);
+            }
+            else{
+                Intent intent = new Intent(this, Homepage.class);
+                intent.putExtra("ActiveUser", activeUser);
+                startActivity(intent);
+            }
         }
 
     }

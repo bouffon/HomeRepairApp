@@ -15,6 +15,7 @@ public class AccountCreation extends AppCompatActivity {
     EditText passwordBox;
     EditText emailBox;
     EditText phoneBox;
+    EditText cPasswordBox;
     Switch serviceProviderSwitch;
 
     @Override
@@ -25,9 +26,98 @@ public class AccountCreation extends AppCompatActivity {
         lNameBox = findViewById(R.id.lastNameInput);
         usernameBox = findViewById(R.id.usernameInput);
         passwordBox = findViewById(R.id.passwordInput);
+        cPasswordBox = findViewById(R.id.cPasswordInput);
         emailBox = findViewById(R.id.emailInput);
         phoneBox = findViewById(R.id.phoneInput);
         serviceProviderSwitch = findViewById(R.id.serviceProviderSwitch);
+    }
+
+    // E-MAIL VALIDATION
+    private boolean isValidMail(){
+        String email = emailBox.getText().toString();
+
+        if (email.isEmpty()) {
+            emailBox.setError("Field cannot be empty!");
+            return false;
+        }
+        else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailBox.setError("Please enter a valid email address");
+            return false;
+        }
+        return true;
+    }
+
+    // PHONE NUMBER VALIDATION
+    private boolean isValidPhone(){
+        String phone = phoneBox.getText().toString();
+
+        if(phone.isEmpty()){
+            phoneBox.setError("Field cannot be empty!");
+            return false;
+        }
+        else if (!android.util.Patterns.PHONE.matcher(phone).matches() || !(phone.length() == 10)){
+            phoneBox.setError("Please enter a valid 10 digit phone number");
+            return false;
+        }
+        return true;
+    }
+
+    // IF THE FIRST NAME FIELD IS EMPTY
+    private boolean isEmptyFName(){
+        String fName = fNameBox.getText().toString();
+
+        if(fName.isEmpty()){
+            fNameBox.setError("Field cannot be empty!");
+            return false;
+        }
+        return true;
+    }
+    // IF THE LAST NAME FIELD IS EMPTY
+    private boolean isEmptyLName(){
+        String lName = lNameBox.getText().toString();
+
+        if(lName.isEmpty()){
+            lNameBox.setError("Field cannot be empty!");
+            return false;
+        }
+        return true;
+    }
+
+    // IF THE USERNAME FIELD IS EMPTY
+    private boolean isEmptyUsername(){
+        String username = usernameBox.getText().toString();
+
+        if(username.isEmpty()){
+            usernameBox.setError("Field cannot be empty!");
+            return false;
+        }
+        return true;
+    }
+
+    // IF THE PASSWORD FIELD IS EMPTY
+    private boolean isEmptyPassword(){
+        String password = passwordBox.getText().toString();
+
+        if(password.isEmpty()){
+            passwordBox.setError("Field cannot be empty!");
+            return false;
+        }
+        return true;
+    }
+
+    // IF THE CONFIRMED PASSWORD IS THE SAME AS THE ORIGINAL TYPED
+    private boolean isSamePassword(){
+        String cPassword = cPasswordBox.getText().toString();
+
+        if (cPassword.isEmpty()){
+            cPasswordBox.setError("Field cannot be empty!");
+            return false;
+        }
+        else if (!(cPassword.equals(passwordBox.getText().toString()))){
+            cPasswordBox.setError("Passwords do not match");
+            return false;
+        }
+        return true;
     }
 
     public void newUser(View view){
@@ -41,8 +131,11 @@ public class AccountCreation extends AppCompatActivity {
         String phone = phoneBox.getText().toString();
         Boolean switchResult = serviceProviderSwitch.isChecked();
 
-        if (db.findUser(username, password) == null) {
+        if (!isValidMail() | !isEmptyFName() | !isEmptyLName() | !isEmptyUsername() | !isEmptyPassword() | !isValidPhone() | !isSamePassword()){
+            return;
+        }
 
+        if (db.findUser(username, password) == null) {
             if (switchResult) { //depending on if switch is flipped creates Homeowner vs ServiceProvider
                 ServiceProvider user = new ServiceProvider(username, password, fName, lName, email, phone);
                 db.addUser(user);
