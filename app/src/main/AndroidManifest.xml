@@ -24,7 +24,8 @@
         </activity>
         <activity android:name=".Homepage" />
         <activity android:name=".AdminUserList" />
-        <activity android:name=".AdminHomepage"></activity>
+        <activity android:name=".AdminHomepage" />
+        <activity android:name=".ServiceCreation"></activity>
     </application>
 
 </manifest>
