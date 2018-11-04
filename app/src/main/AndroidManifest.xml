@@ -25,7 +25,10 @@
         <activity android:name=".Homepage" />
         <activity android:name=".AdminUserList" />
         <activity android:name=".AdminHomepage" />
-        <activity android:name=".ServiceCreation"></activity>
+        <activity android:name=".ServiceCreation" />
+        <activity
+            android:name=".AdminServiceManager"
+            android:label="@string/title_activity_admin_service_manager"></activity>
     </application>
 
 </manifest>

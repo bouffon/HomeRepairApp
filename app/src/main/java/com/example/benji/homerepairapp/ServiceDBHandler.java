@@ -93,4 +93,10 @@ public class ServiceDBHandler extends SQLiteOpenHelper {
         return result;
     }
 
+    public Cursor getDBContents(){
+        SQLiteDatabase dB = this.getWritableDatabase();
+        Cursor services = dB.rawQuery("SELECT * FROM " + TABLE_SERVICES, null);
+        return services;
+    }
+
 }

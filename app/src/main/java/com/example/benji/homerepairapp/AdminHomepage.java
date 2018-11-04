@@ -25,4 +25,9 @@ public class AdminHomepage extends AppCompatActivity {
         Intent intent = new Intent(this, AdminUserList.class);
         startActivity(intent);
     }
+
+    public void serviceManager(View view){
+        Intent intent = new Intent(this,AdminServiceManager.class);
+        startActivity(intent);
+    }
 }
