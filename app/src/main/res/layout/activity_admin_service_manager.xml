@@ -38,6 +38,13 @@
             android:text="Edit Service" />
 
         <Button
+            android:id="@+id/removeService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Remove Service" />
+
+        <Button
             android:id="@+id/addService"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
