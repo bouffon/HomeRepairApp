@@ -27,7 +27,7 @@ public class AdminServiceManager extends Activity {
             Toast.makeText(this, "There are no services", Toast.LENGTH_LONG).show();
         } else{
                 while(data.moveToNext()){
-                    serviceList.add(data.getString(1));
+                    serviceList.add(("" + data.getString(1) + " (" + data.getDouble(2) + " $/hr )"));
                     ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, serviceList);
                     listView.setAdapter(listAdapter);
                 }
@@ -39,6 +39,6 @@ public class AdminServiceManager extends Activity {
         startActivity(intent);
     }
 
-    //TODO add list implementation and functionality to the two buttons.
+    //TODO add list implementation and functionality to the delete and edit buttons.
 
 }
