@@ -51,13 +51,7 @@ public class ServiceCreation extends AppCompatActivity {
     }
 
     private boolean isEmptyRate(){
-        Double rate = parseDouble(hRateBox.getText().toString());
-        String rateString = rate.toString();
-
-        if (rateString.isEmpty()){
-            hRateBox.setError("Field cannot be empty!");
-            return false;
-        }
         return true;
+        //TODO implement this method!
     }
 }
