@@ -26,12 +26,13 @@ public class ServiceCreation extends AppCompatActivity {
     public void newService(View view){
         ServiceDBHandler db = new ServiceDBHandler(this);
         String serviceName = sNameBox.getText().toString();
-        Double rate = parseDouble(hRateBox.getText().toString());
-        if (!isEmptyRate() || !isEmptyServiceName() ){
+        String rate = hRateBox.getText().toString();
+
+        if (!isEmptyRate() | !isEmptyServiceName() ){
             return;
         }
         if (db.findService(serviceName) == null){
-            Service service = new Service(serviceName,rate);
+            Service service = new Service(serviceName, parseDouble(rate));
             db.addService(service);
             Intent intent = new Intent(this, AdminServiceManager.class);
             startActivity(intent);
@@ -51,7 +52,13 @@ public class ServiceCreation extends AppCompatActivity {
     }
 
     private boolean isEmptyRate(){
+        String hRate = hRateBox.getText().toString();
+
+        if(hRate.isEmpty()){
+            hRateBox.setError("Field cannot be empty!");
+            return false;
+        }
         return true;
-        //TODO implement this method!
+
     }
 }
