@@ -1,10 +1,13 @@
 package com.example.benji.homerepairapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -51,9 +54,39 @@ public class ServiceEditor extends AppCompatActivity {
         if(!isEmptyRate()){
             return;
         }
-        
+
         db.updateRate(oldRate,service,hRate);
         Intent serviceManager = new Intent(this, AdminServiceManager.class);
         startActivity(serviceManager);
+    }
+
+    public void deleteService(){
+        ServiceDBHandler db = new ServiceDBHandler(this);
+
+        db.deleteService(service);
+
+        Intent serviceManager = new Intent(this, AdminServiceManager.class);
+        startActivity(serviceManager);
+    }
+
+    public void deletePrompt (View view){
+
+        AlertDialog.Builder delMsg = new AlertDialog.Builder(this);
+        delMsg.setMessage("Are you sure you want to delete this service?").setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int choice){
+                        deleteService();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int choice){
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog delConfirm = delMsg.create();
+        delConfirm.setTitle("Delete a service");
+        delConfirm.show();
     }
 }
