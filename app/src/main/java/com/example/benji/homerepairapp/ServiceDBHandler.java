@@ -59,6 +59,13 @@ public class ServiceDBHandler extends SQLiteOpenHelper {
         return service;
     }
 
+    public void updateRate(String oldRate, String service, String newRate){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_SERVICES + " SET " + COLUMN_RATE + " = " + newRate + " WHERE "
+                + COLUMN_SERVICENAME + " = " + service + " AND " + " = " + oldRate;
+        db.execSQL(query);
+    }
+
     public Service findServicebyRate(Double rate){
         SQLiteDatabase db = this.getReadableDatabase();
 

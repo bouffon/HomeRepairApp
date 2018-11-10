@@ -43,8 +43,10 @@ public class AdminServiceManager extends Activity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, final View view, int position, long id) {
                         String service = adapterView.getItemAtPosition(position).toString();    //service at clicked position
+
                         Intent launchServiceEditor = new Intent(getApplicationContext(), ServiceEditor.class);
                         launchServiceEditor.putExtra("serviceName",service );
+                        launchServiceEditor.putExtra("rate",service );
                         startActivity(launchServiceEditor);
                     }
                 });
