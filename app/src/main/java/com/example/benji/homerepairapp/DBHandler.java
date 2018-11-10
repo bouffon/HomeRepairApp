@@ -47,7 +47,7 @@ public class DBHandler extends SQLiteOpenHelper {
         if (user.getClass() == ServiceProvider.class) { //checks if user is of type ServiceProvider
             sp = 1;
         }
-         else if (user.getClass() == Admin.class){ //checks if user is of type ServiceProvider
+         else if (user.getClass() == Admin.class){ //checks if user is of type Admin
             sp = 2;
         }
         values.put(COLUMN_USERNAME, user.getUsername());

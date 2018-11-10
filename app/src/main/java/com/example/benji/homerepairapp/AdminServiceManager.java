@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -23,14 +24,30 @@ public class AdminServiceManager extends Activity {
 
         ArrayList<String> serviceList = new ArrayList<>();
         Cursor data = db.getDBContents();
+
+        //check to see is there are no services
         if(data.getCount() == 0) {
             Toast.makeText(this, "There are no services", Toast.LENGTH_LONG).show();
-        } else{
-                while(data.moveToNext()){
+        }
+
+        //populate listView and add listeners to each item in the list
+        else{
+                while(data.moveToNext()){   //populate
                     serviceList.add(("" + data.getString(1) + " (" + data.getDouble(2) + " $/hr )"));
                     ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, serviceList);
                     listView.setAdapter(listAdapter);
                 }
+
+                //add listeners
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, final View view, int position, long id) {
+                        String service = adapterView.getItemAtPosition(position).toString();    //service at clicked position
+                        Intent launchServiceEditor = new Intent(getApplicationContext(), ServiceEditor.class);
+                        launchServiceEditor.putExtra("serviceName",service );
+                        startActivity(launchServiceEditor);
+                    }
+                });
             }
     }
 

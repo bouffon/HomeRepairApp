@@ -28,7 +28,8 @@
         <activity android:name=".ServiceCreation" />
         <activity
             android:name=".AdminServiceManager"
-            android:label="@string/title_activity_admin_service_manager"></activity>
+            android:label="@string/title_activity_admin_service_manager" />
+        <activity android:name=".ServiceEditor"></activity>
     </application>
 
 </manifest>
