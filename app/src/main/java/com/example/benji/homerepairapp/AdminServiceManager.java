@@ -22,7 +22,7 @@ public class AdminServiceManager extends Activity {
         ListView listView = (ListView) findViewById(R.id.servicesList);
         ServiceDBHandler db = new ServiceDBHandler(this);
 
-        ArrayList<String> serviceList = new ArrayList<>();
+        ArrayList<Service> serviceList = new ArrayList<>();
         Cursor data = db.getDBContents();
 
         //check to see is there are no services
@@ -33,20 +33,21 @@ public class AdminServiceManager extends Activity {
         //populate listView and add listeners to each item in the list
         else{
                 while(data.moveToNext()){   //populate
-                    serviceList.add(("" + data.getString(1) + " (" + data.getDouble(2) + " $/hr )"));
-                    ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, serviceList);
-                    listView.setAdapter(listAdapter);
+
+                    serviceList.add(new Service(data.getString(1), data.getDouble(2)));
+                    ServiceAdapter sAdapter = new ServiceAdapter(this, serviceList);
+                    listView.setAdapter(sAdapter);
                 }
 
                 //add listeners
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, final View view, int position, long id) {
-                        String service = adapterView.getItemAtPosition(position).toString();    //service at clicked position
+                        Service s = (Service) adapterView.getItemAtPosition(position);    //service at clicked position
 
                         Intent launchServiceEditor = new Intent(getApplicationContext(), ServiceEditor.class);
-                        launchServiceEditor.putExtra("serviceName",service );
-                        launchServiceEditor.putExtra("rate",service );
+                        launchServiceEditor.putExtra("service",s.getServiceName());
+                        launchServiceEditor.putExtra("hourly rate", s.getRate());
                         startActivity(launchServiceEditor);
                     }
                 });

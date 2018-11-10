@@ -3,6 +3,7 @@ package com.example.benji.homerepairapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,8 +25,8 @@ public class ServiceEditor extends AppCompatActivity {
         //get Intent
         Intent receivedIntent = getIntent();
 
-        oldRate = receivedIntent.getStringExtra("rate");
-        service = receivedIntent.getStringExtra("serviceName");
+        service = receivedIntent.getStringExtra("service");
+        oldRate = Double.toString(receivedIntent.getDoubleExtra("hourly rate", 0));
 
         message.setText("Change hourly rate for service " + service);   //prompt user to change rate
         changeRateBox.setText(oldRate); //display old rate initially
@@ -46,10 +47,12 @@ public class ServiceEditor extends AppCompatActivity {
 
         String hRate = changeRateBox.getText().toString();
 
-        if(!isEmptyRate()){
-            db.updateRate(oldRate,service,hRate);
-        }
 
+        if(!isEmptyRate()){
+            return;
+        }
+        
+        db.updateRate(oldRate,service,hRate);
         Intent serviceManager = new Intent(this, AdminServiceManager.class);
         startActivity(serviceManager);
     }
