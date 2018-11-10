@@ -14,7 +14,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
-        android:text="Create a new Account:"
+        android:text="Create a new Account"
         android:textAllCaps="true"
         android:textColor="@color/design_default_color_primary"
         android:textSize="18sp"
