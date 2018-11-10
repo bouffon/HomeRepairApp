@@ -28,6 +28,11 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View rowView = inflater.inflate(R.layout.service_layout, serviceList, false);
+
+        if (rowView == null){
+            rowView = inflater.inflate(R.layout.service_layout, serviceList, false);
+        }
+
         TextView service = (TextView) rowView.findViewById(R.id.serviceNameItem);
         TextView hRate = (TextView) rowView.findViewById(R.id.hourlyRateItem);
 

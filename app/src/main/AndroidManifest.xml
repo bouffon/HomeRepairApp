@@ -30,6 +30,9 @@
             android:name=".AdminServiceManager"
             android:label="@string/title_activity_admin_service_manager" />
         <activity android:name=".ServiceEditor" />
+        <activity
+            android:name=".AdminNav"
+            android:label="@string/title_activity_admin_nav"></activity>
     </application>
 
 </manifest>

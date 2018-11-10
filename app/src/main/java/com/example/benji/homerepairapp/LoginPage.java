@@ -32,7 +32,7 @@ public class LoginPage extends AppCompatActivity {
 
         if (activeUser != null) {
             if (usernameBox.getText().toString().equals("admin") && passwordBox.getText().toString().equals("admin")){
-                Intent intent = new Intent(this, AdminHomepage.class);
+                Intent intent = new Intent(this, AdminNav.class);
                 intent.putExtra("ActiveUser", activeUser);
                 startActivity(intent);
             }

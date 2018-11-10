@@ -33,6 +33,25 @@ public class ServiceEditor extends AppCompatActivity {
 
         message.setText("Change hourly rate for service " + service);   //prompt user to change rate
         changeRateBox.setText(oldRate); //display old rate initially
+
+        //to allow a hourly rate change with fragments
+        View saveRate = findViewById(R.id.save);
+        saveRate.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                saveHourlyRate(v);
+            }
+
+        });
+
+        //to allow a service deletion with fragments
+        View deleteService = findViewById(R.id.delete);
+        deleteService.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                deletePrompt(v);
+            }
+        });
     }
 
     private boolean isEmptyRate(){
@@ -56,7 +75,9 @@ public class ServiceEditor extends AppCompatActivity {
         }
 
         db.updateRate(oldRate,service,hRate);
-        Intent serviceManager = new Intent(this, AdminServiceManager.class);
+
+        //return to list of users
+        Intent serviceManager = new Intent(this, AdminNav.class);
         startActivity(serviceManager);
     }
 
@@ -65,7 +86,7 @@ public class ServiceEditor extends AppCompatActivity {
 
         db.deleteService(service);
 
-        Intent serviceManager = new Intent(this, AdminServiceManager.class);
+        Intent serviceManager = new Intent(this, AdminNav.class);
         startActivity(serviceManager);
     }
 
