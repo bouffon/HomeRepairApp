@@ -6,6 +6,11 @@ It allows users to connect with services providers such as plumbers, electrician
 *OCT 25, 2018*: The app is able to create accounts for homeowner's and service providers and supply them to the database, while the admin account
 has the ability to view all the accounts in the database. 
 
+*NOV 10, 2018: The app is able to create services, edit a service's hourly rates and delete services. It is also able to display all of the created services in addition to the hourly rate of each service.
+
 Authors: Ben Morrison (300025533), Joongho Kim (300043500), Stephen Chen (300033450), Muhammed Izol(300043365), Ethan Lee (300026957)
 
 GitHub Link: https://github.com/bouffon/HomeRepairApp.git
+
+Admin Username: admin
+Admin Password: admin
