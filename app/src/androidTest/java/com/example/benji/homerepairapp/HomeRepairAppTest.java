@@ -25,6 +25,8 @@ public class HomeRepairAppTest {
 
     @Test
     @UiThreadTest
+
+    //test to check username input
     public void checkUsername() throws Exception{
         text = mActivity.findViewById(R.id.usernameInput);
         text.setText("superuser");
@@ -34,6 +36,7 @@ public class HomeRepairAppTest {
 
     @Test
     @UiThreadTest
+    //test to check email input
     public void checkEmail() throws Exception{
         text = mActivity.findViewById(R.id.emailInput);
         text.setText("superuser@super.com");
@@ -44,6 +47,7 @@ public class HomeRepairAppTest {
 
     @Test
     @UiThreadTest
+    //test to check phone number input
     public void checkPhoneNumber() throws Exception{
         text = mActivity.findViewById(R.id.phoneInput);
         text.setText("6136136133");
@@ -55,6 +59,7 @@ public class HomeRepairAppTest {
 
     @Test
     @UiThreadTest
+    //test to check first name input
     public void checkFirstName() throws Exception{
         text = mActivity.findViewById(R.id.firstNameInput);
         text.setText("guy");
@@ -65,6 +70,7 @@ public class HomeRepairAppTest {
 
     @Test
     @UiThreadTest
+    //test to check password input
     public void checkPasswords() throws Exception{
         TextView text2;
         text = mActivity.findViewById(R.id.passwordInput);
