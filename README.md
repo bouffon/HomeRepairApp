@@ -14,3 +14,15 @@ GitHub Link: https://github.com/bouffon/HomeRepairApp.git
 
 Admin Username: admin
 Admin Password: admin
+
+There are 5 unit test cases for the app:
+
+1. Username validation
+2. Email validation
+3. Telephone validation
+4. FirstName validation
+5. Same password validation
+
+These test cases can be found in HomeRepairApp\app\src\androidTest\java\com\example\benji\homerepairapp
+
+The code is found in GitHub.
