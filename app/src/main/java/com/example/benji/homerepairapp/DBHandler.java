@@ -127,13 +127,33 @@ public class DBHandler extends SQLiteOpenHelper {
         return result;
     }
 
-    public void addSPInfo(String companyName, String description, Boolean licenced){
+    public void addSPInfo(String username, String password, String companyName, String description, Boolean licenced){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_COMPANYNAME, companyName);
         values.put(COLUMN_DESCRIPTION, description);
         values.put(COLUMN_LICENCED, licenced);
         db.insert(TABLE_SPInfo, null, values);
+
+        //THIS QUERY FIND THE PRIMARY KEY OF THE NEWLY ADDED INFO FOR THE SERVICE PROVIDER
+        String query = "Select * FROM " + TABLE_USERS + " WHERE " +
+                COLUMN_COMPANYNAME + " = \"" + companyName + "\"" + " AND " + COLUMN_DESCRIPTION + " = \"" + description + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+        Integer id = null;
+
+        //GETS THE ID
+        if (cursor.moveToFirst()) {
+            id = cursor.getInt(0);
+        }
+
+        //FIND THE ROW IN THE USERS TABLE OF THE MATCHING SERVICE PROVIDER
+        query = "Select * FROM " + TABLE_USERS + " WHERE " +
+                COLUMN_USERNAME + " = \"" + username + "\"" + " AND " + COLUMN_PASSWORD + " = \"" + password + "\"";
+        cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            ContentValues values2 = new ContentValues();
+            values.put(COLUMN_SPINFOID, id);
+        }
         db.close();
     }
 
