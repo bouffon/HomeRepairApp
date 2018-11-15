@@ -10,8 +10,10 @@ import android.database.Cursor;
 public class DBHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "Users.db";
+
+    //USERS TABLE
     public static final String TABLE_USERS = "users";
-    public static final String COLUMN_ID = "_id";
+    public static final String COLUMN_ID = "userid";
     public static final String COLUMN_USERNAME = "username";
     public static final String COLUMN_PASSWORD = "password";
     public static final String COLUMN_FNAME = "firstName";
@@ -19,6 +21,15 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_EMAIL = "email";
     public static final String COLUMN_PHONE = "phone";
     public static final String COLUMN_SERVICEPROVIDER = "serviceProvider";
+    public static final String COLUMN_SPInfo = "SPInfo";
+
+    //SERVICE PROVIDER INFO TABLE
+    public static final String TABLE_SPInfo = "SPINFO";
+    public static final String COLUMN_SPINFOID = "SPInfoId";
+    public static final String COLUMN_COMPANYNAME = "companyName";
+    public static final String COLUMN_DESCRIPTION = "description";
+    public static final String COLUMN_LICENCED = "licenced";
+
 
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -30,13 +41,20 @@ public class DBHandler extends SQLiteOpenHelper {
                 TABLE_USERS + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY," + COLUMN_USERNAME
                 + " TEXT," + COLUMN_PASSWORD + " TEXT," + COLUMN_FNAME + " TEXT," + COLUMN_LNAME
-                + " TEXT," + COLUMN_EMAIL + " TEXT," + COLUMN_PHONE + " TEXT," + COLUMN_SERVICEPROVIDER + " TEXT)";
+                + " TEXT," + COLUMN_EMAIL + " TEXT," + COLUMN_PHONE + " TEXT," + COLUMN_SERVICEPROVIDER + " TEXT," + COLUMN_SPInfo + " INTEGER," + " FOREIGN KEY(SPInfo) REFERENCES SPInfoID " + ")";
         db.execSQL(CREATE_USERS_TABLE);
+
+        String CREATE_SPInfo_TABLE = "CREATE TABLE " +
+                TABLE_SPInfo + "("
+                + COLUMN_SPINFOID + " INTEGER PRIMARY KEY," + COLUMN_COMPANYNAME
+                + " TEXT," + COLUMN_DESCRIPTION + " TEXT," + COLUMN_LICENCED + " BOOLEAN" +")";
+        db.execSQL(CREATE_SPInfo_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersionNumber, int newVersionNumber) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SPInfo);
         onCreate(db);
     }
 
@@ -109,15 +127,30 @@ public class DBHandler extends SQLiteOpenHelper {
         return result;
     }
 
+    public void addSPInfo(String companyName, String description, Boolean licenced){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_COMPANYNAME, companyName);
+        values.put(COLUMN_DESCRIPTION, description);
+        values.put(COLUMN_LICENCED, licenced);
+        db.insert(TABLE_SPInfo, null, values);
+        db.close();
+    }
+
     public Cursor getDBContents(){
         SQLiteDatabase dB = this.getWritableDatabase();
         Cursor users = dB.rawQuery("SELECT * FROM " + TABLE_USERS, null);
         return users;
     }
 
-    public void clearTable(){
+    public void clearUserTable(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_USERS,null,null);
+    }
+
+    public void clearSPInfoTable(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_SPInfo,null,null);
     }
 
 }
