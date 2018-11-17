@@ -139,7 +139,7 @@ public class AccountCreation extends AppCompatActivity {
             if (switchResult) { //depending on if switch is flipped creates Homeowner vs ServiceProvider
                 ServiceProvider user = new ServiceProvider(username, password, fName, lName, email, phone);
                 db.addUser(user);
-                Intent intent = new Intent(this, LoginPage.class);
+                Intent intent = new Intent(this, ServiceProviderInformation.class);
                 startActivity(intent);
             } else {
                 Homeowner user = new Homeowner(username, password, fName, lName, email, phone);

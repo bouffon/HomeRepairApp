@@ -32,7 +32,8 @@
         <activity android:name=".ServiceEditor" />
         <activity
             android:name=".AdminNav"
-            android:label="@string/title_activity_admin_nav"></activity>
+            android:label="@string/title_activity_admin_nav" />
+        <activity android:name=".ServiceProviderInformation"></activity>
     </application>
 
 </manifest>
