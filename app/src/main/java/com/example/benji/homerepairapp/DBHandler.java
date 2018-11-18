@@ -24,11 +24,15 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_SPInfo = "SPInfo";
 
     //SERVICE PROVIDER INFO TABLE
-    public static final String TABLE_SPInfo = "SPINFO";
+    public static final String TABLE_SPINFO = "SPINFO";
     public static final String COLUMN_SPINFOID = "SPInfoId";
     public static final String COLUMN_COMPANYNAME = "companyName";
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_LICENCED = "licenced";
+
+    //HOURS TABLE
+    public static final String TABLE_SPHOURS = "SPINFO";
+    public static final String COLUMN_SPHOURSID = "SPInfoId";
 
 
     public DBHandler(Context context) {
@@ -45,7 +49,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_USERS_TABLE);
 
         String CREATE_SPInfo_TABLE = "CREATE TABLE " +
-                TABLE_SPInfo + "("
+                TABLE_SPINFO + "("
                 + COLUMN_SPINFOID + " INTEGER PRIMARY KEY," + COLUMN_COMPANYNAME
                 + " TEXT," + COLUMN_DESCRIPTION + " TEXT," + COLUMN_LICENCED + " BOOLEAN" +")";
         db.execSQL(CREATE_SPInfo_TABLE);
@@ -54,7 +58,7 @@ public class DBHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersionNumber, int newVersionNumber) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SPInfo);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SPINFO);
         onCreate(db);
     }
 
@@ -133,7 +137,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_COMPANYNAME, companyName);
         values.put(COLUMN_DESCRIPTION, description);
         values.put(COLUMN_LICENCED, licenced);
-        db.insert(TABLE_SPInfo, null, values);
+        db.insert(TABLE_SPINFO, null, values);
 
         //THIS QUERY FIND THE PRIMARY KEY OF THE NEWLY ADDED INFO FOR THE SERVICE PROVIDER
         String query = "Select * FROM " + TABLE_USERS + " WHERE " +
@@ -170,7 +174,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public void clearSPInfoTable(){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_SPInfo,null,null);
+        db.delete(TABLE_SPINFO,null,null);
     }
 
 }
