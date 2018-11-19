@@ -29,11 +29,20 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_COMPANYNAME = "companyName";
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_LICENCED = "licenced";
-
-    //HOURS TABLE
-    public static final String TABLE_SPHOURS = "SPINFO";
-    public static final String COLUMN_SPHOURSID = "SPInfoId";
-
+    public static final String COLUMN_MONDAYSTART = "mondayStart";
+    public static final String COLUMN_MONDAYEND = "mondayEnd";
+    public static final String COLUMN_TUESDAYSTART = "tuesdayStart";
+    public static final String COLUMN_TUESDAYEND = "tuesdayEnd";
+    public static final String COLUMN_WEDNESDAYSTART = "wednesdayStart";
+    public static final String COLUMN_WEDNESDAYEND = "wednesdayEnd";
+    public static final String COLUMN_THURSDAYSTART = "thursdayStart";
+    public static final String COLUMN_THURSDAYEND = "thursdayEnd";
+    public static final String COLUMN_FRIDAYSTART = "fridayStart";
+    public static final String COLUMN_FRIDAYEND = "fridayEnd";
+    public static final String COLUMN_SATURDAYSTART = "saturdayStart";
+    public static final String COLUMN_SATURDAYEND = "saturdayEnd";
+    public static final String COLUMN_SUNDAYSTART = "sundayStart";
+    public static final String COLUMN_SUNDAYEND = "sundayEnd";
 
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -51,8 +60,11 @@ public class DBHandler extends SQLiteOpenHelper {
         String CREATE_SPInfo_TABLE = "CREATE TABLE " +
                 TABLE_SPINFO + "("
                 + COLUMN_SPINFOID + " INTEGER PRIMARY KEY," + COLUMN_COMPANYNAME
-                + " TEXT," + COLUMN_DESCRIPTION + " TEXT," + COLUMN_LICENCED + " BOOLEAN" +")";
-        db.execSQL(CREATE_SPInfo_TABLE);
+                + " TEXT," + COLUMN_DESCRIPTION + " TEXT," + COLUMN_LICENCED + " BOOLEAN" + COLUMN_MONDAYSTART + "TEXT," + COLUMN_MONDAYEND + "TEXT," + COLUMN_TUESDAYSTART + "TEXT,"
+                + COLUMN_TUESDAYEND + "TEXT," + COLUMN_WEDNESDAYSTART + "TEXT," + COLUMN_WEDNESDAYEND + "TEXT," + COLUMN_THURSDAYSTART + "TEXT," + COLUMN_THURSDAYEND + "TEXT,"
+                + COLUMN_FRIDAYSTART + "TEXT," + COLUMN_FRIDAYEND + "TEXT," + COLUMN_SATURDAYSTART + "TEXT," + COLUMN_SATURDAYEND + "TEXT," + COLUMN_SUNDAYSTART + "TEXT," +
+                COLUMN_SUNDAYEND + "TEXT" + ")";
+                db.execSQL(CREATE_SPInfo_TABLE);
     }
 
     @Override
@@ -131,12 +143,19 @@ public class DBHandler extends SQLiteOpenHelper {
         return result;
     }
 
-    public void addSPInfo(String username, String password, String companyName, String description, Boolean licenced){
+    public void addSPInfo(String username, String password, String companyName, String description, Boolean licenced, String mondayStart, String mondayEnd,
+                          String tuesdayStart, String tuesdayEnd, String wednesdayStart, String wednesdayEnd ,String thursdayStart, String thursdayEnd, String fridayStart,
+                          String fridayEnd, String saturdayStart, String saturdayEnd, String sundayStart, String sundayEnd){
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_COMPANYNAME, companyName);
-        values.put(COLUMN_DESCRIPTION, description);
-        values.put(COLUMN_LICENCED, licenced);
+
+        values.put(COLUMN_COMPANYNAME, companyName); values.put(COLUMN_DESCRIPTION, description); values.put(COLUMN_LICENCED, licenced);
+        values.put(COLUMN_MONDAYSTART, mondayStart); values.put(COLUMN_MONDAYEND, mondayEnd); values.put(COLUMN_TUESDAYSTART, tuesdayStart);
+        values.put(COLUMN_TUESDAYEND, tuesdayEnd); values.put(COLUMN_WEDNESDAYSTART, wednesdayStart); values.put(COLUMN_WEDNESDAYEND, wednesdayEnd);
+        values.put(COLUMN_THURSDAYSTART, thursdayStart); values.put(COLUMN_THURSDAYEND, thursdayEnd); values.put(COLUMN_FRIDAYSTART, fridayStart);
+        values.put(COLUMN_FRIDAYEND, fridayEnd); values.put(COLUMN_SATURDAYSTART, saturdayStart); values.put(COLUMN_SATURDAYEND, saturdayEnd);
+        values.put(COLUMN_SUNDAYSTART, sundayStart); values.put(COLUMN_SUNDAYEND, sundayEnd);
         db.insert(TABLE_SPINFO, null, values);
 
         //THIS QUERY FIND THE PRIMARY KEY OF THE NEWLY ADDED INFO FOR THE SERVICE PROVIDER
