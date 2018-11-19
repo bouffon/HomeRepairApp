@@ -10,25 +10,26 @@
         android:id="@+id/serviceProviderSwitch2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:checked="false"
         android:switchMinWidth="30dp"
-        android:switchPadding="20dp"
+        android:switchPadding="5dp"
         android:text="Are you a Licensed Practictioner?"
         android:textColor="@color/design_default_color_primary"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description" />
+        app:layout_constraintTop_toBottomOf="@+id/companyName" />
 
     <TextView
         android:id="@+id/createAccountText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:fontFamily="sans-serif"
         android:text="SERVICE PROVIDER INFORMATION"
         android:textAllCaps="true"
@@ -39,130 +40,406 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/description"
-        android:layout_width="262dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:gravity="top|left"
-        android:hint="Brief Description of Service"
-        android:inputType="textMultiLine"
-        android:lines="4"
-        android:maxLines="4"
-        android:minLines="2"
-        android:scrollbars="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.436"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/companyName" />
-
-    <EditText
         android:id="@+id/companyName"
         android:layout_width="253dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="50dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="508dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="484dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:hint="Company Name:"
         android:inputType="textCapWords"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.46"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAccountText"
-        app:layout_constraintVertical_bias="0.52" />
-
-    <Button
-        android:id="@+id/monday"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="95dp"
-        android:layout_marginEnd="8dp"
-        android:text="Monday"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/wednesday"
-        app:layout_constraintEnd_toStartOf="@+id/tuesday"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/serviceProviderSwitch2" />
-
-    <Button
-        android:id="@+id/tuesday"
-        android:layout_width="125dp"
-        android:layout_height="51dp"
-        android:layout_marginEnd="40dp"
-        android:text="Tuesday"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="279dp" />
-
-    <Button
-        android:id="@+id/wednesday"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="54dp"
-        android:layout_marginEnd="8dp"
-        android:text="Wednesday"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@+id/thursday"
-        app:layout_constraintHorizontal_bias="0.046"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/monday" />
-
-    <Button
-        android:id="@+id/thursday"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="52dp"
-        android:text="Thursday"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="330dp" />
-
-    <Button
-        android:id="@+id/friday"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="20dp"
-        android:text="Friday"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@+id/saturday"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wednesday" />
-
-    <Button
-        android:id="@+id/saturday"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="40dp"
-        android:text="saturday"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/thursday" />
-
-    <Button
-        android:id="@+id/sunday"
-        android:layout_width="125dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Sunday"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/friday" />
+        app:layout_constraintTop_toBottomOf="@+id/createAccountText2" />
 
     <EditText
-        android:id="@+id/editText"
-        android:layout_width="225dp"
+        android:id="@+id/description"
+        android:layout_width="266dp"
+        android:layout_height="92dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:gravity="bottom|center"
+        android:hint="100 Character Limit"
+        android:inputType="textMultiLine"
+        android:lines="4"
+        android:maxLength="100"
+        android:maxLines="4"
+        android:minLines="2"
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTitle" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="241dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="Please select an availability"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/description" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="235dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.363">
+
+        <LinearLayout
+            android:id="@+id/dates"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="27dp"
+            tools:layout_editor_absoluteY="346dp">
+
+            <TextView
+                android:id="@+id/monday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Monday"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="313dp" />
+
+            <TextView
+                android:id="@+id/tuesday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tuesday"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="346dp" />
+
+            <TextView
+                android:id="@+id/wednesday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Wednesday"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="386dp" />
+
+            <TextView
+                android:id="@+id/thursday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thursday"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="432dp" />
+
+            <TextView
+                android:id="@+id/friday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Friday"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="477dp" />
+
+            <TextView
+                android:id="@+id/saturday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Saturday"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="522dp" />
+
+            <TextView
+                android:id="@+id/sunday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sunday"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="573dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/timeSlot1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="176dp"
+            tools:layout_editor_absoluteY="346dp">
+
+            <TextView
+                android:id="@+id/mo1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="313dp" />
+
+            <TextView
+                android:id="@+id/tu1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="346dp" />
+
+            <TextView
+                android:id="@+id/we1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="386dp" />
+
+            <TextView
+                android:id="@+id/th1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="432dp" />
+
+            <TextView
+                android:id="@+id/fr1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="477dp" />
+
+            <TextView
+                android:id="@+id/sa1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="522dp" />
+
+            <TextView
+                android:id="@+id/su1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="573dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/-"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="273dp"
+            tools:layout_editor_absoluteY="346dp">
+
+            <TextView
+                android:id="@+id/-1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="313dp" />
+
+            <TextView
+                android:id="@+id/-2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="346dp" />
+
+            <TextView
+                android:id="@+id/-3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="386dp" />
+
+            <TextView
+                android:id="@+id/-4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="432dp" />
+
+            <TextView
+                android:id="@+id/-5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="477dp" />
+
+            <TextView
+                android:id="@+id/-6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="522dp" />
+
+            <TextView
+                android:id="@+id/-7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="573dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/timeSlot2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="316dp"
+            tools:layout_editor_absoluteY="346dp">
+
+            <TextView
+                android:id="@+id/mo2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="313dp" />
+
+            <TextView
+                android:id="@+id/tu2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="346dp" />
+
+            <TextView
+                android:id="@+id/we2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="386dp" />
+
+            <TextView
+                android:id="@+id/th2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="432dp" />
+
+            <TextView
+                android:id="@+id/fr2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="477dp" />
+
+            <TextView
+                android:id="@+id/sa2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="522dp" />
+
+            <TextView
+                android:id="@+id/su2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="573dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/descriptionTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text|textPersonName"
-        android:text="Please select availability "
-        android:textAlignment="center"
-        tools:layout_editor_absoluteX="80dp"
-        tools:layout_editor_absoluteY="216dp" />
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="Brief Description of Service"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@+id/serviceProviderSwitch2"
+        tools:layout_editor_absoluteX="119dp" />
 
 </android.support.constraint.ConstraintLayout>

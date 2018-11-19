@@ -1,14 +1,11 @@
 package com.example.benji.homerepairapp;
 
 import android.app.TimePickerDialog;
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Switch;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -24,15 +21,25 @@ public class ServiceProviderInformation extends AppCompatActivity implements Tim
 
 
 
-        Button monday = (Button) findViewById(R.id.monday);
-        Button tuesday = (Button) findViewById(R.id.tuesday);
-        Button wednesday = (Button) findViewById(R.id.wednesday);
-        Button thursday = (Button) findViewById(R.id.thursday);
-        Button friday = (Button) findViewById(R.id.friday);
-        Button saturday = (Button) findViewById(R.id.saturday);
-        Button sunday = (Button) findViewById(R.id.sunday);
+        TextView mo1View = (TextView) findViewById(R.id.mo1);
+        TextView tu1View = (TextView) findViewById(R.id.tu1);
+        TextView we1View = (TextView) findViewById(R.id.we1);
+        TextView th1View = (TextView) findViewById(R.id.th1);
+        TextView fr1View = (TextView) findViewById(R.id.fr1);
+        TextView sa1View = (TextView) findViewById(R.id.sa1);
+        TextView su1View = (TextView) findViewById(R.id.su1);
 
-        monday.setOnClickListener(new View.OnClickListener(){
+        TextView mo2View = (TextView) findViewById(R.id.mo2);
+        TextView tu2View = (TextView) findViewById(R.id.tu2);
+        TextView we2View = (TextView) findViewById(R.id.we2);
+        TextView th2View = (TextView) findViewById(R.id.th2);
+        TextView fr2View = (TextView) findViewById(R.id.fr2);
+        TextView sa2View = (TextView) findViewById(R.id.sa2);
+        TextView su2View = (TextView) findViewById(R.id.su2);
+
+
+        // THIS IS FOR THE FIRST TIME
+        mo1View.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 DialogFragment timePicker = new TimePickerFragment();
@@ -40,7 +47,7 @@ public class ServiceProviderInformation extends AppCompatActivity implements Tim
             }
         });
 
-        tuesday.setOnClickListener(new View.OnClickListener(){
+        tu1View.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 DialogFragment timePicker = new TimePickerFragment();
@@ -48,7 +55,7 @@ public class ServiceProviderInformation extends AppCompatActivity implements Tim
             }
         });
 
-        wednesday.setOnClickListener(new View.OnClickListener(){
+        we1View.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 DialogFragment timePicker = new TimePickerFragment();
@@ -56,7 +63,7 @@ public class ServiceProviderInformation extends AppCompatActivity implements Tim
             }
         });
 
-        thursday.setOnClickListener(new View.OnClickListener(){
+        th1View.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 DialogFragment timePicker = new TimePickerFragment();
@@ -64,7 +71,7 @@ public class ServiceProviderInformation extends AppCompatActivity implements Tim
             }
         });
 
-        friday.setOnClickListener(new View.OnClickListener(){
+        fr1View.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 DialogFragment timePicker = new TimePickerFragment();
@@ -72,7 +79,7 @@ public class ServiceProviderInformation extends AppCompatActivity implements Tim
             }
         });
 
-        saturday.setOnClickListener(new View.OnClickListener(){
+        sa1View.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 DialogFragment timePicker = new TimePickerFragment();
@@ -80,7 +87,7 @@ public class ServiceProviderInformation extends AppCompatActivity implements Tim
             }
         });
 
-        sunday.setOnClickListener(new View.OnClickListener(){
+        su1View.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 DialogFragment timePicker = new TimePickerFragment();
@@ -89,6 +96,62 @@ public class ServiceProviderInformation extends AppCompatActivity implements Tim
         });
 
 
+        // THIS IS FOR THE END TIME
+        mo2View.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getSupportFragmentManager(), "time picker");
+            }
+        });
+
+        tu2View.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getSupportFragmentManager(), "time picker");
+            }
+        });
+
+        we2View.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getSupportFragmentManager(), "time picker");
+            }
+        });
+
+        th2View.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getSupportFragmentManager(), "time picker");
+            }
+        });
+
+        fr2View.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getSupportFragmentManager(), "time picker");
+            }
+        });
+
+        sa2View.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getSupportFragmentManager(), "time picker");
+            }
+        });
+
+        su2View.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getSupportFragmentManager(), "time picker");
+            }
+        });
     }
 
     private boolean isEmptyCName(){

@@ -33,7 +33,8 @@
         <activity
             android:name=".AdminNav"
             android:label="@string/title_activity_admin_nav" />
-        <activity android:name=".ServiceProviderInformation"></activity>
+        <activity android:name=".ServiceProviderInformation"
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>
