@@ -143,8 +143,6 @@ public class AccountCreation extends AppCompatActivity {
         String email = emailBox.getText().toString();
         String address = addressBox.getText().toString();
         String phone = phoneBox.getText().toString();
-        //TODO create edittext for address and implement the line below
-        String address = "TODO";
         Boolean switchResult = serviceProviderSwitch.isChecked();
 
         if (!isValidMail() | !isEmptyFName() | !isEmptyLName() | !isEmptyUsername() | !isEmptyPassword() | !isValidPhone() | !isSamePassword() | !isEmptyAddress()){

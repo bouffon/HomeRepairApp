@@ -1,11 +1,10 @@
 package com.example.benji.homerepairapp;
 
-import android.database.sqlite.SQLiteOpenHelper;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.content.Context;
-import android.content.ContentValues;
-import android.database.Cursor;
 
 public class DBHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
@@ -99,6 +98,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_LNAME, user.getlName());
         values.put(COLUMN_EMAIL, user.getEmail());
         values.put(COLUMN_PHONE, user.getPhone());
+        values.put(COLUMN_ADDRESS, user.getAddress());
         values.put(COLUMN_SERVICEPROVIDER, sp.toString());
         db.insert(TABLE_USERS, null, values);
         db.close();
