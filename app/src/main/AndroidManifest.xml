@@ -38,7 +38,10 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ServiceProviderNav"
-            android:label="@string/title_activity_service_provider_nav"></activity>
+            android:label="@string/title_activity_service_provider_nav" />
+        <activity android:name=".SPServices" />
+        <activity android:name=".SPAddService" />
+        <activity android:name=".EditSPHours"></activity>
     </application>
 
 </manifest>

@@ -247,6 +247,86 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void updateHours(String username, String password, String[] newTimes){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "Select * FROM " + TABLE_USERS + " WHERE " +
+                COLUMN_USERNAME + " = \"" + username + "\"" + " AND " + COLUMN_PASSWORD + " = \"" + password + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+        int id;
+        id = cursor.getInt(0);
+
+        //MONDAY
+
+        query = "UPDATE " + TABLE_SPINFO + " SET " + COLUMN_MONDAYSTART + " = '" + newTimes[0] + "' WHERE "
+                + COLUMN_SPINFOID + " = '" + id + "'";
+        db.execSQL(query);
+
+        query = "UPDATE " + TABLE_SPINFO + " SET " + COLUMN_MONDAYEND + " = '" + newTimes[1] + "' WHERE "
+                + COLUMN_SPINFOID + " = '" + id + "'";
+        db.execSQL(query);
+
+        //TUESDAY
+
+        query = "UPDATE " + TABLE_SPINFO + " SET " + COLUMN_TUESDAYSTART + " = '" + newTimes[0] + "' WHERE "
+                + COLUMN_SPINFOID + " = '" + id + "'";
+        db.execSQL(query);
+
+        query = "UPDATE " + TABLE_SPINFO + " SET " + COLUMN_TUESDAYEND + " = '" + newTimes[1] + "' WHERE "
+                + COLUMN_SPINFOID + " = '" + id + "'";
+        db.execSQL(query);
+
+        //WEDNESDAY
+
+        query = "UPDATE " + TABLE_SPINFO + " SET " + COLUMN_WEDNESDAYSTART + " = '" + newTimes[0] + "' WHERE "
+                + COLUMN_SPINFOID + " = '" + id + "'";
+        db.execSQL(query);
+
+        query = "UPDATE " + TABLE_SPINFO + " SET " + COLUMN_WEDNESDAYEND + " = '" + newTimes[1] + "' WHERE "
+                + COLUMN_SPINFOID + " = '" + id + "'";
+        db.execSQL(query);
+
+        //THURSDAY
+
+        query = "UPDATE " + TABLE_SPINFO + " SET " + COLUMN_THURSDAYSTART + " = '" + newTimes[0] + "' WHERE "
+                + COLUMN_SPINFOID + " = '" + id + "'";
+        db.execSQL(query);
+
+        query = "UPDATE " + TABLE_SPINFO + " SET " + COLUMN_THURSDAYEND + " = '" + newTimes[1] + "' WHERE "
+                + COLUMN_SPINFOID + " = '" + id + "'";
+        db.execSQL(query);
+
+        //FRIDAY
+
+        query = "UPDATE " + TABLE_SPINFO + " SET " + COLUMN_FRIDAYSTART + " = '" + newTimes[0] + "' WHERE "
+                + COLUMN_SPINFOID + " = '" + id + "'";
+        db.execSQL(query);
+
+        query = "UPDATE " + TABLE_SPINFO + " SET " + COLUMN_FRIDAYEND + " = '" + newTimes[1] + "' WHERE "
+                + COLUMN_SPINFOID + " = '" + id + "'";
+        db.execSQL(query);
+
+        //SATURDAY
+
+        query = "UPDATE " + TABLE_SPINFO + " SET " + COLUMN_SATURDAYSTART + " = '" + newTimes[0] + "' WHERE "
+                + COLUMN_SPINFOID + " = '" + id + "'";
+        db.execSQL(query);
+
+        query = "UPDATE " + TABLE_SPINFO + " SET " + COLUMN_SATURDAYEND + " = '" + newTimes[1] + "' WHERE "
+                + COLUMN_SPINFOID + " = '" + id + "'";
+        db.execSQL(query);
+
+        //SUNDAY
+
+        query = "UPDATE " + TABLE_SPINFO + " SET " + COLUMN_SUNDAYSTART + " = '" + newTimes[0] + "' WHERE "
+                + COLUMN_SPINFOID + " = '" + id + "'";
+        db.execSQL(query);
+
+        query = "UPDATE " + TABLE_SPINFO + " SET " + COLUMN_SUNDAYEND + " = '" + newTimes[1] + "' WHERE "
+                + COLUMN_SPINFOID + " = '" + id + "'";
+        db.execSQL(query);
+    }
+
     public void addSPService(String username, String password, String service){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();

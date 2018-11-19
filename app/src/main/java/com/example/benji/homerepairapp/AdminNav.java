@@ -23,19 +23,14 @@ public class AdminNav extends AppCompatActivity {
 
                 case R.id.nav_users:
                     selectedFragment = new AdminUserList(); //create an instance of AdminUserList to create the list of users to display
-                   // mTextMessage.setText("Users");
                     break;
 
                 case R.id.nav_services:
                     selectedFragment = new AdminServiceManager();
-
-                    //mTextMessage.setText("Services");
                     break;
 
                 case R.id.nav_addService:
                     selectedFragment = new ServiceCreation();
-
-                    //mTextMessage.setText("Add service");
                     break;
             }
 
