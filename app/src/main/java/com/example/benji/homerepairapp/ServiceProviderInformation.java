@@ -174,7 +174,7 @@ public class ServiceProviderInformation extends AppCompatActivity implements Tim
             @Override
             public void onClick(View v){
 
-                if(th2View.getText().equals("__ : __")){
+                if(th1View.getText().equals("__ : __")){
                     return;
                 }
 
