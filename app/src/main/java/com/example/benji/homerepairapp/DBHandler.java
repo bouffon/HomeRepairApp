@@ -43,6 +43,17 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_SATURDAYEND = "saturdayEnd";
     public static final String COLUMN_SUNDAYSTART = "sundayStart";
     public static final String COLUMN_SUNDAYEND = "sundayEnd";
+    public static final String COLUMN_SERVICE1 = "service1";
+    public static final String COLUMN_SERVICE2 = "service2";
+    public static final String COLUMN_SERVICE3 = "service3";
+    public static final String COLUMN_SERVICE4 = "service4";
+    public static final String COLUMN_SERVICE5 = "service5";
+
+    //CREATES SERVICES TABLE
+    public static final String TABLE_SERVICES = "services";
+    public static final String COLUMN_SERVICEID = "serviceID";
+    public static final String COLUMN_SERVICENAME = "serviceName";
+    public static final String COLUMN_RATE = "rate";
 
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -66,14 +77,21 @@ public class DBHandler extends SQLiteOpenHelper {
                 + " TEXT," + COLUMN_DESCRIPTION + " TEXT," + COLUMN_LICENCED + " BOOLEAN" + COLUMN_MONDAYSTART + "TEXT," + COLUMN_MONDAYEND + "TEXT," + COLUMN_TUESDAYSTART + "TEXT,"
                 + COLUMN_TUESDAYEND + "TEXT," + COLUMN_WEDNESDAYSTART + "TEXT," + COLUMN_WEDNESDAYEND + "TEXT," + COLUMN_THURSDAYSTART + "TEXT," + COLUMN_THURSDAYEND + "TEXT,"
                 + COLUMN_FRIDAYSTART + "TEXT," + COLUMN_FRIDAYEND + "TEXT," + COLUMN_SATURDAYSTART + "TEXT," + COLUMN_SATURDAYEND + "TEXT," + COLUMN_SUNDAYSTART + "TEXT," +
-                COLUMN_SUNDAYEND + "TEXT" + ")";
-                db.execSQL(CREATE_SPINFO_TABLE);
+                COLUMN_SUNDAYEND + "TEXT" + COLUMN_SERVICE1 + "TEXT," + COLUMN_SERVICE2 + "TEXT," + COLUMN_SERVICE3 + "TEXT," + COLUMN_SERVICE4 + "TEXT," + COLUMN_SERVICE5 + "TEXT" + ")";
+        db.execSQL(CREATE_SPINFO_TABLE);
+
+        String CREATE_SERVICES_TABLE = "CREATE TABLE " +
+                TABLE_SERVICES + "("
+                + COLUMN_SERVICEID + " INTEGER PRIMARY KEY," + COLUMN_SERVICENAME
+                + " TEXT," + COLUMN_RATE + " DOUBLE" + ")";
+        db.execSQL(CREATE_SERVICES_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersionNumber, int newVersionNumber) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SPINFO);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SERVICES);
         onCreate(db);
     }
     /*
@@ -137,7 +155,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
                 if (cursor2.moveToFirst()) {
                     ((ServiceProvider) user).additionalInfo(cursor2.getString(1), cursor2.getString(2), cursor.getInt(3) > 0,
-                            this.createTimesArray(cursor.getInt(9)));
+                            this.createTimesArray(cursor.getInt(9)),this.createServiceArray(cursor.getInt(9)));
                 }
 
             } if (Integer.parseInt(cursor.getString(8)) == 2) {
@@ -229,6 +247,47 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void addSPService(String username, String password, String service){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        String query = "Select * FROM " + TABLE_USERS + " WHERE " +
+                COLUMN_USERNAME + " = \"" + username + "\"" + " AND " + COLUMN_PASSWORD + " = \"" + password + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+        int id = cursor.getInt(9);
+        query = "Select * FROM " + TABLE_SPINFO + " WHERE " +
+                COLUMN_SPINFOID + " = \"" + id + "\"";
+        cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            int locationIndex = 0 ;
+            for (int i = 18; i<24; i++){
+                if (cursor.getString(i) == null && locationIndex == 0) {
+                    locationIndex = i;
+                }
+                if (cursor.getString(i)== service){
+                    locationIndex = 0;
+                    break;
+                }
+            }
+            if (locationIndex == 18){
+                values.put(COLUMN_SERVICE1, service);
+            } if (locationIndex ==19){
+                values.put(COLUMN_SERVICE2, service);
+            } if (locationIndex ==20) {
+                values.put(COLUMN_SERVICE3, service);
+            } if (locationIndex ==21) {
+                values.put(COLUMN_SERVICE4, service);
+            } if (locationIndex ==22) {
+                values.put(COLUMN_SERVICE5, service);
+            }
+            db.close();
+            return;
+
+        }
+
+    }
+
     /*
        getDBContents returns are cursor object that is positioned it
        in the users table
@@ -281,5 +340,101 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         db.close();
         return newTimes;
+    }
+
+    private Service[] createServiceArray(int key){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "Select * FROM " + TABLE_SPINFO + " WHERE " +
+                COLUMN_SPINFOID + " = \"" + key + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+        Service[] newServices = new Service[4];
+        int i = 18;
+        int j = 0;
+        while (i<23){ //Go through all columns that store times
+            if (cursor.getString(i) != null) {
+                newServices[j] = this.findService(cursor.getString(i));
+            } else {
+                newServices[j] = null;
+            }
+            i++;
+            j++;
+        }
+        db.close();
+        return newServices;
+    }
+
+    public void addService(Service service){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_SERVICENAME, service.getServiceName());
+        values.put(COLUMN_RATE, service.getRate());
+        db.insert(TABLE_SERVICES, null, values);
+        db.close();
+    }
+
+    public Service findService(String serviceName){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "Select * FROM " + TABLE_SERVICES + " WHERE " +
+                COLUMN_SERVICENAME + " = \"" + serviceName+ "\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        Service service;
+        if (cursor.moveToFirst()){
+            service = new Service(cursor.getString(1),cursor.getDouble(2));
+        } else {
+            service = null;
+        }
+        db.close();
+        return service;
+    }
+
+    public void updateRate(String oldRate, String service, String newRate){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_SERVICES + " SET " + COLUMN_RATE + " = '" + newRate + "' WHERE "
+                + COLUMN_SERVICENAME + " = '" + service + "'" + " AND " + COLUMN_RATE + " = '" + oldRate + "'";
+        db.execSQL(query);
+    }
+
+
+    public Service findServicebyRate(Double rate){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "Select * FROM " + TABLE_SERVICES + " WHERE " +
+                COLUMN_RATE + " = \"" + rate + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        Service service;
+        if (cursor.moveToFirst()){
+            service = new Service(cursor.getString(1),cursor.getDouble(2));
+        } else {
+            service = null;
+        }
+        db.close();
+        return service;
+    }
+
+    public boolean deleteService(String serviceName) {
+        boolean result = false;
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "Select * FROM " + TABLE_SERVICES + " WHERE " +
+                COLUMN_SERVICENAME + " = \"" + serviceName + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            String idStr = cursor.getString(0);
+            db.delete(TABLE_SERVICES, COLUMN_ID + " = " + idStr, null);
+            cursor.close();
+            result = true;
+        }
+        db.close();
+        return result;
+    }
+
+    public Cursor getServiceContents(){
+        SQLiteDatabase dB = this.getWritableDatabase();
+        Cursor services = dB.rawQuery("SELECT * FROM " + TABLE_SERVICES, null);
+        return services;
     }
 }

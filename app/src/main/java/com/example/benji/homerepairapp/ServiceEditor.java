@@ -65,7 +65,7 @@ public class ServiceEditor extends AppCompatActivity {
     }
 
     public void saveHourlyRate(View view){
-        ServiceDBHandler db = new ServiceDBHandler(this);
+        DBHandler db = new DBHandler(this);
 
         String hRate = changeRateBox.getText().toString();
 
@@ -82,7 +82,7 @@ public class ServiceEditor extends AppCompatActivity {
     }
 
     public void deleteService(){
-        ServiceDBHandler db = new ServiceDBHandler(this);
+        DBHandler db = new DBHandler(this);
 
         db.deleteService(service);
 

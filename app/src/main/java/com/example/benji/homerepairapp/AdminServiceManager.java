@@ -26,10 +26,10 @@ public class AdminServiceManager extends Fragment {
         View v = inflater.inflate(R.layout.activity_admin_service_manager, container, false);
 
         ListView listView = (ListView) v.findViewById(R.id.servicesList);   //listView for all services
-        ServiceDBHandler db = new ServiceDBHandler(getActivity());
+        DBHandler db = new DBHandler(getActivity());
 
         ArrayList<Service> serviceList = new ArrayList<>(); //ArrayList to store Service objects
-        Cursor data = db.getDBContents();
+        Cursor data = db.getServiceContents();
 
         //check to see if there are no services
         if(data.getCount() == 0) {
@@ -70,10 +70,10 @@ public class AdminServiceManager extends Fragment {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_service_manager);
         ListView listView = (ListView) findViewById(R.id.servicesList);
-        ServiceDBHandler db = new ServiceDBHandler(this);
+        DBHandler db = new DBHandler(this);
 
         ArrayList<Service> serviceList = new ArrayList<>();
-        Cursor data = db.getDBContents();
+        Cursor data = db.getServiceContents();
 
         //check to see is there are no services
         if(data.getCount() == 0) {

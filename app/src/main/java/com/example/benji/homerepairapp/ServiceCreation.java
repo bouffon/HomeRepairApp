@@ -51,7 +51,7 @@ public class ServiceCreation extends Fragment {
     }*/
 
     public void newService(View view){
-        ServiceDBHandler db = new ServiceDBHandler(getActivity());
+        DBHandler db = new DBHandler(getActivity());
         String serviceName = sNameBox.getText().toString();
         String rate = hRateBox.getText().toString();
 
