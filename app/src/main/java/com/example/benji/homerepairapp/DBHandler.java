@@ -127,9 +127,23 @@ public class DBHandler extends SQLiteOpenHelper {
             if (Integer.parseInt(cursor.getString(8)) == 1) {
                 user = new ServiceProvider(cursor.getString(1), cursor.getString(2), cursor.getString(3),
                         cursor.getString(4), cursor.getString(5), cursor.getString(6),cursor.getString(7));
+
+                //THIS QUERY LOOKS FOR THE ROW IN SPINFO THAT CONTAINS THE ADDITIONAL INFORMATION OF THE SERVICE PROVIDER BEING CREATED
+                String query2 = "Select * FROM " + TABLE_SPINFO + " WHERE " +
+                        COLUMN_SPINFOID + " = \"" + cursor.getInt(9) + "\"";
+
+                //THIS CURSOR SEARCHES THROUGH THE SPINFO TABLE FOR THE THE ADDITONAL INFORMATION TO ADD
+                Cursor cursor2 = db.rawQuery(query2, null);
+
+                if (cursor2.moveToFirst()) {
+                    ((ServiceProvider) user).additionalInfo(cursor2.getString(1), cursor2.getString(2), cursor.getInt(3) > 0,
+                            this.createTimesArray(cursor.getInt(9)));
+                }
+
             } if (Integer.parseInt(cursor.getString(8)) == 2) {
                 user = new Admin(cursor.getString(1), cursor.getString(2), cursor.getString(3),
                         cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7));
+
             } if (Integer.parseInt(cursor.getString(8)) == 0) { //checks if the account is of type homeowner
                 user = new Homeowner(cursor.getString(1), cursor.getString(2), cursor.getString(3),
                         cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7));
@@ -212,4 +226,22 @@ public class DBHandler extends SQLiteOpenHelper {
         db.delete(TABLE_SPINFO,null,null);
     }
 
+    private String[] createTimesArray(int key){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "Select * FROM " + TABLE_SPINFO + " WHERE " +
+                COLUMN_SPINFOID + " = \"" + key + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+        String[] newTimes = new String[13];
+        int i = 4;
+        int j = 0;
+        while (i<18){ //Go through all columns that store times
+            newTimes[j] = cursor.getString(i);
+            i++;
+            j++;
+        }
+        db.close();
+        return newTimes;
+    }
 }
