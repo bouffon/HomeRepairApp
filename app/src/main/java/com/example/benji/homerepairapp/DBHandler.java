@@ -175,7 +175,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.insert(TABLE_SPINFO, null, values);
 
         //THIS QUERY FIND THE PRIMARY KEY OF THE NEWLY ADDED INFO FOR THE SERVICE PROVIDER
-        String query = "Select * FROM " + TABLE_USERS + " WHERE " +
+        String query = "Select * FROM " + TABLE_SPINFO + " WHERE " +
                 COLUMN_COMPANYNAME + " = \"" + companyName + "\"" + " AND " + COLUMN_DESCRIPTION + " = \"" + description + "\"";
         Cursor cursor = db.rawQuery(query, null);
         Integer id = null;

@@ -154,6 +154,7 @@ public class AccountCreation extends AppCompatActivity {
                 ServiceProvider user = new ServiceProvider(username, password, fName, lName, email, phone, address);
                 db.addUser(user);
                 Intent intent = new Intent(this, ServiceProviderInformation.class);
+                intent.putExtra("service provider", user);
                 startActivity(intent);
             } else {
                 Homeowner user = new Homeowner(username, password, fName, lName, email, phone, address);
