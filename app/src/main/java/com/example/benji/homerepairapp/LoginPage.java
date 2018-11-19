@@ -24,7 +24,7 @@ public class LoginPage extends AppCompatActivity {
         DBHandler db = new DBHandler(this);
 
         if (db.findUser("admin", "admin") == null){
-            Admin user = new Admin("admin", "admin", "admin", "admin", "admin@admin.ca", "9059059055");
+            Admin user = new Admin("admin", "admin", "admin", "admin", "admin@admin.ca", "9059059055", "69 Admin place");
             db.addUser(user);
         }
 

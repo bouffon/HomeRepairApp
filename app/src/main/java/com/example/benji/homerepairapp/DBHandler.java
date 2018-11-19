@@ -20,6 +20,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_LNAME = "lastName";
     public static final String COLUMN_EMAIL = "email";
     public static final String COLUMN_PHONE = "phone";
+    public static final String COLUMN_ADDRESS = "address";
     public static final String COLUMN_SERVICEPROVIDER = "serviceProvider";
     public static final String COLUMN_SPInfo = "SPInfo";
 
@@ -50,21 +51,24 @@ public class DBHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+        //BUILDS THE USER TABLE
         String CREATE_USERS_TABLE = "CREATE TABLE " +
                 TABLE_USERS + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY," + COLUMN_USERNAME
                 + " TEXT," + COLUMN_PASSWORD + " TEXT," + COLUMN_FNAME + " TEXT," + COLUMN_LNAME
-                + " TEXT," + COLUMN_EMAIL + " TEXT," + COLUMN_PHONE + " TEXT," + COLUMN_SERVICEPROVIDER + " TEXT," + COLUMN_SPInfo + " INTEGER," + " FOREIGN KEY(SPInfo) REFERENCES SPInfoID " + ")";
+                + " TEXT," + COLUMN_EMAIL + " TEXT," + COLUMN_PHONE + " TEXT," + COLUMN_ADDRESS + " TEXT," + COLUMN_SERVICEPROVIDER + " TEXT," + COLUMN_SPInfo + " INTEGER," + " FOREIGN KEY(SPInfo) REFERENCES SPInfoID " + ")";
         db.execSQL(CREATE_USERS_TABLE);
 
-        String CREATE_SPInfo_TABLE = "CREATE TABLE " +
+        //BUILDS THE SPINFO TABLE
+        String CREATE_SPINFO_TABLE = "CREATE TABLE " +
                 TABLE_SPINFO + "("
                 + COLUMN_SPINFOID + " INTEGER PRIMARY KEY," + COLUMN_COMPANYNAME
                 + " TEXT," + COLUMN_DESCRIPTION + " TEXT," + COLUMN_LICENCED + " BOOLEAN" + COLUMN_MONDAYSTART + "TEXT," + COLUMN_MONDAYEND + "TEXT," + COLUMN_TUESDAYSTART + "TEXT,"
                 + COLUMN_TUESDAYEND + "TEXT," + COLUMN_WEDNESDAYSTART + "TEXT," + COLUMN_WEDNESDAYEND + "TEXT," + COLUMN_THURSDAYSTART + "TEXT," + COLUMN_THURSDAYEND + "TEXT,"
                 + COLUMN_FRIDAYSTART + "TEXT," + COLUMN_FRIDAYEND + "TEXT," + COLUMN_SATURDAYSTART + "TEXT," + COLUMN_SATURDAYEND + "TEXT," + COLUMN_SUNDAYSTART + "TEXT," +
                 COLUMN_SUNDAYEND + "TEXT" + ")";
-                db.execSQL(CREATE_SPInfo_TABLE);
+                db.execSQL(CREATE_SPINFO_TABLE);
     }
 
     @Override
@@ -73,7 +77,11 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SPINFO);
         onCreate(db);
     }
-
+    /*
+        AddUser takes in the information of the given user and stores its values in
+        the Users table
+        @param user
+     */
     public void addUser(User user){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -84,6 +92,7 @@ public class DBHandler extends SQLiteOpenHelper {
          else if (user.getClass() == Admin.class){ //checks if user is of type Admin
             sp = 2;
         }
+        //ADD THE VALUES OF A NEW USER TO THE TABLE
         values.put(COLUMN_USERNAME, user.getUsername());
         values.put(COLUMN_PASSWORD, user.getPassword());
         values.put(COLUMN_FNAME, user.getfName());
@@ -94,7 +103,14 @@ public class DBHandler extends SQLiteOpenHelper {
         db.insert(TABLE_USERS, null, values);
         db.close();
     }
+    /*
+       findUser takes in a username and password and finds the user with that password
+       and username in the users table and returns an instance of that user
+       @param username
+       @param password
 
+       @return user
+    */
     public User findUser(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -108,15 +124,15 @@ public class DBHandler extends SQLiteOpenHelper {
 
             user = null;
 
-            if (Integer.parseInt(cursor.getString(7)) == 1) {
+            if (Integer.parseInt(cursor.getString(8)) == 1) {
                 user = new ServiceProvider(cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                        cursor.getString(4), cursor.getString(5), cursor.getString(6));
-            } if (Integer.parseInt(cursor.getString(7)) == 2) {
+                        cursor.getString(4), cursor.getString(5), cursor.getString(6),cursor.getString(7));
+            } if (Integer.parseInt(cursor.getString(8)) == 2) {
                 user = new Admin(cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                        cursor.getString(4), cursor.getString(5), cursor.getString(6));
-            } if (Integer.parseInt(cursor.getString(7)) == 0) { //checks if the account is of type homeowner
+                        cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7));
+            } if (Integer.parseInt(cursor.getString(8)) == 0) { //checks if the account is of type homeowner
                 user = new Homeowner(cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                        cursor.getString(4), cursor.getString(5), cursor.getString(6));
+                        cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7));
             }
         } else {
             user = null;
