@@ -16,6 +16,7 @@ public class AccountCreation extends AppCompatActivity {
     EditText emailBox;
     EditText phoneBox;
     EditText cPasswordBox;
+    EditText addressBox;
     Switch serviceProviderSwitch;
 
     @Override
@@ -27,6 +28,7 @@ public class AccountCreation extends AppCompatActivity {
         usernameBox = findViewById(R.id.usernameInput);
         passwordBox = findViewById(R.id.passwordInput);
         cPasswordBox = findViewById(R.id.cPasswordInput);
+        addressBox = findViewById(R.id.addressInput);
         emailBox = findViewById(R.id.emailInput);
         phoneBox = findViewById(R.id.phoneInput);
         serviceProviderSwitch = findViewById(R.id.serviceProviderSwitch);
@@ -94,6 +96,17 @@ public class AccountCreation extends AppCompatActivity {
         return true;
     }
 
+    // IF THE ADDRESS FIELD IS EMPTY
+    private boolean isEmptyAddress(){
+        String address = addressBox.getText().toString();
+
+        if(address.isEmpty()){
+            addressBox.setError("Field cannot be empty!");
+            return false;
+        }
+        return true;
+    }
+
     // IF THE PASSWORD FIELD IS EMPTY
     private boolean isEmptyPassword(){
         String password = passwordBox.getText().toString();
@@ -128,10 +141,11 @@ public class AccountCreation extends AppCompatActivity {
         String username = usernameBox.getText().toString();
         String password = passwordBox.getText().toString();
         String email = emailBox.getText().toString();
+        String address = addressBox.getText().toString();
         String phone = phoneBox.getText().toString();
         Boolean switchResult = serviceProviderSwitch.isChecked();
 
-        if (!isValidMail() | !isEmptyFName() | !isEmptyLName() | !isEmptyUsername() | !isEmptyPassword() | !isValidPhone() | !isSamePassword()){
+        if (!isValidMail() | !isEmptyFName() | !isEmptyLName() | !isEmptyUsername() | !isEmptyPassword() | !isValidPhone() | !isSamePassword() | !isEmptyAddress()){
             return;
         }
 

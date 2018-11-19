@@ -179,4 +179,5 @@ public class ServiceProviderInformation extends AppCompatActivity implements Tim
         TextView textView = (TextView)findViewById(R.id.textView);
         textView.setText("Hour: " + hourOfDay + "Minute: " + minute);
     }
+
 }
