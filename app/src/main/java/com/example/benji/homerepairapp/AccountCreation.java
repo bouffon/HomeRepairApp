@@ -143,6 +143,8 @@ public class AccountCreation extends AppCompatActivity {
         String email = emailBox.getText().toString();
         String address = addressBox.getText().toString();
         String phone = phoneBox.getText().toString();
+        //TODO create edittext for address and implement the line below
+        String address = "TODO";
         Boolean switchResult = serviceProviderSwitch.isChecked();
 
         if (!isValidMail() | !isEmptyFName() | !isEmptyLName() | !isEmptyUsername() | !isEmptyPassword() | !isValidPhone() | !isSamePassword() | !isEmptyAddress()){
@@ -151,12 +153,12 @@ public class AccountCreation extends AppCompatActivity {
 
         if (db.findUser(username, password) == null) {
             if (switchResult) { //depending on if switch is flipped creates Homeowner vs ServiceProvider
-                ServiceProvider user = new ServiceProvider(username, password, fName, lName, email, phone);
+                ServiceProvider user = new ServiceProvider(username, password, fName, lName, email, phone, address);
                 db.addUser(user);
                 Intent intent = new Intent(this, ServiceProviderInformation.class);
                 startActivity(intent);
             } else {
-                Homeowner user = new Homeowner(username, password, fName, lName, email, phone);
+                Homeowner user = new Homeowner(username, password, fName, lName, email, phone, address);
                 db.addUser(user);
                 Intent intent = new Intent(this, LoginPage.class);
                 startActivity(intent);
