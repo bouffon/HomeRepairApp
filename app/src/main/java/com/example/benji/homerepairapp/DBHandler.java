@@ -155,6 +155,15 @@ public class DBHandler extends SQLiteOpenHelper {
         return user;
     }
 
+    /*
+       deleteUser takes in a username and password and finds the user with that password
+       and username in the users table and deletes the user. It returns true if the user was
+       deleted successfully.
+       @param username
+       @param password
+
+       @return boolean
+    */
     public boolean deleteUser(String username, String password) {
         boolean result = false;
 
@@ -172,7 +181,17 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
         return result;
     }
+    /*
+       addSPInfo takes in additonal information for the service provider and adds them to the
+       SPINFO database table
+       @param username
+       @param password
+       @param companyName
+       @param description
+       @param licenced
+       @param times
 
+    */
     public void addSPInfo(String username, String password, String companyName, String description, Boolean licenced, String mondayStart, String mondayEnd,
                           String tuesdayStart, String tuesdayEnd, String wednesdayStart, String wednesdayEnd ,String thursdayStart, String thursdayEnd, String fridayStart,
                           String fridayEnd, String saturdayStart, String saturdayEnd, String sundayStart, String sundayEnd){
@@ -210,22 +229,41 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    /*
+       getDBContents returns are cursor object that is positioned it
+       in the users table
+
+       @return Cursor
+    */
     public Cursor getDBContents(){
         SQLiteDatabase dB = this.getWritableDatabase();
         Cursor users = dB.rawQuery("SELECT * FROM " + TABLE_USERS, null);
         return users;
     }
 
+    /*
+       clearUserTable empties the users table
+    */
     public void clearUserTable(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_USERS,null,null);
     }
-
+    /*
+        clearSPInfoTable empties the users table
+    */
     public void clearSPInfoTable(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_SPINFO,null,null);
     }
+    /*
+        createTimesArray takes in a key value and locates the row in the SPINFO
+        table with that primary key, the method then generates a list that of all
+        the start and end times of that service provider
 
+        @param key
+
+        @return newTimes
+    */
     private String[] createTimesArray(int key){
 
         SQLiteDatabase db = this.getReadableDatabase();
