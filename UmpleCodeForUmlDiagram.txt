@@ -5,6 +5,7 @@ class User{
   password;
   email;
   phoneNum;
+  address;
 }
 
 class ServiceProvider{
@@ -14,6 +15,10 @@ class ServiceProvider{
   String [] availability;
   int rating;
   
+  String[] hours;
+  company;
+  description;
+  boolean license;
 }
 
 class Service{
@@ -30,8 +35,8 @@ class Admin{
 class HomeOwner{
   isA User;
   *--1 Admin;
-  address;
   long creditCardNum;
   creditCardExpiry;
 }
+
 
