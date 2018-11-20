@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,8 +67,6 @@ public class SPAddService extends Fragment {
 
 
                     //create an intent for the selected service so it can be edited
-                    Intent launchServiceEditor = new Intent(getActivity().getApplicationContext(), ServiceProviderNav.class);
-                    startActivity(launchServiceEditor);
                 }
             });
         }
@@ -76,6 +75,8 @@ public class SPAddService extends Fragment {
     }
 
     public void addSPService() {
+        ServiceProvider spp = (ServiceProvider) db.findUser("guy", "guy");
+        Log.d("Yes", spp.getUsername() + " " + spp.getPassword() + " " + service);
         db.addSPService(SPUsername, SPPassword, service);
 
         Intent serviceManager = new Intent(getActivity(), ServiceProviderNav.class);
