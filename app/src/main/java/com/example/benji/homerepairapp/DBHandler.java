@@ -91,8 +91,13 @@ public class DBHandler extends SQLiteOpenHelper {
                 + " TEXT," + COLUMN_RATE + " DOUBLE" + ")";
         db.execSQL(CREATE_SERVICES_TABLE);
 
-        String = CREATE_SERVICES_TABLE
+        String CREATE_SERVICESFORPROVIDERS_TABLE = "CREATE TABLE " +
+                TABLE_SERVICESFORPROVIDERS + "("
+                + COLUMN_SP + " INTEGER," + COLUMN_SERVICE
+                + " TEXT," + COLUMN_RATE + " DOUBLE" + ")";
+        db.execSQL(CREATE_SERVICESFORPROVIDERS_TABLE);
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersionNumber, int newVersionNumber) {
@@ -371,7 +376,7 @@ public class DBHandler extends SQLiteOpenHelper {
             db.close();
             return;
 
-        }cursor.
+        }
 
     }
 
