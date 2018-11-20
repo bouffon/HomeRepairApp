@@ -11,28 +11,31 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-public class HomeRepairAppTest {
+public class AccountCreationTest {
 
     @Rule
     public ActivityTestRule<AccountCreation> mActivityTestRule = new ActivityTestRule<AccountCreation>(AccountCreation.class);
+
     private AccountCreation mActivity = null;
     private TextView text;
 
     @Before
     public void setUp() throws Exception{
+
         mActivity = mActivityTestRule.getActivity();
     }
 
+    //UNIT TEST CASES FOR DELIVERABLE 2
+
     @Test
     @UiThreadTest
-
     //test to check username input
     public void checkUsername() throws Exception{
         text = mActivity.findViewById(R.id.usernameInput);
         text.setText("superuser");
         String name = text.getText().toString();
         assertNotNull("Username", name);
-    }
+}
 
     @Test
     @UiThreadTest
@@ -80,8 +83,4 @@ public class HomeRepairAppTest {
         assertEquals("Same password", text.getText().toString(), text2.getText().toString());
 
     }
-
-
-
-
 }
