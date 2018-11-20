@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,13 @@ public class AdminUserList extends Fragment {
         }
         else{
             while(data.moveToNext()){
-                userList.add(data.getString(1));
+                if (data.getString(1) == null){
+                    break;
+                }
+                else{
+                    userList.add(data.getString(1));
+                }
+                Log.d("yes", data.getString(1));
                 ListAdapter listAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, userList);
                 listView.setAdapter(listAdapter);
             }
