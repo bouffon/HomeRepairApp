@@ -10,13 +10,13 @@ public class ServiceProvider extends User {
     private String description;
     private boolean license;
     private String[] times = new String[13];
-    private Service[] services = new Service[4];
+    private List<Service> services = null;
 
     public ServiceProvider(String username, String password, String fName, String lName, String email, String phone, String address) {
         super(username, password, fName, lName, email, phone, address);
     }
 
-    public void additionalInfo(String company, String description, boolean license, String[] newTimes, Service[] newServices){
+    public void additionalInfo(String company, String description, boolean license, String[] newTimes, List<Service> newServices){
         this.company = company;
         this.description = description;
         this.license = license;
@@ -24,8 +24,8 @@ public class ServiceProvider extends User {
         for (int i =0; i<newTimes.length; i++){
             times[i] = newTimes[i];
         }
-        for (int j =0; j<newServices.length; j++){
-            times[j] = newTimes[j];
+        for (int i = 0; i<newServices.size(); i++){
+            services.add(newServices.get(i));
         }
     }
 
@@ -45,7 +45,7 @@ public class ServiceProvider extends User {
         return times;
     }
 
-    public Service[] getServices(){
+    public List<Service> getServices(){
         return services;
     }
 
@@ -67,9 +67,9 @@ public class ServiceProvider extends User {
         }
     }
 
-    public void setServices(String[] newServices){
-        for (int i =0; i<newServices.length; i++){
-            times[i] = newServices[i];
+    public void setServices(List<Service> newServices){
+        for (int i =0; i<newServices.size(); i++){
+            services.add(newServices.get(i));
         }
     }
 }

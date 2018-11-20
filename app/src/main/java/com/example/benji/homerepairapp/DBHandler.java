@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.List;
+
 public class DBHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "Users.db";
@@ -43,11 +45,6 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_SATURDAYEND = "saturdayEnd";
     public static final String COLUMN_SUNDAYSTART = "sundayStart";
     public static final String COLUMN_SUNDAYEND = "sundayEnd";
-    public static final String COLUMN_SERVICE1 = "service1";
-    public static final String COLUMN_SERVICE2 = "service2";
-    public static final String COLUMN_SERVICE3 = "service3";
-    public static final String COLUMN_SERVICE4 = "service4";
-    public static final String COLUMN_SERVICE5 = "service5";
 
     //CREATES SERVICES TABLE
     public static final String TABLE_SERVICES = "services";
@@ -82,7 +79,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 + " TEXT," + COLUMN_DESCRIPTION + " TEXT," + COLUMN_LICENCED + " BOOLEAN" + COLUMN_MONDAYSTART + "TEXT," + COLUMN_MONDAYEND + "TEXT," + COLUMN_TUESDAYSTART + "TEXT,"
                 + COLUMN_TUESDAYEND + "TEXT," + COLUMN_WEDNESDAYSTART + "TEXT," + COLUMN_WEDNESDAYEND + "TEXT," + COLUMN_THURSDAYSTART + "TEXT," + COLUMN_THURSDAYEND + "TEXT,"
                 + COLUMN_FRIDAYSTART + "TEXT," + COLUMN_FRIDAYEND + "TEXT," + COLUMN_SATURDAYSTART + "TEXT," + COLUMN_SATURDAYEND + "TEXT," + COLUMN_SUNDAYSTART + "TEXT," +
-                COLUMN_SUNDAYEND + "TEXT" + COLUMN_SERVICE1 + "TEXT," + COLUMN_SERVICE2 + "TEXT," + COLUMN_SERVICE3 + "TEXT," + COLUMN_SERVICE4 + "TEXT," + COLUMN_SERVICE5 + "TEXT" + ")";
+                COLUMN_SUNDAYEND + "TEXT" + ")";
         db.execSQL(CREATE_SPINFO_TABLE);
 
         String CREATE_SERVICES_TABLE = "CREATE TABLE " +
@@ -94,7 +91,7 @@ public class DBHandler extends SQLiteOpenHelper {
         String CREATE_SERVICESFORPROVIDERS_TABLE = "CREATE TABLE " +
                 TABLE_SERVICESFORPROVIDERS + "("
                 + COLUMN_SP + " INTEGER," + COLUMN_SERVICE
-                + " TEXT," + COLUMN_RATE + " DOUBLE" + ")";
+                + " INTEGER," + "FOREIGN KEY(service) REFERENCES serviceID" + ")";
         db.execSQL(CREATE_SERVICESFORPROVIDERS_TABLE);
     }
 
@@ -104,6 +101,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SPINFO);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SERVICES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SERVICESFORPROVIDERS);
         onCreate(db);
     }
     /*
@@ -167,7 +165,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
                 if (cursor2.moveToFirst()) {
                     ((ServiceProvider) user).additionalInfo(cursor2.getString(1), cursor2.getString(2), cursor.getInt(3) > 0,
-                            this.createTimesArray(cursor.getInt(9)),this.createServiceArray(cursor.getInt(9)));
+                            this.createTimesArray(cursor.getInt(9)),this.createServiceArray(cursor.getInt(0)));
                 }
 
             } if (Integer.parseInt(cursor.getString(8)) == 2) {
@@ -343,40 +341,23 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
+        //QUERY FINDS THE SERVICE PROVIDER THAT IS ADDING A NEW SERVICE
         String query = "Select * FROM " + TABLE_USERS + " WHERE " +
                 COLUMN_USERNAME + " = \"" + username + "\"" + " AND " + COLUMN_PASSWORD + " = \"" + password + "\"";
         Cursor cursor = db.rawQuery(query, null);
-        int id = cursor.getInt(9);
-        query = "Select * FROM " + TABLE_SPINFO + " WHERE " +
-                COLUMN_SPINFOID + " = \"" + id + "\"";
+
+        int id = cursor.getInt(0);
+
+        values.put(COLUMN_SP, id); //enters the primary key of the service provider into column 1 of the services for providers table
+
+        //QUERY FINDS THE SERVICE THAT IS BEING ADDED
+        query = "Select * FROM " + TABLE_SERVICES + " WHERE " +
+                COLUMN_SERVICENAME + " = \"" + service + "\"";
         cursor = db.rawQuery(query, null);
 
-        if (cursor.moveToFirst()){
-            int locationIndex = 0 ;
-            for (int i = 18; i<24; i++){
-                if (cursor.getString(i) == null && locationIndex == 0) {
-                    locationIndex = i;
-                }
-                if (cursor.getString(i)== service){
-                    locationIndex = 0;
-                    break;
-                }
-            }
-            if (locationIndex == 18){
-                values.put(COLUMN_SERVICE1, service);
-            } if (locationIndex ==19){
-                values.put(COLUMN_SERVICE2, service);
-            } if (locationIndex ==20) {
-                values.put(COLUMN_SERVICE3, service);
-            } if (locationIndex ==21) {
-                values.put(COLUMN_SERVICE4, service);
-            } if (locationIndex ==22) {
-                values.put(COLUMN_SERVICE5, service);
-            }
-            db.close();
-            return;
-
-        }
+        values.put(COLUMN_SERVICE, cursor.getInt(0));//enters the primary key of the service into column 2 of the services for providers table
+        db.close();
+        return;
 
     }
 
@@ -434,23 +415,16 @@ public class DBHandler extends SQLiteOpenHelper {
         return newTimes;
     }
 
-    private Service[] createServiceArray(int key){
+    private List<Service> createServiceArray(int key){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "Select * FROM " + TABLE_SPINFO + " WHERE " +
-                COLUMN_SPINFOID + " = \"" + key + "\"";
+        String query = "Select * FROM " + TABLE_SERVICESFORPROVIDERS + " WHERE " +
+                COLUMN_SP + " = \"" + key + "\"";
         Cursor cursor = db.rawQuery(query, null);
-        Service[] newServices = new Service[4];
-        int i = 18;
-        int j = 0;
-        while (i<23){ //Go through all columns that store times
-            if (cursor.getString(i) != null) {
-                newServices[j] = this.findService(cursor.getString(i));
-            } else {
-                newServices[j] = null;
-            }
-            i++;
-            j++;
+        List<Service> newServices = null;
+        while (cursor.moveToNext()) {
+            int serviceKey = cursor.getInt(1);
+            newServices.add(findServicebyID(serviceKey));
         }
         db.close();
         return newServices;
@@ -490,11 +464,11 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
 
-    public Service findServicebyRate(Double rate){
+    public Service findServicebyID(int id){
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "Select * FROM " + TABLE_SERVICES + " WHERE " +
-                COLUMN_RATE + " = \"" + rate + "\"";
+                COLUMN_SERVICEID + " = \"" + id + "\"";
         Cursor cursor = db.rawQuery(query, null);
 
         Service service;
