@@ -361,6 +361,30 @@ public class DBHandler extends SQLiteOpenHelper {
 
     }
 
+    public void deleteSPService(String username, String password, String service){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        //QUERY FINDS THE SERVICE PROVIDER THAT IS ADDING A NEW SERVICE
+        String query = "Select * FROM " + TABLE_USERS + " WHERE " +
+                COLUMN_USERNAME + " = \"" + username + "\"" + " AND " + COLUMN_PASSWORD + " = \"" + password + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        int id = cursor.getInt(0);
+
+        //QUERY FINDS THE SERVICE THAT IS BEING ADDED
+        query = "Select * FROM " + TABLE_SERVICES + " WHERE " +
+                COLUMN_SERVICENAME + " = \"" + service + "\"";
+        cursor = db.rawQuery(query, null);
+        int serviceId = cursor. getInt(0);
+
+        db.delete(TABLE_SERVICESFORPROVIDERS, COLUMN_SERVICE + " = " + serviceId + " AND " + COLUMN_SP + " = " + id, null);
+        cursor.close();
+        db.close();
+        return;
+
+    }
+
     /*
        getDBContents returns are cursor object that is positioned it
        in the users table
