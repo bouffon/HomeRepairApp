@@ -20,31 +20,45 @@ import java.util.ArrayList;
 public class SPServices extends Fragment {
 
     DBHandler db;
+    String SPUsername, SPPassword;
+    ServiceProvider sp;
     String service;
+
+    View v;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle saveInstanceState) {
 
-        View v = inflater.inflate(R.layout.activity_spservices, container, false);
+        v = inflater.inflate(R.layout.activity_spservices, container, false);
+
+        Bundle bundle = getArguments();
+        String [] spLoginArray = bundle.getStringArray("sp");
+        SPUsername = spLoginArray[0];
+        SPPassword = spLoginArray[1];
 
         ListView listView = (ListView) v.findViewById(R.id.servicesOffered);   //listView for all services
         DBHandler db = new DBHandler(getActivity());
 
-        ArrayList<Service> serviceList = new ArrayList<>(); //ArrayList to store Service objects
-        Cursor data = db.getDBContents();
+        sp = (ServiceProvider) db.findUser(SPUsername, SPPassword);
+
+        ArrayList<Service> servicesOffered = new ArrayList<>(); //ArrayList to store Service objects
+
+        for(int i = 0; i < sp.getServices().size(); i++){
+            servicesOffered.add(sp.getServices().get(i));
+        }
 
         //check to see if there are no services
-        if(data.getCount() == 0) {
+        if(sp.getServices().size() == 0) {
             Toast.makeText(getActivity(), "You do not currently offer services", Toast.LENGTH_LONG).show();
         }
 
         //populate listView and add listeners to each item in the list
         else{
-            while(data.moveToNext()){
+            for(int i = 0; i < sp.getServices().size(); i++){
 
-                serviceList.add(new Service(data.getString(1), data.getDouble(2)));
-                ServiceAdapter sAdapter = new ServiceAdapter(getActivity(), serviceList);
+                servicesOffered.add(sp.getServices().get(i));
+                ServiceAdapter sAdapter = new ServiceAdapter(getActivity(), servicesOffered);
                 listView.setAdapter(sAdapter);
             }
 
@@ -54,12 +68,11 @@ public class SPServices extends Fragment {
                 public void onItemClick(AdapterView<?> adapterView, final View view, int position, long id) {
                     Service s = (Service) adapterView.getItemAtPosition(position);    //service at selected position
                     service = s.getServiceName();
+                    deletePrompt(v);    //run delete algorithm
 
                     //create an intent for the selected service so it can be edited
-                    Intent launchServiceEditor = new Intent(getActivity().getApplicationContext(), ServiceEditor.class);
-                    launchServiceEditor.putExtra("service",s.getServiceName());
-                    launchServiceEditor.putExtra("hourly rate", s.getRate());
-                    startActivity(launchServiceEditor);
+                    Intent launchServiceProviderNav = new Intent(getActivity().getApplicationContext(), ServiceProviderNav.class);
+                    startActivity(launchServiceProviderNav);
                 }
             });
         }
@@ -70,7 +83,7 @@ public class SPServices extends Fragment {
     public void deleteServiceOffered(){
         DBHandler db = new DBHandler(getActivity());
 
-        db.deleteService(service);
+        db.deleteSPService(SPUsername, SPPassword,service);
 
         Intent serviceManager = new Intent(getActivity(), ServiceProviderNav.class);
         startActivity(serviceManager);

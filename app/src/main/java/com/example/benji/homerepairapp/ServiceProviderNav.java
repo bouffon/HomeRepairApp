@@ -25,6 +25,9 @@ public class ServiceProviderNav extends AppCompatActivity {
 
             Fragment selectedFragment = null;
 
+            Intent i = getIntent();
+            sp = (ServiceProvider) i.getSerializableExtra("service provider");
+
             //put Service provider's username and password into the bundle
             String [] spLogin = {sp.getUsername(),sp.getPassword()};
             args.putStringArray("sp", spLogin);
@@ -56,9 +59,6 @@ public class ServiceProviderNav extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_provider_nav);
-
-        Intent i = getIntent();
-        sp = (ServiceProvider) i.getSerializableExtra("service provider");
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);

@@ -1,9 +1,11 @@
 package com.example.benji.homerepairapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,11 +22,14 @@ public class SPAddService extends Fragment {
     DBHandler db;
     String SPUsername, SPPassword;
 
+    String service;
+    View v;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle saveInstanceState) {
 
-        View v = inflater.inflate(R.layout.activity_spadd_service, container, false);
+        v = inflater.inflate(R.layout.activity_spadd_service, container, false);
 
         Bundle bundle = getArguments();
         String [] spLoginArray = bundle.getStringArray("sp");
@@ -56,7 +61,9 @@ public class SPAddService extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, final View view, int position, long id) {
                     Service s = (Service) adapterView.getItemAtPosition(position);    //service at selected position
-                    db.addSPService(SPUsername,SPPassword, s.getServiceName());
+                    service = s.getServiceName();
+                    addPrompt(v);
+
 
                     //create an intent for the selected service so it can be edited
                     Intent launchServiceEditor = new Intent(getActivity().getApplicationContext(), ServiceProviderNav.class);
@@ -67,4 +74,34 @@ public class SPAddService extends Fragment {
 
         return v;
     }
+
+    public void addSPService() {
+        db.addSPService(SPUsername, SPPassword, service);
+
+        Intent serviceManager = new Intent(getActivity(), ServiceProviderNav.class);
+        startActivity(serviceManager);
+    }
+
+
+        public void addPrompt (View view){
+
+        AlertDialog.Builder delMsg = new AlertDialog.Builder(getActivity());
+        delMsg.setMessage("Are you sure you want to offer this service?").setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int choice){
+                        addSPService();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int choice){
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog delConfirm = delMsg.create();
+        delConfirm.setTitle("Add a service");
+        delConfirm.show();
+    }
 }
+
