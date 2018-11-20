@@ -19,6 +19,8 @@ import java.util.ArrayList;
 
 public class SPServices extends Fragment {
 
+    DBHandler db;
+    String service;
 
     @Nullable
     @Override
@@ -51,6 +53,7 @@ public class SPServices extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, final View view, int position, long id) {
                     Service s = (Service) adapterView.getItemAtPosition(position);    //service at selected position
+                    service = s.getServiceName();
 
                     //create an intent for the selected service so it can be edited
                     Intent launchServiceEditor = new Intent(getActivity().getApplicationContext(), ServiceEditor.class);
@@ -64,13 +67,13 @@ public class SPServices extends Fragment {
         return v;
     }
 
-    public void deleteService(){
-        /*ServiceDBHandler db = new ServiceDBHandler(this);
+    public void deleteServiceOffered(){
+        DBHandler db = new DBHandler(getActivity());
 
         db.deleteService(service);
 
-        Intent serviceManager = new Intent(this, ServiceProviderNav.class);
-        startActivity(serviceManager);*/
+        Intent serviceManager = new Intent(getActivity(), ServiceProviderNav.class);
+        startActivity(serviceManager);
     }
 
     public void deletePrompt (View view){
@@ -80,7 +83,7 @@ public class SPServices extends Fragment {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialog, int choice){
-                        deleteService();
+                        deleteServiceOffered();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener(){

@@ -17,21 +17,29 @@ import java.util.ArrayList;
 
 public class SPAddService extends Fragment {
 
+    DBHandler db;
+    String SPUsername, SPPassword;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle saveInstanceState) {
 
         View v = inflater.inflate(R.layout.activity_spadd_service, container, false);
 
+        Bundle bundle = getArguments();
+        String [] spLoginArray = bundle.getStringArray("sp");
+        SPUsername = spLoginArray[0];
+        SPPassword = spLoginArray[1];
+
         ListView listView = (ListView) v.findViewById(R.id.addSPServicesList);   //listView for all services
-        DBHandler db = new DBHandler(getActivity());
+        db = new DBHandler(getActivity());
 
         ArrayList<Service> serviceList = new ArrayList<>(); //ArrayList to store Service objects
-        Cursor data = db.getDBContents();
+        Cursor data = db.getServiceContents();
 
         //check to see if there are no services
         if(data.getCount() == 0) {
-            Toast.makeText(getActivity(), "There are no services", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "You currently offer no services", Toast.LENGTH_LONG).show();
         }
 
         //populate listView and add listeners to each item in the list
@@ -48,7 +56,7 @@ public class SPAddService extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, final View view, int position, long id) {
                     Service s = (Service) adapterView.getItemAtPosition(position);    //service at selected position
-                    addServiceOffered(s);
+                    db.addSPService(SPUsername,SPPassword, s.getServiceName());
 
                     //create an intent for the selected service so it can be edited
                     Intent launchServiceEditor = new Intent(getActivity().getApplicationContext(), ServiceProviderNav.class);
@@ -58,10 +66,5 @@ public class SPAddService extends Fragment {
         }
 
         return v;
-    }
-
-    //TODO FINISH THIS METHOD
-    private void addServiceOffered(Service s){
-
     }
 }

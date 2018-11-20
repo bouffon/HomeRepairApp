@@ -16,27 +16,30 @@ import android.widget.TimePicker;
 
 public class EditSPHours extends Fragment implements TimePickerDialog.OnTimeSetListener {
 
-    ServiceProvider sp;
-
     EditText cNameBox;
     EditText sDescriptionBox;
     String timeSelected = "";
-
     Switch licenseSwitch;
+
+    //for bundle
+    String SPUsername, SPPassword;
+
 
     TextView mo1View, tu1View, we1View, th1View, fr1View, sa1View, su1View, mo2View, tu2View, we2View, th2View, fr2View, sa2View, su2View;
 
     int moStart, tuStart, weStart, thStart, frStart, saStart, suStart;
-
-    public EditSPHours(ServiceProvider sp){
-        sp = this.sp;
-    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle saveInstanceState){
 
         View v = inflater.inflate(R.layout.activity_edit_sphours, container, false);
+
+        //get SP username and password from bundle
+        Bundle bundle = getArguments();
+        String [] spLoginArray = bundle.getStringArray("sp");
+        SPUsername = spLoginArray[0];
+        SPPassword = spLoginArray[1];
 
         cNameBox = v.findViewById(R.id.companyName);
         sDescriptionBox = v.findViewById(R.id.description);
@@ -353,7 +356,7 @@ public class EditSPHours extends Fragment implements TimePickerDialog.OnTimeSetL
             return;
         }
 
-        db.addSPInfo(sp.getUsername(), sp.getPassword(), cNameBox.getText().toString(), sDescriptionBox.getText().toString(), licenseSwitch.isChecked(), mo1View.getText().toString(),
+        db.addSPInfo(SPUsername, SPPassword, cNameBox.getText().toString(), sDescriptionBox.getText().toString(), licenseSwitch.isChecked(), mo1View.getText().toString(),
                 tu1View.getText().toString(), we1View.getText().toString(), th1View.getText().toString(), fr1View.getText().toString(), sa1View.getText().toString(), su1View.getText().toString(),
                 mo2View.getText().toString(), tu2View.getText().toString(), we2View.getText().toString(), th2View.getText().toString(), fr2View.getText().toString(), sa2View.getText().toString(),
                 su2View.getText().toString());

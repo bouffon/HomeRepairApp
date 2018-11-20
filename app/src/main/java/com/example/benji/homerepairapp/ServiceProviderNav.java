@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -12,8 +13,9 @@ import android.widget.TextView;
 public class ServiceProviderNav extends AppCompatActivity {
 
     private TextView mTextMessage;
-
     private ServiceProvider sp;
+    private Bundle args = new Bundle();
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -23,16 +25,24 @@ public class ServiceProviderNav extends AppCompatActivity {
 
             Fragment selectedFragment = null;
 
+            //put Service provider's username and password into the bundle
+            String [] spLogin = {sp.getUsername(),sp.getPassword()};
+            args.putStringArray("sp", spLogin);
+
             switch (item.getItemId()) {
                 case R.id.snav_services:
                     selectedFragment = new SPServices(); //create an instance of SPServices to create the list of services currently offered
+                    selectedFragment.setArguments(args);
                     break;
+
                 case R.id.snav_addService:
                     selectedFragment = new SPAddService();
-
+                    selectedFragment.setArguments(args);
                     break;
+
                 case R.id.snav_hours:
-                    selectedFragment = new EditSPHours(sp);
+                    selectedFragment = new EditSPHours();
+                    selectedFragment.setArguments(args);
                     break;
             }
 
