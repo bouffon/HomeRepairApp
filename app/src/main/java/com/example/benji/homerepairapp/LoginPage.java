@@ -37,7 +37,7 @@ public class LoginPage extends AppCompatActivity {
             }
             else if(activeUser.getClass() == ServiceProvider.class){
                 Intent intent = new Intent(this, ServiceProviderNav.class);
-                intent.putExtra("service provider", activeUser);
+                intent.putExtra("sp", activeUser);
                 startActivity(intent);
             }
             else{

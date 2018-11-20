@@ -44,17 +44,10 @@ public class SPServices extends Fragment {
 
         ArrayList<Service> servicesOffered = new ArrayList<>(); //ArrayList to store Service objects
 
-        for(int i = 0; i < sp.getServices().size(); i++){
-            servicesOffered.add(sp.getServices().get(i));
-        }
-
         //check to see if there are no services
-        if(sp.getServices().size() == 0) {
+        if(sp.getServices() == null) {
             Toast.makeText(getActivity(), "You do not currently offer services", Toast.LENGTH_LONG).show();
-        }
-
-        //populate listView and add listeners to each item in the list
-        else{
+        } else {
             for(int i = 0; i < sp.getServices().size(); i++){
 
                 servicesOffered.add(sp.getServices().get(i));
@@ -75,6 +68,7 @@ public class SPServices extends Fragment {
                     startActivity(launchServiceProviderNav);
                 }
             });
+
         }
 
         return v;

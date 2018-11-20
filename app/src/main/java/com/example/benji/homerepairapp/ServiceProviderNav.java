@@ -13,7 +13,7 @@ import android.widget.TextView;
 public class ServiceProviderNav extends AppCompatActivity {
 
     private TextView mTextMessage;
-    private ServiceProvider sp;
+    private User sp;
     private Bundle args = new Bundle();
 
 
@@ -25,12 +25,13 @@ public class ServiceProviderNav extends AppCompatActivity {
 
             Fragment selectedFragment = null;
 
-            Intent i = getIntent();
-            sp = (ServiceProvider) i.getSerializableExtra("service provider");
+/*            Intent i = getIntent();
+            sp = (ServiceProvider) i.getSerializableExtra("sp");
+            sp.getUsername();
 
             //put Service provider's username and password into the bundle
             String [] spLogin = {sp.getUsername(),sp.getPassword()};
-            args.putStringArray("sp", spLogin);
+            args.putStringArray("sp", spLogin);*/
 
             switch (item.getItemId()) {
                 case R.id.snav_services:
@@ -63,6 +64,19 @@ public class ServiceProviderNav extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        Intent i = getIntent();
+        sp = (ServiceProvider) i.getSerializableExtra("sp");
+        sp.getUsername();
+
+        //put Service provider's username and password into the bundle
+        String [] spLogin = {sp.getUsername(),sp.getPassword()};
+        args.putStringArray("sp", spLogin);
+
+        Fragment defaultFragment =  new SPServices();
+        defaultFragment.setArguments(args);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, defaultFragment).commit();
+
     }
 
 }

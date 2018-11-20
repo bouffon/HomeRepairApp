@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.List;
 
@@ -337,7 +338,8 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    public void addSPService(String username, String password, String service){
+    public void addSPService(String username, String password, String service) {
+        Log.d("username: " + username, "password: " + password);
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -346,7 +348,11 @@ public class DBHandler extends SQLiteOpenHelper {
                 COLUMN_USERNAME + " = \"" + username + "\"" + " AND " + COLUMN_PASSWORD + " = \"" + password + "\"";
         Cursor cursor = db.rawQuery(query, null);
 
-        int id = cursor.getInt(0);
+        int id = 0;
+        if (cursor.moveToFirst()){
+            id = cursor.getInt(0);
+        }
+        Log.d("id: " , Integer.toString(id));
 
         values.put(COLUMN_SP, id); //enters the primary key of the service provider into column 1 of the services for providers table
 
@@ -355,7 +361,12 @@ public class DBHandler extends SQLiteOpenHelper {
                 COLUMN_SERVICENAME + " = \"" + service + "\"";
         cursor = db.rawQuery(query, null);
 
-        values.put(COLUMN_SERVICE, cursor.getInt(0));//enters the primary key of the service into column 2 of the services for providers table
+        int serviceID = 0;
+        if (cursor.moveToFirst()){
+            serviceID = cursor.getInt(0);
+        }
+
+        values.put(COLUMN_SERVICE, serviceID);//enters the primary key of the service into column 2 of the services for providers table
         db.close();
         return;
 

@@ -75,11 +75,11 @@ public class SPAddService extends Fragment {
     }
 
     public void addSPService() {
-        ServiceProvider spp = (ServiceProvider) db.findUser("guy", "guy");
-        Log.d("Yes", spp.getUsername() + " " + spp.getPassword() + " " + service);
+
         db.addSPService(SPUsername, SPPassword, service);
 
         Intent serviceManager = new Intent(getActivity(), ServiceProviderNav.class);
+        serviceManager.putExtra("sp",db.findUser(SPUsername,SPPassword));
         startActivity(serviceManager);
     }
 
