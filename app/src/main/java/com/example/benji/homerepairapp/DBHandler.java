@@ -55,6 +55,11 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_SERVICENAME = "serviceName";
     public static final String COLUMN_RATE = "rate";
 
+    //CREATES SERVICE TO SP LINK TABLE
+    public static final String TABLE_SERVICESFORPROVIDERS = "servicesForProviders";
+    public static final String COLUMN_SP = "sp";
+    public static final String COLUMN_SERVICE = "service";
+
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -85,6 +90,8 @@ public class DBHandler extends SQLiteOpenHelper {
                 + COLUMN_SERVICEID + " INTEGER PRIMARY KEY," + COLUMN_SERVICENAME
                 + " TEXT," + COLUMN_RATE + " DOUBLE" + ")";
         db.execSQL(CREATE_SERVICES_TABLE);
+
+        String = CREATE_SERVICES_TABLE
     }
 
     @Override
@@ -284,7 +291,7 @@ public class DBHandler extends SQLiteOpenHelper {
             db.close();
             return;
 
-        }
+        }cursor.
 
     }
 
@@ -433,7 +440,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     public Cursor getServiceContents(){
-        SQLiteDatabase dB = this.getWritableDatabase();
+        SQLiteDatabase dB = this.getReadableDatabase();
         Cursor services = dB.rawQuery("SELECT * FROM " + TABLE_SERVICES, null);
         return services;
     }
