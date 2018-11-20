@@ -10,7 +10,7 @@ public class ServiceProvider extends User {
     private String description;
     private boolean license;
     private String[] times = new String[13];
-    private List<Service> services = null;
+    private List<Service> services;
 
     public ServiceProvider(String username, String password, String fName, String lName, String email, String phone, String address) {
         super(username, password, fName, lName, email, phone, address);

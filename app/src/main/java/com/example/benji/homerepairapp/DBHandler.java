@@ -339,7 +339,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     public void addSPService(String username, String password, String service) {
-        Log.d("username: " + username, "password: " + password);
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -352,7 +352,6 @@ public class DBHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()){
             id = cursor.getInt(0);
         }
-        Log.d("id: " , Integer.toString(id));
 
         values.put(COLUMN_SP, id); //enters the primary key of the service provider into column 1 of the services for providers table
 
@@ -457,8 +456,12 @@ public class DBHandler extends SQLiteOpenHelper {
                 COLUMN_SP + " = \"" + key + "\"";
         Cursor cursor = db.rawQuery(query, null);
         List<Service> newServices = null;
+        cursor.moveToFirst();
+        int serviceKey = cursor.getInt(1);
+        newServices.add(findServicebyID(serviceKey));
+
         while (cursor.moveToNext()) {
-            int serviceKey = cursor.getInt(1);
+            serviceKey = cursor.getInt(1);
             newServices.add(findServicebyID(serviceKey));
         }
         db.close();
