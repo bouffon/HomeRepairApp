@@ -10,8 +10,8 @@ import android.util.Log;
 import java.util.List;
 
 public class DBHandler extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "Users.db";
+    private static final int DATABASE_VERSION = 2;
+    private static final String DATABASE_NAME = "providers.db";
 
     //USERS TABLE
     public static final String TABLE_USERS = "users";
@@ -55,6 +55,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     //CREATES SERVICE TO SP LINK TABLE
     public static final String TABLE_SERVICESFORPROVIDERS = "servicesForProviders";
+    public static final String COLUMN_SFPID = "sfpId";
     public static final String COLUMN_SP = "sp";
     public static final String COLUMN_SERVICE = "service";
 
@@ -77,10 +78,10 @@ public class DBHandler extends SQLiteOpenHelper {
         String CREATE_SPINFO_TABLE = "CREATE TABLE " +
                 TABLE_SPINFO + "("
                 + COLUMN_SPINFOID + " INTEGER PRIMARY KEY," + COLUMN_COMPANYNAME
-                + " TEXT," + COLUMN_DESCRIPTION + " TEXT," + COLUMN_LICENCED + " BOOLEAN" + COLUMN_MONDAYSTART + "TEXT," + COLUMN_MONDAYEND + "TEXT," + COLUMN_TUESDAYSTART + "TEXT,"
-                + COLUMN_TUESDAYEND + "TEXT," + COLUMN_WEDNESDAYSTART + "TEXT," + COLUMN_WEDNESDAYEND + "TEXT," + COLUMN_THURSDAYSTART + "TEXT," + COLUMN_THURSDAYEND + "TEXT,"
-                + COLUMN_FRIDAYSTART + "TEXT," + COLUMN_FRIDAYEND + "TEXT," + COLUMN_SATURDAYSTART + "TEXT," + COLUMN_SATURDAYEND + "TEXT," + COLUMN_SUNDAYSTART + "TEXT," +
-                COLUMN_SUNDAYEND + "TEXT" + ")";
+                + " TEXT," + COLUMN_DESCRIPTION + " TEXT," + COLUMN_LICENCED + " BOOLEAN," + COLUMN_MONDAYSTART + " TEXT," + COLUMN_MONDAYEND + " TEXT," + COLUMN_TUESDAYSTART + " TEXT,"
+                + COLUMN_TUESDAYEND + " TEXT," + COLUMN_WEDNESDAYSTART + " TEXT," + COLUMN_WEDNESDAYEND + " TEXT," + COLUMN_THURSDAYSTART + " TEXT," + COLUMN_THURSDAYEND + " TEXT,"
+                + COLUMN_FRIDAYSTART + " TEXT," + COLUMN_FRIDAYEND + " TEXT," + COLUMN_SATURDAYSTART + " TEXT," + COLUMN_SATURDAYEND + " TEXT," + COLUMN_SUNDAYSTART + " TEXT," +
+                COLUMN_SUNDAYEND + " TEXT" + ")";
         db.execSQL(CREATE_SPINFO_TABLE);
 
         String CREATE_SERVICES_TABLE = "CREATE TABLE " +
@@ -90,7 +91,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_SERVICES_TABLE);
 
         String CREATE_SERVICESFORPROVIDERS_TABLE = "CREATE TABLE " +
-                TABLE_SERVICESFORPROVIDERS + "("
+                TABLE_SERVICESFORPROVIDERS + "(" + COLUMN_SFPID + " INTEGER PRIMARY KEY,"
                 + COLUMN_SP + " INTEGER," + COLUMN_SERVICE
                 + " INTEGER," + "FOREIGN KEY(service) REFERENCES serviceID" + ")";
         db.execSQL(CREATE_SERVICESFORPROVIDERS_TABLE);
@@ -105,7 +106,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SERVICESFORPROVIDERS);
         onCreate(db);
     }
-    /*
+    /**
         AddUser takes in the information of the given user and stores its values in
         the Users table
         @param user
@@ -132,7 +133,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.insert(TABLE_USERS, null, values);
         db.close();
     }
-    /*
+    /**
        findUser takes in a username and password and finds the user with that password
        and username in the users table and returns an instance of that user
        @param username
@@ -147,10 +148,12 @@ public class DBHandler extends SQLiteOpenHelper {
                 COLUMN_USERNAME + " = \"" + username + "\"" + " AND " + COLUMN_PASSWORD + " = \"" + password + "\"";
         Cursor cursor = db.rawQuery(query, null);
 
+
         User user;
 
         if (cursor.moveToFirst()) {
 
+            //Log.d("spInfoKey: ", Integer.toString(cursor.getInt(9)));
             user = null;
 
             if (Integer.parseInt(cursor.getString(8)) == 1) {
@@ -163,8 +166,9 @@ public class DBHandler extends SQLiteOpenHelper {
 
                 //THIS CURSOR SEARCHES THROUGH THE SPINFO TABLE FOR THE THE ADDITONAL INFORMATION TO ADD
                 Cursor cursor2 = db.rawQuery(query2, null);
-
+                Log.d("outside if","outside if");
                 if (cursor2.moveToFirst()) {
+                    Log.d("inside if","inside if");
                     ((ServiceProvider) user).additionalInfo(cursor2.getString(1), cursor2.getString(2), cursor.getInt(3) > 0,
                             this.createTimesArray(cursor.getInt(9)),this.createServiceArray(cursor.getInt(0)));
                 }
@@ -184,7 +188,7 @@ public class DBHandler extends SQLiteOpenHelper {
         return user;
     }
 
-    /*
+    /**
        deleteUser takes in a username and password and finds the user with that password
        and username in the users table and deletes the user. It returns true if the user was
        deleted successfully.
@@ -210,7 +214,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
         return result;
     }
-    /*
+    /**
        addSPInfo takes in additonal information for the service provider and adds them to the
        SPINFO database table
        @param username
@@ -218,7 +222,7 @@ public class DBHandler extends SQLiteOpenHelper {
        @param companyName
        @param description
        @param licenced
-       @param times
+       @param mondayStart, mondayEnd, etc
 
     */
     public void addSPInfo(String username, String password, String companyName, String description, Boolean licenced, String mondayStart, String mondayEnd,
@@ -228,23 +232,38 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(COLUMN_COMPANYNAME, companyName); values.put(COLUMN_DESCRIPTION, description); values.put(COLUMN_LICENCED, licenced);
-        values.put(COLUMN_MONDAYSTART, mondayStart); values.put(COLUMN_MONDAYEND, mondayEnd); values.put(COLUMN_TUESDAYSTART, tuesdayStart);
-        values.put(COLUMN_TUESDAYEND, tuesdayEnd); values.put(COLUMN_WEDNESDAYSTART, wednesdayStart); values.put(COLUMN_WEDNESDAYEND, wednesdayEnd);
-        values.put(COLUMN_THURSDAYSTART, thursdayStart); values.put(COLUMN_THURSDAYEND, thursdayEnd); values.put(COLUMN_FRIDAYSTART, fridayStart);
-        values.put(COLUMN_FRIDAYEND, fridayEnd); values.put(COLUMN_SATURDAYSTART, saturdayStart); values.put(COLUMN_SATURDAYEND, saturdayEnd);
-        values.put(COLUMN_SUNDAYSTART, sundayStart); values.put(COLUMN_SUNDAYEND, sundayEnd);
-        db.insert(TABLE_SPINFO, null, values);
+        values.put(COLUMN_COMPANYNAME, companyName);
+        values.put(COLUMN_DESCRIPTION, description);
+        values.put(COLUMN_LICENCED, licenced);
+        values.put(COLUMN_MONDAYSTART, mondayStart);
+        values.put(COLUMN_MONDAYEND, mondayEnd);
+        values.put(COLUMN_TUESDAYSTART, tuesdayStart);
+        values.put(COLUMN_TUESDAYEND, tuesdayEnd);
+        values.put(COLUMN_WEDNESDAYSTART, wednesdayStart);
+        values.put(COLUMN_WEDNESDAYEND, wednesdayEnd);
+        values.put(COLUMN_THURSDAYSTART, thursdayStart);
+        values.put(COLUMN_THURSDAYEND, thursdayEnd);
+        values.put(COLUMN_FRIDAYSTART, fridayStart);
+        values.put(COLUMN_FRIDAYEND, fridayEnd);
+        values.put(COLUMN_SATURDAYSTART, saturdayStart);
+        values.put(COLUMN_SATURDAYEND, saturdayEnd);
+        values.put(COLUMN_SUNDAYSTART, sundayStart);
+        values.put(COLUMN_SUNDAYEND, sundayEnd);
 
-        //THIS QUERY FIND THE PRIMARY KEY OF THE NEWLY ADDED INFO FOR THE SERVICE PROVIDER
-        String query = "Select * FROM " + TABLE_SPINFO + " WHERE " +
-                COLUMN_COMPANYNAME + " = \"" + companyName + "\"" + " AND " + COLUMN_DESCRIPTION + " = \"" + description + "\"";
+        db.insert(TABLE_SPINFO,null,values);
+
+
+        String query = "SELECT * FROM " + TABLE_SPINFO;
+        //THIS QUERY FINDS THE PRIMARY KEY OF THE NEWLY ADDED INFO FOR THE SERVICE PROVIDER
+        //String query = "Select * FROM " + TABLE_SPINFO + " WHERE " +
+        //       COLUMN_COMPANYNAME + " = \"" + companyName + "\"" + " AND " + COLUMN_DESCRIPTION + " = \"" + description + "\"";
         Cursor cursor = db.rawQuery(query, null);
         Integer id = null;
 
         //GETS THE ID
-        if (cursor.moveToFirst()) {
+        if (cursor.moveToLast()) {
             id = cursor.getInt(0);
+            Log.d("Last SPInfoID inserted:", Integer.toString(id));
         }
 
         //FIND THE ROW IN THE USERS TABLE OF THE MATCHING SERVICE PROVIDER
@@ -253,7 +272,8 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             ContentValues values2 = new ContentValues();
-            values.put(COLUMN_SPINFOID, id);
+            values2.put(COLUMN_SPInfo, id);
+            db.insert(TABLE_USERS,null,values2);
         }
         db.close();
     }
@@ -338,7 +358,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    public void addSPService(String username, String password, String service) {
+    public void addSPService(String username, String password, String service) throws NullPointerException{
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -348,24 +368,29 @@ public class DBHandler extends SQLiteOpenHelper {
                 COLUMN_USERNAME + " = \"" + username + "\"" + " AND " + COLUMN_PASSWORD + " = \"" + password + "\"";
         Cursor cursor = db.rawQuery(query, null);
 
-        int id = 0;
+        int id;
         if (cursor.moveToFirst()){
             id = cursor.getInt(0);
+            values.put(COLUMN_SP, id); //enters the primary key of the service provider into column 1 of the services for providers table
+        } else {
+            throw new NullPointerException("addSPService did not find a service provider in the SPFORID Table");
         }
 
-        values.put(COLUMN_SP, id); //enters the primary key of the service provider into column 1 of the services for providers table
+
 
         //QUERY FINDS THE SERVICE THAT IS BEING ADDED
         query = "Select * FROM " + TABLE_SERVICES + " WHERE " +
                 COLUMN_SERVICENAME + " = \"" + service + "\"";
         cursor = db.rawQuery(query, null);
 
-        int serviceID = 0;
+        int serviceID;
         if (cursor.moveToFirst()){
             serviceID = cursor.getInt(0);
+            values.put(COLUMN_SERVICE, serviceID);//enters the primary key of the service into column 2 of the services for providers table
+        }else {
+            throw new NullPointerException("addSPService did not find a service in the SPFORID Table");
         }
 
-        values.put(COLUMN_SERVICE, serviceID);//enters the primary key of the service into column 2 of the services for providers table
         db.close();
         return;
 
@@ -407,21 +432,21 @@ public class DBHandler extends SQLiteOpenHelper {
         return users;
     }
 
-    /*
+    /**
        clearUserTable empties the users table
     */
     public void clearUserTable(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_USERS,null,null);
     }
-    /*
+    /**
         clearSPInfoTable empties the users table
     */
     public void clearSPInfoTable(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_SPINFO,null,null);
     }
-    /*
+    /**
         createTimesArray takes in a key value and locates the row in the SPINFO
         table with that primary key, the method then generates a list that of all
         the start and end times of that service provider
@@ -438,12 +463,14 @@ public class DBHandler extends SQLiteOpenHelper {
                 COLUMN_SPINFOID + " = \"" + key + "\"";
         Cursor cursor = db.rawQuery(query, null);
         String[] newTimes = new String[13];
-        int i = 4;
-        int j = 0;
-        while (i<18){ //Go through all columns that store times
-            newTimes[j] = cursor.getString(i);
-            i++;
-            j++;
+        if (cursor.moveToFirst()){
+            int i = 4;
+            int j = 0;
+            while (i<18) { //Go through all columns that store times
+                newTimes[j] = cursor.getString(i);
+                i++;
+                j++;
+            }
         }
         db.close();
         return newTimes;
@@ -456,15 +483,17 @@ public class DBHandler extends SQLiteOpenHelper {
                 COLUMN_SP + " = \"" + key + "\"";
         Cursor cursor = db.rawQuery(query, null);
         List<Service> newServices = null;
-        cursor.moveToFirst();
-        int serviceKey = cursor.getInt(1);
-        newServices.add(findServicebyID(serviceKey));
-
+        int serviceKey;
+        if (cursor.moveToFirst()) {
+            serviceKey = cursor.getInt(2);
+            newServices.add(findServicebyID(serviceKey));
+        }
         while (cursor.moveToNext()) {
-            serviceKey = cursor.getInt(1);
+            serviceKey = cursor.getInt(2);
             newServices.add(findServicebyID(serviceKey));
         }
         db.close();
+        Log.d("services offered:", newServices.toString());
         return newServices;
     }
 

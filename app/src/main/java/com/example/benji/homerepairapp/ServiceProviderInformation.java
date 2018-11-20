@@ -346,8 +346,8 @@ public class ServiceProviderInformation extends AppCompatActivity implements Tim
         }
 
         db.addSPInfo(sp.getUsername(), sp.getPassword(), cNameBox.getText().toString(), sDescriptionBox.getText().toString(), licenseSwitch.isChecked(), mo1View.getText().toString(),
-                tu1View.getText().toString(), we1View.getText().toString(), th1View.getText().toString(), fr1View.getText().toString(), sa1View.getText().toString(), su1View.getText().toString(),
-                mo2View.getText().toString(), tu2View.getText().toString(), we2View.getText().toString(), th2View.getText().toString(), fr2View.getText().toString(), sa2View.getText().toString(),
+                mo2View.getText().toString(), tu1View.getText().toString(), tu2View.getText().toString(), we1View.getText().toString(), we2View.getText().toString(), th1View.getText().toString(),
+                th2View.getText().toString(), fr1View.getText().toString(), fr2View.getText().toString(), sa1View.getText().toString(), sa2View.getText().toString(), su1View.getText().toString(),
                 su2View.getText().toString());
 
         //db.close();
