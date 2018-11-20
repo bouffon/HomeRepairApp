@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditSPHours">
+
+    <TextView
+        android:id="@+id/editHoursHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="Edit Hours"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="235dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.518"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="105dp">
+
+        <LinearLayout
+            android:id="@+id/dates"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="27dp"
+            tools:layout_editor_absoluteY="346dp">
+
+            <TextView
+                android:id="@+id/monday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Monday"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="313dp" />
+
+            <TextView
+                android:id="@+id/tuesday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tuesday"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="346dp" />
+
+            <TextView
+                android:id="@+id/wednesday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Wednesday"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="386dp" />
+
+            <TextView
+                android:id="@+id/thursday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thursday"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="432dp" />
+
+            <TextView
+                android:id="@+id/friday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Friday"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="477dp" />
+
+            <TextView
+                android:id="@+id/saturday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Saturday"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="522dp" />
+
+            <TextView
+                android:id="@+id/sunday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sunday"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="573dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/timeSlot1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="176dp"
+            tools:layout_editor_absoluteY="346dp">
+
+            <TextView
+                android:id="@+id/mo1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="313dp" />
+
+            <TextView
+                android:id="@+id/tu1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="346dp" />
+
+            <TextView
+                android:id="@+id/we1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="386dp" />
+
+            <TextView
+                android:id="@+id/th1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="432dp" />
+
+            <TextView
+                android:id="@+id/fr1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="477dp" />
+
+            <TextView
+                android:id="@+id/sa1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="522dp" />
+
+            <TextView
+                android:id="@+id/su1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="573dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/-"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="273dp"
+            tools:layout_editor_absoluteY="346dp">
+
+            <TextView
+                android:id="@+id/-1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="313dp" />
+
+            <TextView
+                android:id="@+id/-2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="346dp" />
+
+            <TextView
+                android:id="@+id/-3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="386dp" />
+
+            <TextView
+                android:id="@+id/-4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="432dp" />
+
+            <TextView
+                android:id="@+id/-5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="477dp" />
+
+            <TextView
+                android:id="@+id/-6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="522dp" />
+
+            <TextView
+                android:id="@+id/-7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="573dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/timeSlot2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="316dp"
+            tools:layout_editor_absoluteY="346dp">
+
+            <TextView
+                android:id="@+id/mo2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="313dp" />
+
+            <TextView
+                android:id="@+id/tu2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="346dp" />
+
+            <TextView
+                android:id="@+id/we2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="386dp" />
+
+            <TextView
+                android:id="@+id/th2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="432dp" />
+
+            <TextView
+                android:id="@+id/fr2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="477dp" />
+
+            <TextView
+                android:id="@+id/sa2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="522dp" />
+
+            <TextView
+                android:id="@+id/su2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="573dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/saveHours"
+        android:layout_width="77dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="saveHours"
+        android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.389" />
+
+</android.support.constraint.ConstraintLayout>

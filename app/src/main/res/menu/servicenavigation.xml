@@ -13,7 +13,7 @@
         android:title="Add Service" />
 
     <item
-        android:id="@+id/snav_users"
+        android:id="@+id/snav_hours"
         android:icon="@drawable/ic_access_time_black_24dp"
         android:title="Hours" />
 
