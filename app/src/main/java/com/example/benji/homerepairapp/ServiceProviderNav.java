@@ -60,8 +60,6 @@ public class ServiceProviderNav extends AppCompatActivity {
         Intent i = getIntent();
         sp = (ServiceProvider) i.getSerializableExtra("sp");
 
-        sp.getUsername();
-
         //put Service provider's username and password into the bundle
         String [] spLogin = {sp.getUsername(),sp.getPassword()};
         args.putStringArray("sp", spLogin);

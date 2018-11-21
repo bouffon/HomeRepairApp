@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LoginPage extends AppCompatActivity {
 
     EditText usernameBox;
@@ -29,6 +32,10 @@ public class LoginPage extends AppCompatActivity {
         if (db.findUser("guy", "guy") == null){
             ServiceProvider user = new ServiceProvider("guy", "guy", "guy", "guy", "guy@guy.ca", "9059059055", "69 Admin place");
             db.addUser(user);
+            db.addSPInfo("guy","guy","defaultCompany","defaultDescription",true,"__:__","__:__","__:__",
+                    "__:__","__:__","__:__","__:__","__:__","__:__","__:__","__:__","__:__",
+                    "__:__","__:__");
+            
         }
     }
 

@@ -161,7 +161,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
 
-            Log.d("spInfoKey: ", Integer.toString(cursor.getInt(9)));
             user = null;
 
             if (Integer.parseInt(cursor.getString(8)) == 1) {
@@ -174,9 +173,9 @@ public class DBHandler extends SQLiteOpenHelper {
 
                 //THIS CURSOR SEARCHES THROUGH THE SPINFO TABLE FOR THE THE ADDITONAL INFORMATION TO ADD
                 Cursor cursor2 = db.rawQuery(query2, null);
-                Log.d("outside if","outside if");
+
+
                 if (cursor2.moveToFirst()) {
-                    Log.d("inside if","inside if");
                     ((ServiceProvider) user).additionalInfo(cursor2.getString(1), cursor2.getString(2), cursor.getInt(3) > 0,
                             this.createTimesArray(cursor.getInt(9)),this.createServiceArray(cursor.getInt(0)));
                 }
@@ -281,36 +280,6 @@ public class DBHandler extends SQLiteOpenHelper {
                     + COLUMN_USERNAME + " = '" + username + "'" + " AND " + COLUMN_PASSWORD + " = '" + password + "'";
             db.execSQL(query);
         }
-
-        //THIS QUERY FINDS THE PRIMARY KEY OF THE NEWLY ADDED INFO FOR THE SERVICE PROVIDER
-        //String query = "Select * FROM " + TABLE_SPINFO + " WHERE " +
-        //       COLUMN_COMPANYNAME + " = \"" + companyName + "\"" + " AND " + COLUMN_DESCRIPTION + " = \"" + description + "\"";
-        //Cursor cursor = db.rawQuery(query, null);
-        //Integer id = null;
-
-        /*String query = "SELECT * FROM " + TABLE_SPINFO;
-        //THIS QUERY FINDS THE PRIMARY KEY OF THE NEWLY ADDED INFO FOR THE SERVICE PROVIDER
-        //String query = "Select * FROM " + TABLE_SPINFO + " WHERE " +
-        //       COLUMN_COMPANYNAME + " = \"" + companyName + "\"" + " AND " + COLUMN_DESCRIPTION + " = \"" + description + "\"";
-        Cursor cursor = db.rawQuery(query, null);
-        Integer id = null;
-
-        //GETS THE ID
-        if (cursor.moveToPosition(cursor.getCount() - 1)) {
-            id = cursor.getInt(0);
-            Log.d("Last SPInfoID inserted:", Integer.toString(id));
-        }
-
-        //FIND THE ROW IN THE USERS TABLE OF THE MATCHING SERVICE PROVIDER
-        query = "Select * FROM " + TABLE_USERS + " WHERE " +
-                COLUMN_USERNAME + " = \"" + username + "\"" + " AND " + COLUMN_PASSWORD + " = \"" + password + "\"";
-        cursor = db.rawQuery(query, null);
-        if (cursor.moveToFirst()) {
-            ContentValues values2 = new ContentValues();
-            values2.put(COLUMN_SPInfo, id);
-            db.insert(TABLE_USERS,null,values2);
-        }
-        */
         db.close();
     }
 
