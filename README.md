@@ -19,11 +19,14 @@ Admin Password: admin
 
 There are 7 unit test cases for the app:
 
+*New for deliverable 2*
 1. Username validation
 2. Email validation
 3. Telephone validation
 4. FirstName validation
 5. Same password validation
+
+*New for deliverable 3*
 6. Company name validation
 7. Brief company description validation
 
