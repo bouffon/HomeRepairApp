@@ -22,8 +22,8 @@ public class SPAddService extends Fragment {
 
     DBHandler db;
     String SPUsername, SPPassword;
-
     String service;
+    ArrayList<Service> serviceList;
     View v;
 
     @Nullable
@@ -40,7 +40,7 @@ public class SPAddService extends Fragment {
         ListView listView = (ListView) v.findViewById(R.id.addSPServicesList);   //listView for all services
         db = new DBHandler(getActivity());
 
-        ArrayList<Service> serviceList = new ArrayList<>(); //ArrayList to store Service objects
+        serviceList = new ArrayList<>(); //ArrayList to store Service objects
         Cursor data = db.getServiceContents();
 
         //check to see if there are no services
@@ -63,8 +63,17 @@ public class SPAddService extends Fragment {
                 public void onItemClick(AdapterView<?> adapterView, final View view, int position, long id) {
                     Service s = (Service) adapterView.getItemAtPosition(position);    //service at selected position
                     service = s.getServiceName();
-                    addPrompt(v);
+                    ServiceProvider sp = (ServiceProvider) db.findUser(SPUsername,SPPassword);
+                    boolean foundService = false;   //if service provider already offers the service
 
+                    for (int i = 0; i < sp.getServices().length; i++){
+                        if (sp.getServices()[i].equals(service)){
+                            Toast.makeText(getActivity(), "You already offer this service!", Toast.LENGTH_LONG).show();
+                            foundService = true;
+                            return;
+                        }
+                    }
+                    addPrompt(v);
 
                     //create an intent for the selected service so it can be edited
                 }
