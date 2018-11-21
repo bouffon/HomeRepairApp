@@ -37,13 +37,7 @@ public class AdminUserList extends Fragment {
         }
         else{
             while(data.moveToNext()){
-                if (data.getString(1) == null){
-                    break;
-                }
-                else{
-                    userList.add(data.getString(1));
-                }
-                Log.d("yes", data.getString(1));
+                userList.add(data.getString(1));
                 ListAdapter listAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, userList);
                 listView.setAdapter(listAdapter);
             }

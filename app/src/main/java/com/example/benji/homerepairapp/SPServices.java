@@ -49,9 +49,9 @@ public class SPServices extends Fragment {
         if(sp.getServices() == null) {
             Toast.makeText(getActivity(), "You do not currently offer services", Toast.LENGTH_LONG).show();
         } else {
-            for(int i = 0; i < sp.getServices().size(); i++){
+            for(int i = 0; i < sp.getServices().length; i++){
 
-                servicesOffered.add(sp.getServices().get(i));
+                servicesOffered.add(db.findService(sp.getServices()[i]));
                 ServiceAdapter sAdapter = new ServiceAdapter(getActivity(), servicesOffered);
                 listView.setAdapter(sAdapter);
             }
@@ -64,9 +64,6 @@ public class SPServices extends Fragment {
                     service = s.getServiceName();
                     deletePrompt(v);    //run delete algorithm
 
-                    //create an intent for the selected service so it can be edited
-                    Intent launchServiceProviderNav = new Intent(getActivity().getApplicationContext(), ServiceProviderNav.class);
-                    startActivity(launchServiceProviderNav);
                 }
             });
 
@@ -81,6 +78,7 @@ public class SPServices extends Fragment {
         db.deleteSPService(SPUsername, SPPassword,service);
 
         Intent serviceManager = new Intent(getActivity(), ServiceProviderNav.class);
+        serviceManager.putExtra("sp",db.findUser(SPUsername,SPPassword));
         startActivity(serviceManager);
     }
 

@@ -67,6 +67,7 @@ public class ServiceProviderNav extends AppCompatActivity {
 
         Intent i = getIntent();
         sp = (ServiceProvider) i.getSerializableExtra("sp");
+
         sp.getUsername();
 
         //put Service provider's username and password into the bundle
@@ -75,6 +76,8 @@ public class ServiceProviderNav extends AppCompatActivity {
 
         Fragment defaultFragment =  new SPServices();
         defaultFragment.setArguments(args);
+
+        //automatically go to the SPServices fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.container, defaultFragment).commit();
 
     }

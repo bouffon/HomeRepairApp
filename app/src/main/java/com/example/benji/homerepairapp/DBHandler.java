@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DBHandler extends SQLiteOpenHelper {
@@ -276,8 +277,9 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ContentValues values2 = new ContentValues();
         if (cursor.moveToFirst()){
-            values2.put(COLUMN_SPInfo, spinfoID);
-            db.insert(TABLE_USERS,null,values2);
+            query = "UPDATE " + TABLE_USERS + " SET " + COLUMN_SPInfo + " = '" + spinfoID + "' WHERE "
+                    + COLUMN_USERNAME + " = '" + username + "'" + " AND " + COLUMN_PASSWORD + " = '" + password + "'";
+            db.execSQL(query);
         }
 
         //THIS QUERY FINDS THE PRIMARY KEY OF THE NEWLY ADDED INFO FOR THE SERVICE PROVIDER
@@ -419,6 +421,7 @@ public class DBHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()){
             serviceID = cursor.getInt(0);
             values.put(COLUMN_SERVICE, serviceID);//enters the primary key of the service into column 2 of the services for providers table
+            db.insert(TABLE_SERVICESFORPROVIDERS, null, values); //inserts service provider id and service id into a new row in ServicesForProviders
         }else {
             throw new NullPointerException("addSPService did not find a service in the SPFORID Table");
         }
@@ -436,15 +439,18 @@ public class DBHandler extends SQLiteOpenHelper {
         String query = "Select * FROM " + TABLE_USERS + " WHERE " +
                 COLUMN_USERNAME + " = \"" + username + "\"" + " AND " + COLUMN_PASSWORD + " = \"" + password + "\"";
         Cursor cursor = db.rawQuery(query, null);
-
-        int id = cursor.getInt(0);
-
-        //QUERY FINDS THE SERVICE THAT IS BEING ADDED
+        int id = -1;
+        if (cursor.moveToFirst()) {
+             id = cursor.getInt(0);
+        }
+        //QUERY FINDS THE SERVICE THAT IS BEING REMOVED
         query = "Select * FROM " + TABLE_SERVICES + " WHERE " +
                 COLUMN_SERVICENAME + " = \"" + service + "\"";
         cursor = db.rawQuery(query, null);
-        int serviceId = cursor. getInt(0);
-
+        int serviceId = -1;
+        if (cursor.moveToFirst()) {
+             serviceId = cursor.getInt(0);
+        }
         db.delete(TABLE_SERVICESFORPROVIDERS, COLUMN_SERVICE + " = " + serviceId + " AND " + COLUMN_SP + " = " + id, null);
         cursor.close();
         db.close();
@@ -494,11 +500,11 @@ public class DBHandler extends SQLiteOpenHelper {
         String query = "Select * FROM " + TABLE_SPINFO + " WHERE " +
                 COLUMN_SPINFOID + " = \"" + key + "\"";
         Cursor cursor = db.rawQuery(query, null);
-        String[] newTimes = new String[13];
+        String[] newTimes = new String[14];
         if (cursor.moveToFirst()){
             int i = 4;
             int j = 0;
-            while (i<18) { //Go through all columns that store times
+            while (i<=17) { //Go through all columns that store times
                 newTimes[j] = cursor.getString(i);
                 i++;
                 j++;
@@ -514,7 +520,7 @@ public class DBHandler extends SQLiteOpenHelper {
         String query = "Select * FROM " + TABLE_SERVICESFORPROVIDERS + " WHERE " +
                 COLUMN_SP + " = \"" + key + "\"";
         Cursor cursor = db.rawQuery(query, null);
-        List<Service> newServices = null;
+        List<Service> newServices = new ArrayList<Service>();
         int serviceKey;
         if (cursor.moveToFirst()) {
             serviceKey = cursor.getInt(2);
@@ -525,7 +531,6 @@ public class DBHandler extends SQLiteOpenHelper {
             newServices.add(findServicebyID(serviceKey));
         }
         db.close();
-        Log.d("services offered:", newServices.toString());
         return newServices;
     }
 
