@@ -25,14 +25,6 @@ public class ServiceProviderNav extends AppCompatActivity {
 
             Fragment selectedFragment = null;
 
-/*            Intent i = getIntent();
-            sp = (ServiceProvider) i.getSerializableExtra("sp");
-            sp.getUsername();
-
-            //put Service provider's username and password into the bundle
-            String [] spLogin = {sp.getUsername(),sp.getPassword()};
-            args.putStringArray("sp", spLogin);*/
-
             switch (item.getItemId()) {
                 case R.id.snav_services:
                     selectedFragment = new SPServices(); //create an instance of SPServices to create the list of services currently offered
@@ -45,7 +37,7 @@ public class ServiceProviderNav extends AppCompatActivity {
                     break;
 
                 case R.id.snav_hours:
-                    selectedFragment = new EditSPHours();
+                    selectedFragment = new SPServices(); //since edit hours doesn't work lol
                     selectedFragment.setArguments(args);
                     break;
             }

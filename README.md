@@ -8,7 +8,8 @@ has the ability to view all the accounts in the database.
 
 *NOV 10, 2018*: The app is able to create services, edit a service's hourly rates and delete services. It is also able to display all of the created services in addition to the hourly rate of each service.
 
-*NOV 20, 2018*: The app now has implentation for Service Providers. Service Providers now have associated company name, company description, liscensing toggle, and available hours. Service providers can now add or remove what services they provide. "Edit hours" bonus functionality was not implemented, the button will redirect the user into the Service Provider's Service page. 
+*NOV 20, 2018*: The app now has implentation for Service Providers. Service Providers now have associated company name, company description, licensing toggle, and available hours. Service providers can now add or remove what services they provide.
+				"Edit hours" bonus functionality was not implemented, the button will redirect the user into the Service Provider's Service page. 
 
 Authors: Ben Morrison (300025533), Joongho Kim (300043500), Stephen Chen (300033450), Muhammed Izol(300043365), Ethan Lee (300026957)
 

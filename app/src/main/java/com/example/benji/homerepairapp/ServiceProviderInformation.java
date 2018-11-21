@@ -25,6 +25,7 @@ public class ServiceProviderInformation extends AppCompatActivity implements Tim
     TextView mo1View, tu1View, we1View, th1View, fr1View, sa1View, su1View, mo2View, tu2View, we2View, th2View, fr2View, sa2View, su2View;
 
     int moStart, tuStart, weStart, thStart, frStart, saStart, suStart;
+    int moEnd, tuEnd, weEnd, thEnd, frEnd, saEnd, suEnd;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -266,67 +267,130 @@ public class ServiceProviderInformation extends AppCompatActivity implements Tim
 
         switch(timeSelected){
             case "mo1":
-                mo1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
-                moStart = hourOfDay*60 + minute;
+                if (mo2View.getText().toString().equals("__ : __")) {
+                    mo1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
+                    moStart = hourOfDay*60 + minute;
+                }
+                if(((hourOfDay*60+minute) < moEnd) && mo2View.getText().toString() != "__ : __"){
+                    mo1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
+                    moStart = hourOfDay*60 + minute;
+                }
                 break;
 
             case "tu1":
-                tu1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
-                tuStart = hourOfDay*60 + minute;
+                if (tu2View.getText().toString().equals("__ : __")) {
+                    tu1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
+                    tuStart = hourOfDay*60 + minute;
+                }
+
+                if(((hourOfDay*60+minute) < tuEnd) && tu2View.getText().toString() != "__ : __"){
+                    tu1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
+                    tuStart = hourOfDay*60 + minute;
+                }
                 break;
+
             case "we1":
-                we1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
-                weStart = hourOfDay*60 + minute;
+
+                if (we2View.getText().toString().equals("__ : __")) {
+                    we1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
+                    weStart = hourOfDay*60 + minute;
+                }
+                if(((hourOfDay*60+minute) < weEnd) && we2View.getText().toString() != "__ : __"){
+                    we1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
+                    weStart = hourOfDay*60 + minute;
+                }
                 break;
+
             case "th1":
-                th1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
-                thStart = hourOfDay*60 + minute;
+                if (th2View.getText().toString().equals("__ : __")) {
+                    th1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
+                    thStart = hourOfDay*60 + minute;
+                }
+                if(((hourOfDay*60+minute) < thEnd) && th2View.getText().toString() != "__ : __"){
+                    th1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
+                    thStart = hourOfDay*60 + minute;
+                }
                 break;
             case "fr1":
-                fr1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
-                frStart = hourOfDay*60 + minute;
+
+                if (fr2View.getText().toString().equals("__ : __")) {
+                    fr1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
+                    frStart = hourOfDay*60 + minute;
+                }
+
+                if(((hourOfDay*60+minute) < frEnd) && fr2View.getText().toString() != "__ : __"){
+                    fr1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
+                    frStart = hourOfDay*60 + minute;
+                }
                 break;
+
             case "sa1":
-                sa1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
-                saStart = hourOfDay*60 + minute;
+
+                if (sa2View.getText().toString().equals("__ : __")) {
+                    sa1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
+                    saStart = hourOfDay*60 + minute;
+                }
+
+                if(((hourOfDay*60+minute) < saEnd) && sa2View.getText().toString() != "__ : __"){
+                    sa1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
+                    saStart = hourOfDay*60 + minute;
+                }
                 break;
+
             case "su1":
-                su1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
-                suStart = hourOfDay*60 + minute;
+
+                if (su2View.getText().toString().equals("__ : __")) {
+                    su1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
+                    suStart = hourOfDay*60 + minute;
+                }
+
+                if(((hourOfDay*60+minute) < suEnd) && su2View.getText().toString() != "__ : __"){
+                    su1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
+                    suStart = hourOfDay*60 + minute;
+                }
                 break;
+
+             //END TIMES
             case "mo2":
                 if((hourOfDay*60+minute) > moStart) {
                     mo2View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
+                    moEnd = hourOfDay*60+minute;
                 }
                 break;
             case "tu2":
                 if((hourOfDay*60+minute) > tuStart) {
                     tu2View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
+                    tuEnd = hourOfDay*60+minute;
                 }
                 break;
             case "we2":
                 if((hourOfDay*60+minute) > weStart) {
                     we2View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
+                    weEnd = hourOfDay*60+minute;
                 }
                 break;
             case "th2":
                 if((hourOfDay*60+minute) > thStart) {
                     th2View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
+                    thEnd = hourOfDay*60+minute;
                 }
                 break;
             case "fr2":
                 if((hourOfDay*60+minute) > frStart) {
                     fr2View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
+                    frEnd = hourOfDay*60+minute;
                 }
                 break;
             case "sa2":
                 if((hourOfDay*60+minute) > saStart) {
                     sa2View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
+                    saEnd = hourOfDay*60+minute;
                 }
                 break;
             case "su2":
                 if((hourOfDay*60+minute) > suStart) {
                     su2View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
+                    suEnd = hourOfDay*60+minute;
                 }
                 break;
         }

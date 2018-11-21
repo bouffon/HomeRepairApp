@@ -18,8 +18,16 @@ public class LoginPage extends AppCompatActivity {
         usernameBox = findViewById(R.id.usernameLogin);
         passwordBox = findViewById(R.id.passwordLogin);
         DBHandler db = new DBHandler(this);
+
+        //add default admin
         if (db.findUser("admin", "admin") == null){
             Admin user = new Admin("admin", "admin", "admin", "admin", "admin@admin.ca", "9059059055", "69 Admin place");
+            db.addUser(user);
+        }
+
+        //add default service provider
+        if (db.findUser("guy", "guy") == null){
+            ServiceProvider user = new ServiceProvider("guy", "guy", "guy", "guy", "guy@guy.ca", "9059059055", "69 Admin place");
             db.addUser(user);
         }
     }
