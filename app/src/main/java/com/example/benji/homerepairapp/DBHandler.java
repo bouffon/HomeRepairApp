@@ -144,6 +144,13 @@ public class DBHandler extends SQLiteOpenHelper {
     public User findUser(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
 
+        //String selectQuery = "SELECT * FROM " + TABLE_USERS +" ORDER BY "+ COLUMN_ID + " DESC LIMIT 1";
+        //Cursor cursor = db.rawQuery(selectQuery, null);
+        //Log.d("outside if ", "outside if ");
+        //if (cursor.moveToFirst()) {
+        //    Log.d("username: ", cursor.getString(1));
+        //}
+
         String query = "Select * FROM " + TABLE_USERS + " WHERE " +
                 COLUMN_USERNAME + " = \"" + username + "\"" + " AND " + COLUMN_PASSWORD + " = \"" + password + "\"";
         Cursor cursor = db.rawQuery(query, null);
@@ -153,7 +160,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
 
-            //Log.d("spInfoKey: ", Integer.toString(cursor.getInt(9)));
+            Log.d("spInfoKey: ", Integer.toString(cursor.getInt(9)));
             user = null;
 
             if (Integer.parseInt(cursor.getString(8)) == 1) {
@@ -222,7 +229,7 @@ public class DBHandler extends SQLiteOpenHelper {
        @param companyName
        @param description
        @param licenced
-       @param mondayStart, mondayEnd, etc
+       @param mondayStart ,mondayEnd, etc
 
     */
     public void addSPInfo(String username, String password, String companyName, String description, Boolean licenced, String mondayStart, String mondayEnd,
@@ -249,11 +256,37 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_SATURDAYEND, saturdayEnd);
         values.put(COLUMN_SUNDAYSTART, sundayStart);
         values.put(COLUMN_SUNDAYEND, sundayEnd);
-
         db.insert(TABLE_SPINFO,null,values);
 
+        String selectQuery = "SELECT * FROM " + TABLE_SPINFO +" ORDER BY "+ COLUMN_SPINFOID + " DESC LIMIT 1";
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
-        String query = "SELECT * FROM " + TABLE_SPINFO;
+        int spinfoID = -1;
+        if (cursor.moveToFirst()){
+            spinfoID = cursor.getInt(0);
+            Log.d("found last spinfoid","found last spinfoid");
+        } else {
+            throw new NullPointerException("COULD NOT FIND A SPINFO PRIMARY KEY");
+        }
+
+        //FIND THE ROW IN THE USERS TABLE OF THE MATCHING SERVICE PROVIDER
+        String query = "Select * FROM " + TABLE_USERS + " WHERE " +
+                COLUMN_USERNAME + " = \"" + username + "\"" + " AND " + COLUMN_PASSWORD + " = \"" + password + "\"";
+        cursor = db.rawQuery(query, null);
+
+        ContentValues values2 = new ContentValues();
+        if (cursor.moveToFirst()){
+            values2.put(COLUMN_SPInfo, spinfoID);
+            db.insert(TABLE_USERS,null,values2);
+        }
+
+        //THIS QUERY FINDS THE PRIMARY KEY OF THE NEWLY ADDED INFO FOR THE SERVICE PROVIDER
+        //String query = "Select * FROM " + TABLE_SPINFO + " WHERE " +
+        //       COLUMN_COMPANYNAME + " = \"" + companyName + "\"" + " AND " + COLUMN_DESCRIPTION + " = \"" + description + "\"";
+        //Cursor cursor = db.rawQuery(query, null);
+        //Integer id = null;
+
+        /*String query = "SELECT * FROM " + TABLE_SPINFO;
         //THIS QUERY FINDS THE PRIMARY KEY OF THE NEWLY ADDED INFO FOR THE SERVICE PROVIDER
         //String query = "Select * FROM " + TABLE_SPINFO + " WHERE " +
         //       COLUMN_COMPANYNAME + " = \"" + companyName + "\"" + " AND " + COLUMN_DESCRIPTION + " = \"" + description + "\"";
@@ -261,7 +294,7 @@ public class DBHandler extends SQLiteOpenHelper {
         Integer id = null;
 
         //GETS THE ID
-        if (cursor.moveToLast()) {
+        if (cursor.moveToPosition(cursor.getCount() - 1)) {
             id = cursor.getInt(0);
             Log.d("Last SPInfoID inserted:", Integer.toString(id));
         }
@@ -275,6 +308,7 @@ public class DBHandler extends SQLiteOpenHelper {
             values2.put(COLUMN_SPInfo, id);
             db.insert(TABLE_USERS,null,values2);
         }
+        */
         db.close();
     }
 
@@ -375,8 +409,6 @@ public class DBHandler extends SQLiteOpenHelper {
         } else {
             throw new NullPointerException("addSPService did not find a service provider in the SPFORID Table");
         }
-
-
 
         //QUERY FINDS THE SERVICE THAT IS BEING ADDED
         query = "Select * FROM " + TABLE_SERVICES + " WHERE " +

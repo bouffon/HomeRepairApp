@@ -17,15 +17,15 @@ public class LoginPage extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         usernameBox = findViewById(R.id.usernameLogin);
         passwordBox = findViewById(R.id.passwordLogin);
-    }
-
-    public void login(View view){
         DBHandler db = new DBHandler(this);
-
         if (db.findUser("admin", "admin") == null){
             Admin user = new Admin("admin", "admin", "admin", "admin", "admin@admin.ca", "9059059055", "69 Admin place");
             db.addUser(user);
         }
+    }
+
+    public void login(View view){
+        DBHandler db = new DBHandler(this);
 
         User activeUser = db.findUser(usernameBox.getText().toString(),passwordBox.getText().toString());
 
