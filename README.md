@@ -14,8 +14,13 @@ Authors: Ben Morrison (300025533), Joongho Kim (300043500), Stephen Chen (300033
 
 GitHub Link: https://github.com/bouffon/HomeRepairApp.git
 
-Admin Username: admin
-Admin Password: admin
+Admin Login:
+Username: admin
+Password: admin
+
+Default Service Provider Login:
+Username: guy
+password: guy
 
 There are 7 unit test cases for the app:
 
@@ -27,6 +32,7 @@ There are 7 unit test cases for the app:
 5. Same password validation
 
 *New for deliverable 3*
+
 6. Company name validation
 7. Brief company description validation
 
