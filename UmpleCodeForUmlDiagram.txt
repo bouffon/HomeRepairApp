@@ -11,7 +11,7 @@ class User{
 class ServiceProvider{
   isA  User;
   *--1 Admin;
-  Service[] service;
+  String[] service;
   String [] availability;
   int rating;
   
