@@ -45,7 +45,7 @@ public class SPAddService extends Fragment {
 
         //check to see if there are no services
         if(data.getCount() == 0) {
-            Toast.makeText(getActivity(), "You currently offer no services", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "There are no services to be offered", Toast.LENGTH_LONG).show();
         }
 
         //populate listView and add listeners to each item in the list
