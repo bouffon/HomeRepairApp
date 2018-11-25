@@ -35,7 +35,7 @@ public class LoginPage extends AppCompatActivity {
             db.addSPInfo("guy","guy","defaultCompany","defaultDescription",true,"__:__","__:__","__:__",
                     "__:__","__:__","__:__","__:__","__:__","__:__","__:__","__:__","__:__",
                     "__:__","__:__");
-            
+
         }
     }
 

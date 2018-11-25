@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,8 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_SATURDAYEND = "saturdayEnd";
     public static final String COLUMN_SUNDAYSTART = "sundayStart";
     public static final String COLUMN_SUNDAYEND = "sundayEnd";
+    public static final String COLUMN_RATING = "rating";
+    public static final String COLUMN_NUMBEROFRATERS = "NumberOfRater";
 
     //CREATES SERVICES TABLE
     public static final String TABLE_SERVICES = "services";
@@ -82,7 +85,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 + " TEXT," + COLUMN_DESCRIPTION + " TEXT," + COLUMN_LICENCED + " BOOLEAN," + COLUMN_MONDAYSTART + " TEXT," + COLUMN_MONDAYEND + " TEXT," + COLUMN_TUESDAYSTART + " TEXT,"
                 + COLUMN_TUESDAYEND + " TEXT," + COLUMN_WEDNESDAYSTART + " TEXT," + COLUMN_WEDNESDAYEND + " TEXT," + COLUMN_THURSDAYSTART + " TEXT," + COLUMN_THURSDAYEND + " TEXT,"
                 + COLUMN_FRIDAYSTART + " TEXT," + COLUMN_FRIDAYEND + " TEXT," + COLUMN_SATURDAYSTART + " TEXT," + COLUMN_SATURDAYEND + " TEXT," + COLUMN_SUNDAYSTART + " TEXT," +
-                COLUMN_SUNDAYEND + " TEXT" + ")";
+                COLUMN_SUNDAYEND + " TEXT" + COLUMN_RATING + "DOUBLE" + COLUMN_NUMBEROFRATERS + "INTEGER" + ")";
         db.execSQL(CREATE_SPINFO_TABLE);
 
         String CREATE_SERVICES_TABLE = "CREATE TABLE " +
@@ -145,13 +148,6 @@ public class DBHandler extends SQLiteOpenHelper {
     public User findUser(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        //String selectQuery = "SELECT * FROM " + TABLE_USERS +" ORDER BY "+ COLUMN_ID + " DESC LIMIT 1";
-        //Cursor cursor = db.rawQuery(selectQuery, null);
-        //Log.d("outside if ", "outside if ");
-        //if (cursor.moveToFirst()) {
-        //    Log.d("username: ", cursor.getString(1));
-        //}
-
         String query = "Select * FROM " + TABLE_USERS + " WHERE " +
                 COLUMN_USERNAME + " = \"" + username + "\"" + " AND " + COLUMN_PASSWORD + " = \"" + password + "\"";
         Cursor cursor = db.rawQuery(query, null);
@@ -193,6 +189,58 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         db.close();
         return user;
+    }
+
+    /**
+     getAllSP returns a list with all instances of service providers found in the database
+
+     @return List<ServiceProvider>
+     */
+    public List<ServiceProvider> getAllSP(){
+
+        List<ServiceProvider> serviceProviders = new ArrayList<ServiceProvider>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "Select * FROM " + TABLE_USERS + " WHERE " +
+                COLUMN_SERVICEPROVIDER + " = \"" + Integer.toString(1) + "\"";
+
+        Cursor cursor = db.rawQuery(query,null);
+        if (cursor.moveToFirst()){
+            ServiceProvider sp = new ServiceProvider(cursor.getString(1), cursor.getString(2), cursor.getString(3),
+                    cursor.getString(4), cursor.getString(5), cursor.getString(6),cursor.getString(7));
+
+            String query2 = "Select * FROM " + TABLE_SPINFO + " WHERE " +
+                    COLUMN_SPINFOID + " = \"" + cursor.getInt(9) + "\"";
+
+            //THIS CURSOR SEARCHES THROUGH THE SPINFO TABLE FOR THE THE ADDITIONAL INFORMATION TO ADD
+            Cursor cursor2 = db.rawQuery(query2, null);
+
+            if (cursor2.moveToFirst()) {
+                sp.additionalInfo(cursor2.getString(1), cursor2.getString(2), cursor.getInt(3) > 0,
+                        this.createTimesArray(cursor.getInt(9)),this.createServiceArray(cursor.getInt(0)));
+            } serviceProviders.add(sp);
+            cursor2.close();
+        }
+        Log.d("pastif", "past if");
+        while (cursor.moveToNext()){
+            db = this.getReadableDatabase();
+            ServiceProvider sp = new ServiceProvider(cursor.getString(1), cursor.getString(2), cursor.getString(3),
+                    cursor.getString(4), cursor.getString(5), cursor.getString(6),cursor.getString(7));
+
+            String query2 = "Select * FROM " + TABLE_SPINFO + " WHERE " +
+                    COLUMN_SPINFOID + " = \"" + cursor.getInt(9) + "\"";
+
+            //THIS CURSOR SEARCHES THROUGH THE SPINFO TABLE FOR THE THE ADDITIONAL INFORMATION TO ADD
+            Cursor cursor2 = db.rawQuery(query2, null);
+            if (cursor2.moveToFirst()) {
+                sp.additionalInfo(cursor2.getString(1), cursor2.getString(2), cursor.getInt(3) > 0,
+                        this.createTimesArray(cursor.getInt(9)),this.createServiceArray(cursor.getInt(0)));
+            } serviceProviders.add(sp);
+            cursor2.close();
+        }
+        db.close();
+        return serviceProviders;
     }
 
     /**
