@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/hnav_searchByService"
+        android:icon="@drawable/ic_search_by_service_black_24dp"
+        android:title="by Service" />
+
+    <item
+        android:id="@+id/hnav_searchByRating"
+        android:icon="@drawable/ic_search_by_rate_black_24dp"
+        android:title="by Rating" />
+
+    <item
+        android:id="@+id/hnav_searchByHours"
+        android:icon="@drawable/ic_search_by_hours_black_24dp"
+        android:title="by Hours" />
+
+    <item
+        android:id="@+id/hnav_rate"
+        android:icon="@drawable/ic_star_black_24dp"
+        android:title="Rate Provider" />
+
+</menu>

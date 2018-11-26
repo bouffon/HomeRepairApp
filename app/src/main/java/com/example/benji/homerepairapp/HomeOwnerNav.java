@@ -1,19 +1,18 @@
 package com.example.benji.homerepairapp;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class ServiceProviderNav extends AppCompatActivity {
+public class HomeOwnerNav extends AppCompatActivity {
 
     private TextView mTextMessage;
-    private ServiceProvider sp;
+    private Homeowner hm;
     private Bundle args = new Bundle();
 
 
@@ -26,17 +25,22 @@ public class ServiceProviderNav extends AppCompatActivity {
             Fragment selectedFragment = null;
 
             switch (item.getItemId()) {
-                case R.id.snav_services:
-                    selectedFragment = new SPServices(); //create an instance of SPServices to create the list of services currently offered
+                case R.id.hnav_searchByService:
+                    selectedFragment = new SearchByService(); //create an instance of SPServices to create the list of services currently offered
                     selectedFragment.setArguments(args);
                     break;
 
-                case R.id.snav_addService:
-                    selectedFragment = new SPAddService();
+                case R.id.hnav_searchByRating:
+                    selectedFragment = new SearchByRating();
                     selectedFragment.setArguments(args);
                     break;
 
-                case R.id.snav_hours:
+                case R.id.hnav_searchByHours:
+                    selectedFragment = new SearchByHours(); //since edit hours doesn't work lol
+                    selectedFragment.setArguments(args);
+                    break;
+
+                case R.id.hnav_rate:
                     selectedFragment = new SPServices(); //since edit hours doesn't work lol
                     selectedFragment.setArguments(args);
                     break;
@@ -51,18 +55,18 @@ public class ServiceProviderNav extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_service_provider_nav);
+        setContentView(R.layout.activity_home_owner_nav);
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         Intent i = getIntent();
-        sp = (ServiceProvider) i.getSerializableExtra("sp");
+        hm = (Homeowner) i.getSerializableExtra("hm");
 
         //put Service provider's username and password into the bundle
-        String [] spLogin = {sp.getUsername(),sp.getPassword()};
-        args.putStringArray("sp", spLogin);
+        String [] hmLogin = {hm.getUsername(),hm.getPassword()};
+        args.putStringArray("hm", hmLogin);
 
         Fragment defaultFragment =  new SPServices();
         defaultFragment.setArguments(args);
@@ -71,5 +75,4 @@ public class ServiceProviderNav extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.container, defaultFragment).commit();
 
     }
-
 }
