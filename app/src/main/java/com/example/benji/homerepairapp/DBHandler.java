@@ -85,7 +85,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 + " TEXT," + COLUMN_DESCRIPTION + " TEXT," + COLUMN_LICENCED + " BOOLEAN," + COLUMN_MONDAYSTART + " TEXT," + COLUMN_MONDAYEND + " TEXT," + COLUMN_TUESDAYSTART + " TEXT,"
                 + COLUMN_TUESDAYEND + " TEXT," + COLUMN_WEDNESDAYSTART + " TEXT," + COLUMN_WEDNESDAYEND + " TEXT," + COLUMN_THURSDAYSTART + " TEXT," + COLUMN_THURSDAYEND + " TEXT,"
                 + COLUMN_FRIDAYSTART + " TEXT," + COLUMN_FRIDAYEND + " TEXT," + COLUMN_SATURDAYSTART + " TEXT," + COLUMN_SATURDAYEND + " TEXT," + COLUMN_SUNDAYSTART + " TEXT," +
-                COLUMN_SUNDAYEND + " TEXT" + COLUMN_RATING + "DOUBLE" + COLUMN_NUMBEROFRATERS + "INTEGER" + ")";
+                COLUMN_SUNDAYEND + " TEXT," + COLUMN_RATING + " DOUBLE," + COLUMN_NUMBEROFRATERS + " INTEGER" + ")";
         db.execSQL(CREATE_SPINFO_TABLE);
 
         String CREATE_SERVICES_TABLE = "CREATE TABLE " +
@@ -222,7 +222,6 @@ public class DBHandler extends SQLiteOpenHelper {
             } serviceProviders.add(sp);
             cursor2.close();
         }
-        Log.d("pastif", "past if");
         while (cursor.moveToNext()){
             db = this.getReadableDatabase();
             ServiceProvider sp = new ServiceProvider(cursor.getString(1), cursor.getString(2), cursor.getString(3),
@@ -304,6 +303,8 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_SATURDAYEND, saturdayEnd);
         values.put(COLUMN_SUNDAYSTART, sundayStart);
         values.put(COLUMN_SUNDAYEND, sundayEnd);
+        values.put(COLUMN_RATING,0);
+        values.put(COLUMN_NUMBEROFRATERS,0);
         db.insert(TABLE_SPINFO,null,values);
 
         String selectQuery = "SELECT * FROM " + TABLE_SPINFO +" ORDER BY "+ COLUMN_SPINFOID + " DESC LIMIT 1";
@@ -411,6 +412,61 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
+    /**
+     updateRating updates a service providers rating and number of raters in the SPINFO table
+     based upon a given username, password, and rating
+
+     @param username
+     @param password
+     @param rating
+
+     */
+    public void updateRating(String username, String password, Double rating) throws NullPointerException{
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        //QUERY FINDS THE SERVICE PROVIDER WHOSE RATE IS BEING UPDATED
+        String query = "Select * FROM " + TABLE_USERS + " WHERE " +
+                COLUMN_USERNAME + " = \"" + username + "\"" + " AND " + COLUMN_PASSWORD + " = \"" + password + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+        int id;
+        if (cursor.moveToFirst()) {
+            id = cursor.getInt(9);
+        } else {
+            throw new NullPointerException("no service provider found");
+        }
+
+        //THIS QUERY FINDS THE CORRESPONDING SPINFO FOR THE SERVICE PROVIDER
+        query = "Select * FROM " + TABLE_SPINFO + " WHERE " +
+                COLUMN_SPINFOID + " = \"" + id + "\"";
+        Cursor cursor2 = db.rawQuery(query, null);
+        double newRating;
+
+        if (cursor2.moveToFirst()){
+
+            newRating = ((cursor2.getDouble(18) + rating)/(cursor2.getInt(19)+1));
+
+            //THIS QUERY UPDATES THE RATING IN THE TABLE
+            String query2 = "UPDATE " + TABLE_SPINFO + " SET " + COLUMN_RATING + " = '" + newRating + "' WHERE "
+                    + COLUMN_SPINFOID + " = '" + id + "'";
+            db.execSQL(query2);
+            //THIS QUERY UPDATES THE NUMBER OF RATERS IN THE TABLE
+            query2 = "UPDATE " + TABLE_SPINFO + " SET " + COLUMN_NUMBEROFRATERS + " = '" + (cursor2.getInt(19)+1) + "' WHERE "
+                    + COLUMN_SPINFOID + " = '" + id + "'";
+            db.execSQL(query2);
+        }
+        db.close();
+    }
+
+    /**
+     addSPService adds a service to a service providers offered services
+     given the username, password, and the name of the service
+
+     @param username
+     @param password
+     @param service
+
+     */
     public void addSPService(String username, String password, String service) throws NullPointerException{
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -442,12 +498,20 @@ public class DBHandler extends SQLiteOpenHelper {
         }else {
             throw new NullPointerException("addSPService did not find a service in the SPFORID Table");
         }
-
         db.close();
         return;
 
     }
 
+    /**
+     deleteSPService deletes a service from a service providers offered services
+     given the username, password, and the name of the service
+
+     @param username
+     @param password
+     @param service
+
+     */
     public void deleteSPService(String username, String password, String service){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -475,7 +539,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     }
 
-    /*
+    /**
        getDBContents returns are cursor object that is positioned it
        in the users table
 
@@ -531,6 +595,15 @@ public class DBHandler extends SQLiteOpenHelper {
         return newTimes;
     }
 
+    /**
+     createServiceArray takes in a key value and locates the row in the SERVICEFORPROVIDERs
+     table with that primary key, the method then generates a list of all the services offered
+     by the service provider with the key provided.
+
+     @param key
+
+     @return newServices
+     */
     private List<Service> createServiceArray(int key){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -551,6 +624,12 @@ public class DBHandler extends SQLiteOpenHelper {
         return newServices;
     }
 
+    /**
+     addService takes in a service object and adds it to the Services table
+
+     @param service
+
+     */
     public void addService(Service service){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
