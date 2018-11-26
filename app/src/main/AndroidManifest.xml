@@ -41,7 +41,13 @@
             android:label="@string/title_activity_service_provider_nav" />
         <activity android:name=".SPServices" />
         <activity android:name=".SPAddService" />
-        <activity android:name=".EditSPHours"></activity>
+        <activity android:name=".EditSPHours" />
+        <activity android:name=".HomeOwnerNav" />
+        <activity android:name=".SearchByService" />
+        <activity android:name=".SearchByRating" />
+        <activity android:name=".SearchByHours" />
+        <activity android:name=".ScheduleService" />
+        <activity android:name=".ServiceProviderList"></activity>
     </application>
 
 </manifest>

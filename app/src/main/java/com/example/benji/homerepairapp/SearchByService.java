@@ -2,28 +2,26 @@ package com.example.benji.homerepairapp;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Bundle;
-import android.app.Activity;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class AdminServiceManager extends Fragment {
+public class SearchByService extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle saveInstanceState) {
 
-        View v = inflater.inflate(R.layout.activity_admin_service_manager, container, false);
+        View v = inflater.inflate(R.layout.activity_search_by_service, container, false);
 
         ListView listView = (ListView) v.findViewById(R.id.servicesList);   //listView for all services
         DBHandler db = new DBHandler(getActivity());
@@ -52,14 +50,12 @@ public class AdminServiceManager extends Fragment {
                     Service s = (Service) adapterView.getItemAtPosition(position);    //service at selected position
 
                     //create an intent for the selected service so it can be edited
-                    Intent launchServiceEditor = new Intent(getActivity().getApplicationContext(), ServiceEditor.class);
-                    launchServiceEditor.putExtra("service",s.getServiceName());
-                    launchServiceEditor.putExtra("hourly rate", s.getRate());
-                    startActivity(launchServiceEditor);
+                    Intent launchServiceList = new Intent(getActivity().getApplicationContext(), ScheduleService.class);
+                    launchServiceList.putExtra("service",s.getServiceName());
+                    startActivity(launchServiceList);
                 }
             });
         }
-
         return v;
     }
 }
