@@ -63,6 +63,14 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_SP = "sp";
     public static final String COLUMN_SERVICE = "service";
 
+    //CREATES BOOKING FOR PROVIDERS TABLE
+    public static final String TABLE_BOOKINGFORPROVIDERS = "bookingForProviders";
+    public static final String COLUMN_BOOKINGID = "bookingID";
+    public static final String COLUMN_BOOKINGSPID = "booingSPID";
+    public static final String COLUMN_DAYOFWEEK = "dayOfWeek";
+    public static final String COLUMN_STARTTIME = "startTime";
+    public static final String COLUMN_ENDTIME = "endTime";
+
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -99,6 +107,10 @@ public class DBHandler extends SQLiteOpenHelper {
                 + COLUMN_SP + " INTEGER," + COLUMN_SERVICE
                 + " INTEGER," + "FOREIGN KEY(service) REFERENCES serviceID" + ")";
         db.execSQL(CREATE_SERVICESFORPROVIDERS_TABLE);
+
+        String CREATE_BOOKINGFORPROVIDERS_TABLE = "CREATE TABLE " + TABLE_BOOKINGFORPROVIDERS + "(" + COLUMN_BOOKINGID + " INTEGER PRIMARY KEY," +
+                COLUMN_BOOKINGSPID + " INTEGER," + COLUMN_DAYOFWEEK + " TEXT," + COLUMN_STARTTIME + " TEXT," + COLUMN_ENDTIME + " TEXT" + ")";
+        db.execSQL(CREATE_BOOKINGFORPROVIDERS_TABLE);
     }
 
 
@@ -108,6 +120,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SPINFO);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SERVICES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SERVICESFORPROVIDERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BOOKINGFORPROVIDERS);
         onCreate(db);
     }
     /**
@@ -698,9 +711,138 @@ public class DBHandler extends SQLiteOpenHelper {
         return result;
     }
 
-    public Cursor getServiceContents(){
+    public Cursor getServiceContents() throws NullPointerException{
         SQLiteDatabase dB = this.getReadableDatabase();
         Cursor services = dB.rawQuery("SELECT * FROM " + TABLE_SERVICES, null);
         return services;
+    }
+
+    public Boolean createNewBooking(String username, String password, String date, String startTime, String endTime) throws NullPointerException{
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "Select * FROM " + TABLE_USERS + " WHERE " +
+                COLUMN_USERNAME + " = \"" + username + "\"" + " AND " + COLUMN_PASSWORD + " = \"" + password + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        int spInfoId, id;
+        if (cursor.moveToFirst()){
+            spInfoId = cursor.getInt(9);
+            id = cursor.getInt(0);
+        } else {
+            throw new NullPointerException("could not find the requested service provider!");
+        }
+        //CONVERTS THE TIME STRING TO A INT SO IT CAN BE COMPARED
+        char[] chars = {startTime.charAt(0), startTime.charAt(1), startTime.charAt(5), startTime.charAt(6)};
+        int bookingStartTime = Integer.parseInt(String.valueOf(chars));
+
+        char[] chars2 = {endTime.charAt(0), endTime.charAt(1), endTime.charAt(5), endTime.charAt(6)};
+        int bookingEndTime = Integer.parseInt(String.valueOf(chars2));
+
+        query = "Select * FROM " + TABLE_SPINFO + " WHERE " +
+                COLUMN_SPINFOID + " = \"" + spInfoId + "\"";
+        cursor = db.rawQuery(query, null);
+
+        String spStartTime;
+        String spEndTime;
+
+        if (cursor.moveToFirst()){
+
+            switch (date.toLowerCase()) {
+                case "monday":
+                    spStartTime = cursor.getString(4);
+                    spEndTime = cursor.getString(5);
+                    break;
+                case "tuesday":
+                    spStartTime = cursor.getString(6);
+                    spEndTime = cursor.getString(7);
+                    break;
+                case "wednesday":
+                    spStartTime = cursor.getString(8);
+                    spEndTime = cursor.getString(9);
+                    break;
+                case "thursday":
+                    spStartTime = cursor.getString(10);
+                    spEndTime = cursor.getString(11);
+                    break;
+                case "friday":
+                    spStartTime = cursor.getString(12);
+                    spEndTime = cursor.getString(13);
+                    break;
+                case "saturday":
+                    spStartTime = cursor.getString(14);
+                    spEndTime = cursor.getString(15);
+                    break;
+                case "sunday":
+                    spStartTime = cursor.getString(16);
+                    spEndTime = cursor.getString(17);
+                    break;
+                default:
+                    return false;
+            }
+            //CONVERTS THE TIME STRING TO A INT SO IT CAN BE COMPARED
+            char[] chars3 = {spStartTime.charAt(0), spStartTime.charAt(1), spStartTime.charAt(5), spStartTime.charAt(6)};
+            int spStartTimeInt = Integer.parseInt(String.valueOf(chars3));
+
+            char[] chars4 = {spEndTime.charAt(0), spEndTime.charAt(1), spEndTime.charAt(5), spEndTime.charAt(6)};
+            int spEndTimeInt = Integer.parseInt(String.valueOf(chars4));
+
+            if (spStartTimeInt <= bookingStartTime && spEndTimeInt >= bookingEndTime){
+                String query2 = "Select * FROM " + TABLE_BOOKINGFORPROVIDERS + " WHERE " +
+                        COLUMN_BOOKINGSPID + " = \"" + id + "\"" + " AND " + COLUMN_DAYOFWEEK + " = \"" + date.toLowerCase() + "\"";
+                Cursor cursor2 = db.rawQuery(query2, null);
+
+                if (cursor2.moveToFirst()){
+                    String existingBookingST = cursor2.getString(3);
+                    String existingBookingET = cursor2.getString(4);
+
+                    //CONVERTS THE TIME STRING TO A INT SO IT CAN BE COMPARED
+                    char[] chars5 = {existingBookingST.charAt(0), existingBookingST.charAt(1), existingBookingST.charAt(5), existingBookingST.charAt(6)};
+                    int existingBookingSTInt = Integer.parseInt(String.valueOf(chars5));
+
+                    char[] chars6 = {existingBookingET.charAt(0), existingBookingET.charAt(1), existingBookingET.charAt(5), existingBookingET.charAt(6)};
+                    int existingBookingETInt = Integer.parseInt(String.valueOf(chars6));
+
+                    if (existingBookingSTInt <= bookingEndTime || existingBookingETInt >= bookingStartTime){
+                        return false;
+                    }
+                    while (cursor2.moveToNext()) {
+
+                        existingBookingST = cursor2.getString(3);
+                        existingBookingET = cursor2.getString(4);
+
+                        //CONVERTS THE TIME STRING TO A INT SO IT CAN BE COMPARED
+                        char[] chars7 = {existingBookingST.charAt(0), existingBookingST.charAt(1), existingBookingST.charAt(5), existingBookingST.charAt(6)};
+                        existingBookingSTInt = Integer.parseInt(String.valueOf(chars7));
+
+                        char[] chars8 = {existingBookingET.charAt(0), existingBookingET.charAt(1), existingBookingET.charAt(5), existingBookingET.charAt(6)};
+                        existingBookingETInt = Integer.parseInt(String.valueOf(chars8));
+
+                        if (existingBookingSTInt <= bookingEndTime || existingBookingETInt >= bookingStartTime) {
+                            return false;
+                        }
+                    }
+                    //MADE IT THROUGH ALL CHECKS, CAN BE BOOKED
+                    ContentValues values = new ContentValues();
+                    values.put(COLUMN_BOOKINGSPID,id);
+                    values.put(COLUMN_DAYOFWEEK,date.toLowerCase());
+                    values.put(COLUMN_STARTTIME,startTime);
+                    values.put(COLUMN_ENDTIME,endTime);
+                    db.insert(TABLE_BOOKINGFORPROVIDERS,null,values);
+                    return true;
+
+                } else {
+                    //FOUND NO BOOKINGS WITH THAT DAY SO CAN ADD THE REQUESTED BOOKING
+                    ContentValues values = new ContentValues();
+                    values.put(COLUMN_BOOKINGSPID,id);
+                    values.put(COLUMN_DAYOFWEEK,date.toLowerCase());
+                    values.put(COLUMN_STARTTIME,startTime);
+                    values.put(COLUMN_ENDTIME,endTime);
+                    db.insert(TABLE_BOOKINGFORPROVIDERS,null,values);
+                    return true;
+                }
+
+            }
+        }
+        throw new NullPointerException("could not find additional info for this service provider!");
     }
 }
