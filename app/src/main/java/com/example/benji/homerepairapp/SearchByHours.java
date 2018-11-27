@@ -1,6 +1,7 @@
 package com.example.benji.homerepairapp;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -72,6 +73,14 @@ public class SearchByHours extends DialogFragment implements TimePickerDialog.On
             }
         });
 
+        View searchHours = v.findViewById(R.id.searchFromHours);
+        searchHours.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                searchService(v);
+            }
+        });
+
         return v;
     }
 
@@ -109,6 +118,14 @@ public class SearchByHours extends DialogFragment implements TimePickerDialog.On
     private String convertTimeToString(int hourOfDay, int minute, String extraMinZero, String extraHourZero){
 
         return extraHourZero + Integer.toString(hourOfDay) + " : " + extraMinZero + Integer.toString(minute);
+    }
+
+    public void searchService(View view){
+        Intent launchServiceList = new Intent(getActivity(), ScheduleService.class);
+        launchServiceList.putExtra("dayStart", day1View.getText().toString());
+        launchServiceList.putExtra("dayEnd", day2View.getText().toString());
+        launchServiceList.putExtra("Hours", "hours");
+        startActivity(launchServiceList);
     }
 
 }
