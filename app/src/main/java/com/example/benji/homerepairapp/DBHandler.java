@@ -326,7 +326,6 @@ public class DBHandler extends SQLiteOpenHelper {
         int spinfoID = -1;
         if (cursor.moveToFirst()){
             spinfoID = cursor.getInt(0);
-            Log.d("found last spinfoid","found last spinfoid");
         } else {
             throw new NullPointerException("COULD NOT FIND A SPINFO PRIMARY KEY");
         }
@@ -746,7 +745,6 @@ public class DBHandler extends SQLiteOpenHelper {
         String spEndTime;
 
         if (cursor.moveToFirst()){
-
             switch (date.toLowerCase()) {
                 case "monday":
                     spStartTime = cursor.getString(4);
@@ -755,6 +753,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 case "tuesday":
                     spStartTime = cursor.getString(6);
                     spEndTime = cursor.getString(7);
+
                     break;
                 case "wednesday":
                     spStartTime = cursor.getString(8);
@@ -790,7 +789,6 @@ public class DBHandler extends SQLiteOpenHelper {
                 String query2 = "Select * FROM " + TABLE_BOOKINGFORPROVIDERS + " WHERE " +
                         COLUMN_BOOKINGSPID + " = \"" + id + "\"" + " AND " + COLUMN_DAYOFWEEK + " = \"" + date.toLowerCase() + "\"";
                 Cursor cursor2 = db.rawQuery(query2, null);
-
                 if (cursor2.moveToFirst()){
                     String existingBookingST = cursor2.getString(3);
                     String existingBookingET = cursor2.getString(4);
@@ -802,11 +800,10 @@ public class DBHandler extends SQLiteOpenHelper {
                     char[] chars6 = {existingBookingET.charAt(0), existingBookingET.charAt(1), existingBookingET.charAt(5), existingBookingET.charAt(6)};
                     int existingBookingETInt = Integer.parseInt(String.valueOf(chars6));
 
-                    if (existingBookingSTInt <= bookingEndTime || existingBookingETInt >= bookingStartTime){
+                    if ((existingBookingSTInt <= bookingEndTime && bookingEndTime <= existingBookingETInt)||(existingBookingETInt > bookingStartTime && bookingStartTime >= existingBookingSTInt)){
                         return false;
                     }
                     while (cursor2.moveToNext()) {
-
                         existingBookingST = cursor2.getString(3);
                         existingBookingET = cursor2.getString(4);
 
@@ -817,7 +814,7 @@ public class DBHandler extends SQLiteOpenHelper {
                         char[] chars8 = {existingBookingET.charAt(0), existingBookingET.charAt(1), existingBookingET.charAt(5), existingBookingET.charAt(6)};
                         existingBookingETInt = Integer.parseInt(String.valueOf(chars8));
 
-                        if (existingBookingSTInt <= bookingEndTime || existingBookingETInt >= bookingStartTime) {
+                        if ((existingBookingSTInt <= bookingEndTime && bookingEndTime <= existingBookingETInt)||(existingBookingETInt > bookingStartTime && bookingStartTime >= existingBookingSTInt)) {
                             return false;
                         }
                     }
@@ -842,6 +839,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 }
 
             }
+
         }
         throw new NullPointerException("could not find additional info for this service provider!");
     }

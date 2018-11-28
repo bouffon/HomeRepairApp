@@ -3,6 +3,7 @@ package com.example.benji.homerepairapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -32,9 +33,9 @@ public class LoginPage extends AppCompatActivity {
         if (db.findUser("guy", "guy") == null){
             ServiceProvider user = new ServiceProvider("guy", "guy", "guy", "guy", "guy@guy.ca", "9059059055", "69 Admin place");
             db.addUser(user);
-            db.addSPInfo("guy","guy","defaultCompany","defaultDescription",true,"__:__","__:__","__:__",
-                    "__:__","__:__","__:__","__:__","__:__","__:__","__:__","__:__","__:__",
-                    "__:__","__:__");
+            db.addSPInfo("guy","guy","defaultCompany","defaultDescription",true,"10 : 00","18 : 00","08 : 00",
+                    "23 : 00","__ : __","__ : __","__ : __","__ : __","__ : __","__ : __","__ : __","__ : __",
+                    "__ : __","__ : __");
 
         }
     }
