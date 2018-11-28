@@ -1,6 +1,7 @@
 package com.example.benji.homerepairapp;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -39,12 +40,13 @@ public class SearchByHours extends DialogFragment implements TimePickerDialog.On
         days.add("Saturday");
         days.add("Sunday");
 
-        Spinner spinner = getActivity().findViewById(R.id.daySpinner);
+        Spinner spinner = (Spinner) v.findViewById(R.id.daySpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, days );
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(adapter);
 
-        day1View = (TextView) getActivity().findViewById(R.id.day1Time);
-        day2View = (TextView) getActivity().findViewById(R.id.day2Time);
+        day1View = (TextView) v.findViewById(R.id.day1Time);
+        day2View = (TextView) v.findViewById(R.id.day2Time);
 
         day1View.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -69,6 +71,14 @@ public class SearchByHours extends DialogFragment implements TimePickerDialog.On
                 timeSelected = "day2Time";
 
 
+            }
+        });
+
+        View searchHours = v.findViewById(R.id.searchFromHours);
+        searchHours.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                searchService(v);
             }
         });
 
@@ -109,6 +119,14 @@ public class SearchByHours extends DialogFragment implements TimePickerDialog.On
     private String convertTimeToString(int hourOfDay, int minute, String extraMinZero, String extraHourZero){
 
         return extraHourZero + Integer.toString(hourOfDay) + " : " + extraMinZero + Integer.toString(minute);
+    }
+
+    public void searchService(View view){
+        Intent launchServiceList = new Intent(getActivity(), ScheduleService.class);
+        launchServiceList.putExtra("dayStart", day1View.getText().toString());
+        launchServiceList.putExtra("dayEnd", day2View.getText().toString());
+        launchServiceList.putExtra("Hours", "hours");
+        startActivity(launchServiceList);
     }
 
 }

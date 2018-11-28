@@ -19,7 +19,7 @@ public class SearchByRating extends Fragment implements AdapterView.OnItemSelect
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle saveInstanceState) {
 
-        View v = inflater.inflate(R.layout.activity_search_by_service, container, false);
+        View v = inflater.inflate(R.layout.activity_search_by_rating, container, false);
 
         ArrayList<Integer> ratings = new ArrayList<Integer>();
 
@@ -27,8 +27,9 @@ public class SearchByRating extends Fragment implements AdapterView.OnItemSelect
             ratings.add(i);
         }
 
-        Spinner spinner = getActivity().findViewById(R.id.spinner);
+        Spinner spinner = (Spinner) v.findViewById(R.id.ratingSpinner);
         ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(getActivity(),R.layout.support_simple_spinner_dropdown_item, ratings );
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(adapter);
 
         return v;

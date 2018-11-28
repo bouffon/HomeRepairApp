@@ -57,8 +57,8 @@ public class LoginPage extends AppCompatActivity {
                 startActivity(intent);
             }
             else{
-                Intent intent = new Intent(this, Homepage.class);
-                intent.putExtra("ActiveUser", activeUser);
+                Intent intent = new Intent(this, HomeOwnerNav.class);
+                intent.putExtra("hm", activeUser);
                 startActivity(intent);
             }
         }

@@ -27,22 +27,22 @@ public class HomeOwnerNav extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.hnav_searchByService:
                     selectedFragment = new SearchByService(); //create an instance of SPServices to create the list of services currently offered
-                    selectedFragment.setArguments(args);
+                    //selectedFragment.setArguments(args);
                     break;
 
                 case R.id.hnav_searchByRating:
                     selectedFragment = new SearchByRating();
-                    selectedFragment.setArguments(args);
+                    //selectedFragment.setArguments(args);
                     break;
 
                 case R.id.hnav_searchByHours:
                     selectedFragment = new SearchByHours(); //since edit hours doesn't work lol
-                    selectedFragment.setArguments(args);
+                    //selectedFragment.setArguments(args);
                     break;
 
                 case R.id.hnav_rate:
-                    selectedFragment = new SPServices(); //since edit hours doesn't work lol
-                    selectedFragment.setArguments(args);
+                    selectedFragment = new RateProvider(); //since edit hours doesn't work lol
+                    //selectedFragment.setArguments(args);
                     break;
             }
 
@@ -65,11 +65,11 @@ public class HomeOwnerNav extends AppCompatActivity {
         hm = (Homeowner) i.getSerializableExtra("hm");
 
         //put Service provider's username and password into the bundle
-        String [] hmLogin = {hm.getUsername(),hm.getPassword()};
-        args.putStringArray("hm", hmLogin);
+        /*String [] hmLogin = {hm.getUsername(),hm.getPassword()};
+        args.putStringArray("hm", hmLogin);*/
 
-        Fragment defaultFragment =  new SPServices();
-        defaultFragment.setArguments(args);
+        Fragment defaultFragment =  new SearchByService();
+        //defaultFragment.setArguments(args);
 
         //automatically go to the SPServices fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.container, defaultFragment).commit();

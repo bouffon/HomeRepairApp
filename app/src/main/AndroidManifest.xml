@@ -47,7 +47,8 @@
         <activity android:name=".SearchByRating" />
         <activity android:name=".SearchByHours" />
         <activity android:name=".ScheduleService" />
-        <activity android:name=".ServiceProviderList"></activity>
+        <activity android:name=".ServiceProviderList" />
+        <activity android:name=".RateProvider"></activity>
     </application>
 
 </manifest>
