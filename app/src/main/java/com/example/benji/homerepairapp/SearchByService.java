@@ -26,12 +26,12 @@ public class SearchByService extends Fragment {
         ListView listView = (ListView) v.findViewById(R.id.servicesList);   //listView for all services
         DBHandler db = new DBHandler(getActivity());
 
-        ArrayList<Service> serviceList = new ArrayList<>(); //ArrayList to store Service objects
+        ArrayList<Service> serviceList = new ArrayList<Service>(); //ArrayList to store Service objects
         Cursor data = db.getServiceContents();
 
         //check to see if there are no services
         if(data.getCount() == 0) {
-            Toast.makeText(getActivity(), "There are no services", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "There are no services to search", Toast.LENGTH_LONG).show();
         }
 
         //populate listView and add listeners to each item in the list

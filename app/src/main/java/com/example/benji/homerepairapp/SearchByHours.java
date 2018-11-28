@@ -40,12 +40,13 @@ public class SearchByHours extends DialogFragment implements TimePickerDialog.On
         days.add("Saturday");
         days.add("Sunday");
 
-        Spinner spinner = getActivity().findViewById(R.id.daySpinner);
+        Spinner spinner = (Spinner) v.findViewById(R.id.daySpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, days );
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(adapter);
 
-        day1View = (TextView) getActivity().findViewById(R.id.day1Time);
-        day2View = (TextView) getActivity().findViewById(R.id.day2Time);
+        day1View = (TextView) v.findViewById(R.id.day1Time);
+        day2View = (TextView) v.findViewById(R.id.day2Time);
 
         day1View.setOnClickListener(new View.OnClickListener(){
             @Override

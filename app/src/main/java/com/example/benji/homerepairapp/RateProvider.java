@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class AdminUserList extends Fragment {
+public class RateProvider extends Fragment {
 
     DBHandler dB;
 
@@ -24,27 +24,25 @@ public class AdminUserList extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle saveInstanceState){
 
-        View v = inflater.inflate(R.layout.activity_admin_user_list,container,false);
+        View v = inflater.inflate(R.layout.activity_rate_provider,container,false);
 
-        ListView listView = (ListView) v.findViewById(R.id.listView);
+        ListView listView = (ListView) v.findViewById(R.id.serviceProviders);
         dB = new DBHandler(getActivity());
 
-        ArrayList<String> userList = new ArrayList<>();
-        Cursor data = dB.getDBContents();
+        List<ServiceProvider> serviceProviders = dB.getAllSP();
 
-        if(data.getCount() == 0){
-            Toast.makeText(getActivity(), "There are no users in the list",Toast.LENGTH_LONG).show();
+        if(serviceProviders == null){
+            Toast.makeText(getActivity(), "There are no service providers",Toast.LENGTH_LONG).show();
         }
         else{
-            while(data.moveToNext()){
-                userList.add(data.getString(1));
+            List<String> serviceProviderList = new ArrayList<String>();
+
+            for(int i = 0; i <serviceProviders.size();i++){
+                serviceProviderList.add(serviceProviders.get(i).getfName() + " " + serviceProviders.get(i).getlName());
             }
-            ListAdapter listAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, userList);
+            ListAdapter listAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, serviceProviderList);
             listView.setAdapter(listAdapter);
         }
         return v;
     }
-
-
-
 }
