@@ -1,12 +1,12 @@
 package com.example.benji.homerepairapp;
 
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +15,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import java.util.Calendar;
 
+import static java.util.Calendar.*;
 import java.util.ArrayList;
 
 public class SearchByHours extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
@@ -53,8 +55,8 @@ public class SearchByHours extends DialogFragment implements TimePickerDialog.On
         day1View.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                DialogFragment timePicker = new TimePickerFragment();
-                timePicker.show(getActivity().getSupportFragmentManager(), "time picker");
+                DialogFragment timePicker = new SearchByHours();
+                timePicker.show(getFragmentManager(), "time picker");
                 timeSelected = "day1Time";
             }
         });
@@ -64,12 +66,12 @@ public class SearchByHours extends DialogFragment implements TimePickerDialog.On
             @Override
             public void onClick(View v){
 
-                if(day2View.getText().equals("__ : __")){
+                if(day1View.getText().equals("__ : __")){
                     return;
                 }
 
-                DialogFragment timePicker = new TimePickerFragment();
-                timePicker.show(getActivity().getSupportFragmentManager(), "time picker");
+                DialogFragment timePicker = new SearchByHours();
+                timePicker.show(getFragmentManager(), "time picker");
                 timeSelected = "day2Time";
 
 
@@ -92,6 +94,19 @@ public class SearchByHours extends DialogFragment implements TimePickerDialog.On
         return v;
     }
 
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        // Use the current time as the default values for the picker
+
+        final Calendar calendar = getInstance();
+        int hour = calendar.get(HOUR_OF_DAY);
+        int minute = calendar.get(MINUTE);
+
+        // Create a new instance of TimePickerDialog and return it
+        return new TimePickerDialog(getActivity(), this, hour, minute, true);
+    }
+
+
     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
 
         String extraMinZero = "", extraHourZero = "";
@@ -104,6 +119,7 @@ public class SearchByHours extends DialogFragment implements TimePickerDialog.On
             extraHourZero = "0";
         }
 
+        Log.d("guyishot", timeSelected);
         switch (timeSelected) {
             case "day1Time":
                 if (day2View.getText().toString().equals("__ : __")) {
