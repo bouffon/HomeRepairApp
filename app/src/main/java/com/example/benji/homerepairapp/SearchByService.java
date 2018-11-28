@@ -23,7 +23,7 @@ public class SearchByService extends Fragment {
 
         View v = inflater.inflate(R.layout.activity_search_by_service, container, false);
 
-        ListView listView = (ListView) v.findViewById(R.id.servicesList);   //listView for all services
+        ListView listView = (ListView) v.findViewById(R.id.servicesOffered);   //listView for all services
         DBHandler db = new DBHandler(getActivity());
 
         ArrayList<Service> serviceList = new ArrayList<Service>(); //ArrayList to store Service objects

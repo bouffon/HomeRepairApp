@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,7 @@ public class SearchByHours extends DialogFragment implements TimePickerDialog.On
 
     TextView day1View, day2View;
     String timeSelected = "";
+    String dayOfWeek;
 
     int dayStart, dayEnd;
 
@@ -78,7 +80,12 @@ public class SearchByHours extends DialogFragment implements TimePickerDialog.On
         searchHours.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                searchService(v);
+                if(day1View.getText().toString().equals("__ : __") | day2View.getText().toString().equals("__ : __")){
+                    Toast.makeText(getActivity(), "Please enter a start and end time ", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    searchServiceByHours(v);
+                }
             }
         });
 
@@ -121,11 +128,11 @@ public class SearchByHours extends DialogFragment implements TimePickerDialog.On
         return extraHourZero + Integer.toString(hourOfDay) + " : " + extraMinZero + Integer.toString(minute);
     }
 
-    public void searchService(View view){
+    public void searchServiceByHours(View view){
         Intent launchServiceList = new Intent(getActivity(), ScheduleService.class);
         launchServiceList.putExtra("dayStart", day1View.getText().toString());
         launchServiceList.putExtra("dayEnd", day2View.getText().toString());
-        launchServiceList.putExtra("Hours", "hours");
+        launchServiceList.putExtra("searchType", "hours");
         startActivity(launchServiceList);
     }
 
