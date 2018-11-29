@@ -15,15 +15,17 @@ public class ServiceProvider extends User {
     private String[] times = new String[14];
     //private List<Service> services = new ArrayList<Service>();
     private String [] services;
+    private Double rating;
 
     public ServiceProvider(String username, String password, String fName, String lName, String email, String phone, String address) {
         super(username, password, fName, lName, email, phone, address);
     }
 
-    public void additionalInfo(String company, String description, boolean license, String[] newTimes, List<Service> newServices) {
+    public void additionalInfo(String company, String description, boolean license, String[] newTimes, List<Service> newServices, Double rating) {
         this.company = company;
         this.description = description;
         this.license = license;
+        this.rating = rating;
 
         if (newServices != null) {
             services = new String [newServices.size()];

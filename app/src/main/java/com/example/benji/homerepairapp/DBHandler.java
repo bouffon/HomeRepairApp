@@ -186,7 +186,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
                 if (cursor2.moveToFirst()) {
                     ((ServiceProvider) user).additionalInfo(cursor2.getString(1), cursor2.getString(2), cursor.getInt(3) > 0,
-                            this.createTimesArray(cursor.getInt(9)),this.createServiceArray(cursor.getInt(0)));
+                            this.createTimesArray(cursor.getInt(9)),this.createServiceArray(cursor.getInt(0)),cursor2.getDouble(18));
                 }
 
             } if (Integer.parseInt(cursor.getString(8)) == 2) {
@@ -231,7 +231,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
             if (cursor2.moveToFirst()) {
                 sp.additionalInfo(cursor2.getString(1), cursor2.getString(2), cursor.getInt(3) > 0,
-                        this.createTimesArray(cursor.getInt(9)),this.createServiceArray(cursor.getInt(0)));
+                        this.createTimesArray(cursor.getInt(9)),this.createServiceArray(cursor.getInt(0)),cursor2.getDouble(18));
             } serviceProviders.add(sp);
             cursor2.close();
         }
@@ -247,7 +247,7 @@ public class DBHandler extends SQLiteOpenHelper {
             Cursor cursor2 = db.rawQuery(query2, null);
             if (cursor2.moveToFirst()) {
                 sp.additionalInfo(cursor2.getString(1), cursor2.getString(2), cursor.getInt(3) > 0,
-                        this.createTimesArray(cursor.getInt(9)),this.createServiceArray(cursor.getInt(0)));
+                        this.createTimesArray(cursor.getInt(9)),this.createServiceArray(cursor.getInt(0)),cursor2.getDouble(18));
             } serviceProviders.add(sp);
             cursor2.close();
         }
