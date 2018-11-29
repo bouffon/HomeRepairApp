@@ -28,7 +28,11 @@ public class LoginPage extends AppCompatActivity {
             Admin user = new Admin("admin", "admin", "admin", "admin", "admin@admin.ca", "9059059055", "69 Admin place");
             db.addUser(user);
         }
-
+        //creates a default homeowner
+        if (db.findUser("bob", "bob") == null){
+            Homeowner user = new Homeowner("bob", "bob", "bob", "bob", "bob@bob.ca", "9059059055", "bob");
+            db.addUser(user);
+        }
         //add default service provider
         if (db.findUser("guy", "guy") == null){
             ServiceProvider user = new ServiceProvider("guy", "guy", "guy", "guy", "guy@guy.ca", "9059059055", "69 Admin place");

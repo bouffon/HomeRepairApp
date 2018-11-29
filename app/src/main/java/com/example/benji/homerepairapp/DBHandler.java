@@ -70,6 +70,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_DAYOFWEEK = "dayOfWeek";
     public static final String COLUMN_STARTTIME = "startTime";
     public static final String COLUMN_ENDTIME = "endTime";
+    public static final String COLUMN_BOOKINGHID = "bookingHID";
 
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -109,7 +110,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_SERVICESFORPROVIDERS_TABLE);
 
         String CREATE_BOOKINGFORPROVIDERS_TABLE = "CREATE TABLE " + TABLE_BOOKINGFORPROVIDERS + "(" + COLUMN_BOOKINGID + " INTEGER PRIMARY KEY," +
-                COLUMN_BOOKINGSPID + " INTEGER," + COLUMN_DAYOFWEEK + " TEXT," + COLUMN_STARTTIME + " TEXT," + COLUMN_ENDTIME + " TEXT" + ")";
+                COLUMN_BOOKINGSPID + " INTEGER," + COLUMN_DAYOFWEEK + " TEXT," + COLUMN_STARTTIME + " TEXT," + COLUMN_ENDTIME + " TEXT," + COLUMN_BOOKINGHID + " INTEGER" + ")";
         db.execSQL(CREATE_BOOKINGFORPROVIDERS_TABLE);
     }
 
@@ -716,19 +717,30 @@ public class DBHandler extends SQLiteOpenHelper {
         return services;
     }
 
-    public Boolean createNewBooking(String username, String password, String date, String startTime, String endTime) throws NullPointerException{
+    public Boolean createNewBooking(String spUsername, String spPassword, String hUsername, String hPassword, String date, String startTime, String endTime) throws NullPointerException{
         SQLiteDatabase db = this.getWritableDatabase();
 
+        //QUERY FINDS THE SERVICE PROVIDER BEING BOOKED
         String query = "Select * FROM " + TABLE_USERS + " WHERE " +
-                COLUMN_USERNAME + " = \"" + username + "\"" + " AND " + COLUMN_PASSWORD + " = \"" + password + "\"";
+                COLUMN_USERNAME + " = \"" + spUsername + "\"" + " AND " + COLUMN_PASSWORD + " = \"" + spPassword + "\"";
         Cursor cursor = db.rawQuery(query, null);
 
-        int spInfoId, id;
+        //QUERY FIND THE HOMEOWNER WHO MADE THE BOOKING
+        String query3 = "Select * FROM " + TABLE_USERS + " WHERE " +
+                COLUMN_USERNAME + " = \"" + hUsername + "\"" + " AND " + COLUMN_PASSWORD + " = \"" + hPassword + "\"";
+        Cursor cursor3 = db.rawQuery(query3, null);
+
+        int spInfoId, id, hId;
         if (cursor.moveToFirst()){
             spInfoId = cursor.getInt(9);
             id = cursor.getInt(0);
         } else {
             throw new NullPointerException("could not find the requested service provider!");
+        }
+        if (cursor3.moveToFirst()){
+            hId = cursor3.getInt(0);
+        } else {
+            throw new NullPointerException("could not find the requested homeowner!");
         }
         //CONVERTS THE TIME STRING TO A INT SO IT CAN BE COMPARED
         char[] chars = {startTime.charAt(0), startTime.charAt(1), startTime.charAt(5), startTime.charAt(6)};
@@ -824,6 +836,7 @@ public class DBHandler extends SQLiteOpenHelper {
                     values.put(COLUMN_DAYOFWEEK,date.toLowerCase());
                     values.put(COLUMN_STARTTIME,startTime);
                     values.put(COLUMN_ENDTIME,endTime);
+                    values.put(COLUMN_BOOKINGHID,hId);
                     db.insert(TABLE_BOOKINGFORPROVIDERS,null,values);
                     return true;
 
@@ -834,6 +847,7 @@ public class DBHandler extends SQLiteOpenHelper {
                     values.put(COLUMN_DAYOFWEEK,date.toLowerCase());
                     values.put(COLUMN_STARTTIME,startTime);
                     values.put(COLUMN_ENDTIME,endTime);
+                    values.put(COLUMN_BOOKINGHID,hId);
                     db.insert(TABLE_BOOKINGFORPROVIDERS,null,values);
                     return true;
                 }
