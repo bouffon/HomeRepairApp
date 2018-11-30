@@ -51,7 +51,8 @@ public class SearchByService extends Fragment {
 
                     //create an intent for the selected service so it can be edited
                     Intent launchServiceList = new Intent(getActivity().getApplicationContext(), ScheduleService.class);
-                    launchServiceList.putExtra("service",s.getServiceName());
+                    launchServiceList.putExtra("serviceName", s.getServiceName());
+                    launchServiceList.putExtra("searchType","service");
                     startActivity(launchServiceList);
                 }
             });

@@ -16,6 +16,8 @@ import java.util.ArrayList;
 
 public class SearchByRating extends Fragment implements AdapterView.OnItemSelectedListener {
 
+    double selectedRating;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle saveInstanceState) {
@@ -33,6 +35,9 @@ public class SearchByRating extends Fragment implements AdapterView.OnItemSelect
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(adapter);
 
+        selectedRating = Double.parseDouble(spinner.getSelectedItem().toString());
+
+
         View searchHours = v.findViewById(R.id.searchFromRating);
         searchHours.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -46,8 +51,8 @@ public class SearchByRating extends Fragment implements AdapterView.OnItemSelect
 
     public void searchServiceByRating(View view){
         Intent launchServiceList = new Intent(getActivity(), ScheduleService.class);
-
-        launchServiceList.putExtra("searchType", "hours");
+        launchServiceList.putExtra("rating", selectedRating);
+        launchServiceList.putExtra("searchType", "rating");
         startActivity(launchServiceList);
     }
 

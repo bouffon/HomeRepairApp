@@ -33,7 +33,7 @@ public class AdminUserList extends Fragment {
         Cursor data = dB.getDBContents();
 
         if(data.getCount() == 0){
-            Toast.makeText(getActivity(), "There are no users in the list",Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "There are no users",Toast.LENGTH_LONG).show();
         }
         else{
             while(data.moveToNext()){

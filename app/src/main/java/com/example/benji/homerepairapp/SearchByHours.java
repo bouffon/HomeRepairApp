@@ -83,7 +83,7 @@ public class SearchByHours extends DialogFragment implements TimePickerDialog.On
             @Override
             public void onClick(View v){
                 if(day1View.getText().toString().equals("__ : __") | day2View.getText().toString().equals("__ : __")){
-                    Toast.makeText(getActivity(), "Please enter a start and end time ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Please enter a start and end time", Toast.LENGTH_LONG).show();
                 }
                 else{
                     searchServiceByHours(v);

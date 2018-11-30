@@ -13,15 +13,14 @@ public class ServiceProvider extends User {
     private String description;
     private boolean license;
     private String[] times = new String[14];
-    //private List<Service> services = new ArrayList<Service>();
     private String [] services;
-    private Double rating;
+    private double rating;
 
     public ServiceProvider(String username, String password, String fName, String lName, String email, String phone, String address) {
         super(username, password, fName, lName, email, phone, address);
     }
 
-    public void additionalInfo(String company, String description, boolean license, String[] newTimes, List<Service> newServices, Double rating) {
+    public void additionalInfo(String company, String description, boolean license, String[] newTimes, List<Service> newServices, double rating) {
         this.company = company;
         this.description = description;
         this.license = license;
@@ -53,6 +52,10 @@ public class ServiceProvider extends User {
 
     public String[] getTimes() {
         return times;
+    }
+
+    public double getRating() {
+        return rating;
     }
 
     public String[] getServices(){
