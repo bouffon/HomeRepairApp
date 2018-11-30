@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BookingPage">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6">
+
+        <LinearLayout
+            android:id="@+id/dates"
+            android:layout_width="114dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="27dp"
+            tools:layout_editor_absoluteY="346dp">
+
+            <Spinner
+                android:id="@+id/daySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="34dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/timeSlot1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="176dp"
+            tools:layout_editor_absoluteY="346dp">
+
+            <TextView
+                android:id="@+id/day1Time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="313dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/-"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="273dp"
+            tools:layout_editor_absoluteY="346dp">
+
+            <TextView
+                android:id="@+id/-1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="313dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/timeSlot2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="316dp"
+            tools:layout_editor_absoluteY="346dp">
+
+            <TextView
+                android:id="@+id/day2Time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="313dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="357dp"
+        android:layout_height="73dp"
+        android:layout_marginTop="60dp"
+        android:gravity="center"
+        android:text="Book a Service Provider"
+        android:textSize="24sp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="11dp" />
+
+    <Button
+        android:id="@+id/book"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="Book" />
+
+</android.support.constraint.ConstraintLayout>
