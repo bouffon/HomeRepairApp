@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -21,7 +22,7 @@ import java.util.Calendar;
 import static java.util.Calendar.*;
 import java.util.ArrayList;
 
-public class SearchByHours extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+public class SearchByHours extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, AdapterView.OnItemSelectedListener {
 
     TextView day1View, day2View;
     String timeSelected = "";
@@ -50,6 +51,10 @@ public class SearchByHours extends AppCompatActivity implements TimePickerDialog
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, days );
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(adapter);
+
+        dayOfWeek = (spinner.getSelectedItem().toString());
+
+        View searchHours = findViewById(R.id.searchFromHours);
 
         day1View = (TextView) findViewById(R.id.day1Time);
         day2View = (TextView) findViewById(R.id.day2Time);
@@ -80,7 +85,6 @@ public class SearchByHours extends AppCompatActivity implements TimePickerDialog
             }
         });
 
-        View searchHours = findViewById(R.id.searchFromHours);
         searchHours.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -132,10 +136,21 @@ public class SearchByHours extends AppCompatActivity implements TimePickerDialog
 
     public void searchServiceByHours(View view){
         Intent launchServiceList = new Intent(this, ScheduleService.class);
-        launchServiceList.putExtra("dayStart", day1View.getText().toString());
-        launchServiceList.putExtra("dayEnd", day2View.getText().toString());
+        launchServiceList.putExtra("startTime", day1View.getText().toString());
+        launchServiceList.putExtra("endTime", day2View.getText().toString());
+        launchServiceList.putExtra("day", dayOfWeek);
         launchServiceList.putExtra("searchType", "hours");
         startActivity(launchServiceList);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 
 }
