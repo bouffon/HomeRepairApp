@@ -20,7 +20,7 @@ public class ServiceProvider extends User {
         super(username, password, fName, lName, email, phone, address);
     }
 
-    public void additionalInfo(String company, String description, boolean license, String[] newTimes, List<Service> newServices, double rating) {
+    public void additionalInfo(String company, String description, boolean license, String[] newTimes, ArrayList<Service> newServices, double rating) {
         this.company = company;
         this.description = description;
         this.license = license;
@@ -80,7 +80,7 @@ public class ServiceProvider extends User {
         }
     }
 
-    public void setServices(List<Service> newServices){
+    public void setServices(ArrayList<Service> newServices){
         for (int i = 0; i<newServices.size(); i++){
             services [i] = newServices.get(i).getServiceName();
         }

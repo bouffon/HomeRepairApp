@@ -617,13 +617,13 @@ public class DBHandler extends SQLiteOpenHelper {
 
      @return newServices
      */
-    private List<Service> createServiceArray(int key){
+    private ArrayList<Service> createServiceArray(int key){
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "Select * FROM " + TABLE_SERVICESFORPROVIDERS + " WHERE " +
                 COLUMN_SP + " = \"" + key + "\"";
         Cursor cursor = db.rawQuery(query, null);
-        List<Service> newServices = new ArrayList<Service>();
+        ArrayList<Service> newServices = new ArrayList<Service>();
         int serviceKey;
         if (cursor.moveToFirst()) {
             serviceKey = cursor.getInt(2);
