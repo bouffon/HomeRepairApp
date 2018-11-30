@@ -16,23 +16,23 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RateProvider extends Fragment {
+public class RateProvider extends AppCompatActivity {
 
     DBHandler dB;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle saveInstanceState){
+    public void onCreate(Bundle savedInstanceState){
 
-        View v = inflater.inflate(R.layout.activity_rate_provider,container,false);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_rate_provider);
 
-        ListView listView = (ListView) v.findViewById(R.id.serviceProviders);
-        dB = new DBHandler(getActivity());
+        ListView listView = (ListView) findViewById(R.id.serviceProviders);
+        dB = new DBHandler(this);
 
         List<ServiceProvider> serviceProviders = dB.getAllSP();
 
         if(serviceProviders == null){
-            Toast.makeText(getActivity(), "There are no service providers",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "There are no service providers",Toast.LENGTH_LONG).show();
         }
         else{
             List<String> serviceProviderList = new ArrayList<String>();
@@ -40,9 +40,8 @@ public class RateProvider extends Fragment {
             for(int i = 0; i <serviceProviders.size();i++){
                 serviceProviderList.add(serviceProviders.get(i).getfName() + " " + serviceProviders.get(i).getlName());
             }
-            ListAdapter listAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, serviceProviderList);
+            ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, serviceProviderList);
             listView.setAdapter(listAdapter);
         }
-        return v;
     }
 }

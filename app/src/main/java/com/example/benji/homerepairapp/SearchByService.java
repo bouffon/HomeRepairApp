@@ -15,23 +15,24 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class SearchByService extends Fragment {
+public class SearchByService extends AppCompatActivity {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle saveInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.activity_search_by_service, container, false);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search_by_service);
 
-        ListView listView = (ListView) v.findViewById(R.id.servicesOffered);   //listView for all services
-        DBHandler db = new DBHandler(getActivity());
+        ListView listView = (ListView) findViewById(R.id.servicesOffered);   //listView for all services
+        DBHandler db = new DBHandler(this);
 
         ArrayList<Service> serviceList = new ArrayList<Service>(); //ArrayList to store Service objects
         Cursor data = db.getServiceContents();
 
         //check to see if there are no services
         if(data.getCount() == 0) {
-            Toast.makeText(getActivity(), "There are no services to search", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "There are no services to search", Toast.LENGTH_LONG).show();
         }
 
         //populate listView and add listeners to each item in the list
@@ -39,7 +40,7 @@ public class SearchByService extends Fragment {
             while(data.moveToNext()){
 
                 serviceList.add(new Service(data.getString(1), data.getDouble(2)));
-                ServiceAdapter sAdapter = new ServiceAdapter(getActivity(), serviceList);
+                ServiceAdapter sAdapter = new ServiceAdapter(this, serviceList);
                 listView.setAdapter(sAdapter);
             }
 
@@ -50,13 +51,12 @@ public class SearchByService extends Fragment {
                     Service s = (Service) adapterView.getItemAtPosition(position);    //service at selected position
 
                     //create an intent for the selected service so it can be edited
-                    Intent launchServiceList = new Intent(getActivity().getApplicationContext(), ScheduleService.class);
+                    Intent launchServiceList = new Intent(getApplicationContext(), ScheduleService.class);
                     launchServiceList.putExtra("serviceName", s.getServiceName());
                     launchServiceList.putExtra("searchType","service");
                     startActivity(launchServiceList);
                 }
             });
         }
-        return v;
     }
 }

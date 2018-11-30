@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeOwnerPage">
+
+    <TextView
+        android:id="@+id/HomeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:text="WELCOME HOMEOWNER"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="189dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="84dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HomeTitle"
+        app:layout_constraintVertical_bias="0.321">
+
+        <LinearLayout
+            android:layout_width="140dp"
+            android:layout_height="170dp"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="176dp"
+            tools:layout_editor_absoluteY="238dp">
+
+            <TextView
+                android:id="@+id/ServiceText"
+                android:layout_width="140dp"
+                android:layout_height="41dp"
+                android:gravity="left|center"
+                android:text="Services"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/HourText"
+                android:layout_width="140dp"
+                android:layout_height="41dp"
+                android:gravity="left|center"
+                android:text="Hours"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/RatingText"
+                android:layout_width="140dp"
+                android:layout_height="41dp"
+                android:gravity="left|center"
+                android:text="Ratings"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/ratingText"
+                android:layout_width="140dp"
+                android:layout_height="41dp"
+                android:gravity="left|center"
+                android:text="Rate a Provider"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="97dp"
+            android:layout_height="170dp"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="79dp"
+            tools:layout_editor_absoluteY="238dp">
+
+            <ImageButton
+                android:id="@+id/SearchByServices"
+                android:layout_width="96dp"
+                android:layout_height="41dp"
+                android:onClick="searchByServices"
+                app:srcCompat="@drawable/ic_search_by_service_black_24dp"
+                tools:layout_editor_absoluteX="198dp"
+                tools:layout_editor_absoluteY="229dp" />
+
+            <ImageButton
+                android:id="@+id/SearchByHours"
+                android:layout_width="96dp"
+                android:layout_height="41dp"
+                android:onClick="searchByHours"
+                app:srcCompat="@drawable/ic_search_by_hours_black_24dp"
+                tools:layout_editor_absoluteX="198dp"
+                tools:layout_editor_absoluteY="270dp" />
+
+            <ImageButton
+                android:id="@+id/SearchByRatings"
+                android:layout_width="96dp"
+                android:layout_height="41dp"
+                android:onClick="searchByRatings"
+                app:srcCompat="@drawable/ic_search_by_rate_black_24dp"
+                tools:layout_editor_absoluteX="198dp"
+                tools:layout_editor_absoluteY="311dp" />
+
+            <ImageButton
+                android:id="@+id/RateProvider"
+                android:layout_width="96dp"
+                android:layout_height="41dp"
+                android:onClick="giveRatings"
+                app:srcCompat="@drawable/ic_star_black_24dp"
+                tools:layout_editor_absoluteX="198dp"
+                tools:layout_editor_absoluteY="352dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
