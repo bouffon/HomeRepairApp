@@ -5,9 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-import android.widget.ArrayAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -345,6 +342,16 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     updateHours takes in the username and password of a service provider along with a array full of times (as strings)
+     that and will find the service provider with that username and password in the Services Table, then it will edit
+     the hours in the SPINFO table for that service provider
+
+     @param username
+     @param password
+     @param newTimes
+
+     */
     public void updateHours(String username, String password, String[] newTimes){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -652,6 +659,14 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     findService takes in a serviceName and finds the service that has that name, and returns
+     and instance of that service
+
+     @param serviceName
+     @return Service
+
+     */
     public Service findService(String serviceName){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -668,7 +683,15 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
         return service;
     }
+    /**
+     updateRate takes in the oldRate, service name, and new rate and updates the stored hourly rate
+     in the services table
 
+     @param oldRate
+     @param service
+     @param newRate
+
+     */
     public void updateRate(String oldRate, String service, String newRate){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE " + TABLE_SERVICES + " SET " + COLUMN_RATE + " = '" + newRate + "' WHERE "
@@ -676,7 +699,15 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
+    /**
+     findServicebyID takes in the primary key of the service and finds that service in the services table
+     the method then returns an instance of that service
 
+     @param id
+
+     @return Service
+
+     */
     public Service findServicebyID(int id){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -694,6 +725,15 @@ public class DBHandler extends SQLiteOpenHelper {
         return service;
     }
 
+    /**
+     deleteService takes in the name of service, and deletes the service in the services table
+     that has that matching service name.
+
+     @param serviceName
+
+     @return boolean
+
+     */
     public boolean deleteService(String serviceName) {
         boolean result = false;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -711,12 +751,36 @@ public class DBHandler extends SQLiteOpenHelper {
         return result;
     }
 
+    /**
+     getServiceContents returns are cursor that points the the Service table
+
+     @return Cursor
+
+     */
     public Cursor getServiceContents() throws NullPointerException{
         SQLiteDatabase dB = this.getReadableDatabase();
         Cursor services = dB.rawQuery("SELECT * FROM " + TABLE_SERVICES, null);
         return services;
     }
 
+    /**
+     createNewBooking takes in the username and password of the serviceprovider that is being booked, then takes in the
+     username and password of the homeowner creating the booking, and finally, the date and time slot of the booking
+     The method then checks if that booking is valid (if the there is already a booking in that time, or if the service provider
+     does not have those operating hours the booking is not valid). If the booking is valid, it will be added to the
+     BookingForProviders table and true will be returned. If the booking is not valid the method returns false
+
+     @param spUsername
+     @param spPassword
+     @param hUsername
+     @param hPassword
+     @param date
+     @param startTime
+     @param endTime
+
+     @return Boolean
+
+     */
     public Boolean createNewBooking(String spUsername, String spPassword, String hUsername, String hPassword, String date, String startTime, String endTime) throws NullPointerException{
         SQLiteDatabase db = this.getWritableDatabase();
 
