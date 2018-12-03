@@ -477,6 +477,57 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         db.close();
     }
+    /**
+     isRatable determines if a homeowner is allowed to rate a certain service provider. The method
+     takes in the username and password of both the service provider and password. It then finds each
+     of these users in the USERS table. From there it checks if that homeowner has booked that service provider
+     at least once in the BOOKINGFORPROVIDERS table
+
+     @param spUsername
+     @param spPassword
+     @param hUsername
+     @param hPassword
+
+     @return boolean
+
+     */
+    public boolean isRateable(String spUsername, String spPassword, String hUsername, String hPassword) throws NullPointerException{
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        //QUERY BELOW FINDS THE SERVICE PROVIDER SPECIFIED AS AN ARGUMENT
+        String query = "Select * FROM " + TABLE_USERS + " WHERE " +
+                COLUMN_USERNAME + " = \"" + spUsername + "\"" + " AND " + COLUMN_PASSWORD + " = \"" + spPassword + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        int spID, hID;
+        if (cursor.moveToFirst()){
+            spID = cursor.getInt(0);
+        } else {
+            throw new NullPointerException("could not find service provider in db!");
+        }
+
+        //QUERY BELOW FINDS THE HOMEOWNER SPECIFIED AS AN ARGUMENT
+        query = "Select * FROM " + TABLE_USERS + " WHERE " +
+                COLUMN_USERNAME + " = \"" + hUsername + "\"" + " AND " + COLUMN_PASSWORD + " = \"" + hPassword + "\"";
+        cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            hID = cursor.getInt(0);
+        } else {
+            throw new NullPointerException("could not find homeowner in db!");
+        }
+        boolean flag = false;
+
+        //QUERY BELOW CHECKS IF THE FOUND HOMEOWNER HAS AT LEAST ONE BOOKING WITH THAT THAT SERVICE PROVIDER
+        query = "Select * FROM " + TABLE_BOOKINGFORPROVIDERS + " WHERE " +
+                COLUMN_BOOKINGSPID + " = \"" + spID + "\"" + " AND " + COLUMN_BOOKINGHID + " = \"" + hID + "\"";
+        cursor = db.rawQuery(query,null);
+
+        if (cursor.moveToFirst()){
+            flag = true;
+        }
+        return flag;
+    }
 
     /**
      addSPService adds a service to a service providers offered services
