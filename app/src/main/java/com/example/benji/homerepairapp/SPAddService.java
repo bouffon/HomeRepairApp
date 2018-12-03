@@ -93,7 +93,7 @@ public class SPAddService extends Fragment {
     }
 
 
-        public void addPrompt (View view){
+    public void addPrompt (View view){
 
         AlertDialog.Builder delMsg = new AlertDialog.Builder(getActivity());
         delMsg.setMessage("Are you sure you want to offer this service?").setCancelable(false)

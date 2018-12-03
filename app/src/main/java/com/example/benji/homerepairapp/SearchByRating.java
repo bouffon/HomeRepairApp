@@ -14,15 +14,15 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
-public class SearchByRating extends Fragment implements AdapterView.OnItemSelectedListener {
+public class SearchByRating extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     double selectedRating;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle saveInstanceState) {
+    public void onCreate(Bundle savedInstanceState){
 
-        View v = inflater.inflate(R.layout.activity_search_by_rating, container, false);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search_by_rating);
 
         ArrayList<Integer> ratings = new ArrayList<Integer>();
 
@@ -30,27 +30,25 @@ public class SearchByRating extends Fragment implements AdapterView.OnItemSelect
             ratings.add(i);
         }
 
-        Spinner spinner = (Spinner) v.findViewById(R.id.ratingSpinner);
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(getActivity(),R.layout.support_simple_spinner_dropdown_item, ratings );
+        Spinner spinner = (Spinner) findViewById(R.id.ratingSpinner);
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, R.layout.support_simple_spinner_dropdown_item, ratings );
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(adapter);
 
         selectedRating = Double.parseDouble(spinner.getSelectedItem().toString());
 
 
-        View searchHours = v.findViewById(R.id.searchFromRating);
+        View searchHours = findViewById(R.id.searchFromRating);
         searchHours.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 searchServiceByRating(v);
             }
         });
-
-        return v;
     }
 
     public void searchServiceByRating(View view){
-        Intent launchServiceList = new Intent(getActivity(), ScheduleService.class);
+        Intent launchServiceList = new Intent(this, ScheduleService.class);
         launchServiceList.putExtra("rating", selectedRating);
         launchServiceList.putExtra("searchType", "rating");
         startActivity(launchServiceList);

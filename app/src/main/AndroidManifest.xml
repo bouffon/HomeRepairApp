@@ -42,13 +42,15 @@
         <activity android:name=".SPServices" />
         <activity android:name=".SPAddService" />
         <activity android:name=".EditSPHours" />
-        <activity android:name=".HomeOwnerNav" />
+        <activity android:name=".HomeOwnerPage" />
         <activity android:name=".SearchByService" />
         <activity android:name=".SearchByRating" />
         <activity android:name=".SearchByHours" />
         <activity android:name=".ScheduleService" />
         <activity android:name=".ServiceProviderList" />
-        <activity android:name=".RateProvider"></activity>
+        <activity android:name=".RateProvider" />
+        <activity android:name=".ServiceProviderAdapter" />
+        <activity android:name=".BookingPage"></activity>
     </application>
 
 </manifest>

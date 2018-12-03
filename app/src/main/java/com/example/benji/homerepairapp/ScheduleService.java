@@ -1,15 +1,17 @@
 package com.example.benji.homerepairapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +20,11 @@ public class ScheduleService extends AppCompatActivity {
 
     DBHandler db;
     List<ServiceProvider> serviceProviders;
-    List<String> searchedServiceProviders;
+    ArrayList<ServiceProvider>searchedServiceProviders;
     String searchType;
-    Intent i;
+    ServiceProvider serviceProvider;
+
+    Intent i;   //public intent so that it can be called in the switch case
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +33,7 @@ public class ScheduleService extends AppCompatActivity {
 
         db = new DBHandler(this);
         serviceProviders = db.getAllSP();   //get all service providers from DB
-        searchedServiceProviders = new ArrayList<String>();    //initialize list of searched service providers
+        searchedServiceProviders = new ArrayList<ServiceProvider>();    //initialize list of searched service providers
 
         ListView listView = (ListView) findViewById(R.id.listView);
 
@@ -51,8 +55,20 @@ public class ScheduleService extends AppCompatActivity {
                 break;
         }
 
-        ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, searchedServiceProviders);
-        listView.setAdapter(listAdapter);
+        ServiceProviderAdapter spAdapter = new ServiceProviderAdapter(this, searchedServiceProviders);
+        listView.setAdapter(spAdapter);
+
+        //add listeners
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, final View view, int position, long id) {
+
+                serviceProvider = (ServiceProvider) adapterView.getItemAtPosition(position);    //service provider at selected position
+                addPrompt(findViewById(android.R.id.content));
+
+                //create an intent for the selected service so it can be edited
+            }
+        });
 
     }
 
@@ -60,32 +76,21 @@ public class ScheduleService extends AppCompatActivity {
 
         String[] servicesOffered;
 
-        Log.d("searching for service", serviceName);
-
         for(int i = 0; i< serviceProviders.size(); i++){
-
-            Log.d(" looking at service provider", serviceProviders.get(i).getUsername());
-            Log.d(" sp offers", Integer.toString(serviceProviders.get(i).getServices().length) + " service(s)" );
 
             if(serviceProviders.get(i).getServices().length != 0) {
 
                 servicesOffered = serviceProviders.get(i).getServices();
 
-                Log.d("first offered service", servicesOffered[0]);
-
                 for (int j = 0; j < servicesOffered.length; j++) {
-
-                    Log.d("adding sp ", serviceProviders.get(i).getUsername());
 
                     if (servicesOffered[j].equals(serviceName)) {
 
-
-                        searchedServiceProviders.add((serviceProviders.get(i).getfName() + " " + serviceProviders.get(i).getlName()));
+                        searchedServiceProviders.add((serviceProviders.get(i)));
                     }
                 }
             }
         }
-
         if (searchedServiceProviders.size() == 0) {
             couldNotFindSP();
         }
@@ -158,7 +163,7 @@ public class ScheduleService extends AppCompatActivity {
 
                 //add service provider to searched service providers list
                 if ((SPStartTime <= UserStartTime) & (SPEndTime >= UserEndTime)) {
-                    searchedServiceProviders.add(serviceProviders.get(i).getfName() + " " + serviceProviders.get(i).getlName());
+                    searchedServiceProviders.add(serviceProviders.get(i));
                 }
             }
 
@@ -168,12 +173,12 @@ public class ScheduleService extends AppCompatActivity {
             couldNotFindSP();
         }
     }
-    public void searchByRating ( double rating){
+    public void searchByRating (double rating){
 
         for (int i = 0; i < serviceProviders.size(); i++) {
 
-            if (serviceProviders.get(i).getRating() == rating) {
-                searchedServiceProviders.add((serviceProviders.get(i).getfName() + " " + serviceProviders.get(i).getlName()));
+            if (serviceProviders.get(i).getRating() >= rating) {
+                searchedServiceProviders.add(serviceProviders.get(i));
             }
         }
         if (searchedServiceProviders.size() == 0) {
@@ -184,5 +189,32 @@ public class ScheduleService extends AppCompatActivity {
 
     private void couldNotFindSP () {
         Toast.makeText(this, "There are no service providers for your search criteria", Toast.LENGTH_LONG).show();
+    }
+
+    public void addPrompt (View view){
+
+        AlertDialog.Builder delMsg = new AlertDialog.Builder(this);
+        delMsg.setMessage("Are you sure you want to book this service provider?").setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int choice){
+                        switchToBooking();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int choice){
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog delConfirm = delMsg.create();
+        delConfirm.setTitle("Book a Service Provider");
+        delConfirm.show();
+    }
+
+    private void switchToBooking(){
+        Intent i = new Intent(this, BookingPage.class);
+        i.putExtra("sp",serviceProvider);
+        startActivity(i);
     }
 }
