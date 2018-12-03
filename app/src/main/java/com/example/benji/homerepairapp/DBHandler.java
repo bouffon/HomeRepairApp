@@ -832,7 +832,7 @@ public class DBHandler extends SQLiteOpenHelper {
      @return Boolean
 
      */
-    public Boolean createNewBooking(String spUsername, String spPassword, String hUsername, String hPassword, String date, String startTime, String endTime) throws NullPointerException{
+    public boolean createNewBooking(String spUsername, String spPassword, String hUsername, String hPassword, String date, String startTime, String endTime) throws NullPointerException{
         SQLiteDatabase db = this.getWritableDatabase();
 
         //QUERY FINDS THE SERVICE PROVIDER BEING BOOKED
@@ -968,7 +968,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 }
 
             }
-
+            return false;
         }
         throw new NullPointerException("could not find additional info for this service provider!");
     }
