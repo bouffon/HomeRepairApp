@@ -7,6 +7,9 @@ import com.example.benji.homerepairapp.User;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ The Service Provider Class represents a user in the system that can offer services and be booked
+ */
 public class ServiceProvider extends User {
 
     private String company;
@@ -20,6 +23,17 @@ public class ServiceProvider extends User {
         super(username, password, fName, lName, email, phone, address);
     }
 
+    /**
+     additionalInfo associates the additional info of a service provider to its object. It is used in the database to associate additional
+     SPinfo to the service provider being returned
+
+     @param company
+     @param description
+     @param license
+     @param newTimes
+     @param newServices
+     @param rating
+     */
     public void additionalInfo(String company, String description, boolean license, String[] newTimes, ArrayList<Service> newServices, double rating) {
         this.company = company;
         this.description = description;

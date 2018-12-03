@@ -1,9 +1,11 @@
 package com.example.benji.homerepairapp;
 
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
+/**
+ The User class represents a generic user in the Repairify App. A user has a username, password,
+ first name, last name, email, phone number, and address
+ */
 public class User implements Serializable {
 
     private String username;

@@ -1,5 +1,9 @@
 package com.example.benji.homerepairapp;
 
+/**
+ The Service class represents a service that can be offered by a service provider, it has a name and an
+ hourly rate.
+ */
 public class Service {
 
     private double rate;
