@@ -15,7 +15,7 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 
 public class SearchByRating extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
+    private User homeOwner;
     double selectedRating;
 
     @Override
@@ -25,6 +25,9 @@ public class SearchByRating extends AppCompatActivity implements AdapterView.OnI
         setContentView(R.layout.activity_search_by_rating);
 
         ArrayList<Integer> ratings = new ArrayList<Integer>();
+
+        Intent it = getIntent();
+        homeOwner = (User) it.getSerializableExtra("hO");
 
         for (int i = 1; i < 6; i++){
             ratings.add(i);
@@ -51,6 +54,7 @@ public class SearchByRating extends AppCompatActivity implements AdapterView.OnI
         Intent launchServiceList = new Intent(this, ScheduleService.class);
         launchServiceList.putExtra("rating", selectedRating);
         launchServiceList.putExtra("searchType", "rating");
+        launchServiceList.putExtra("hO", homeOwner);
         startActivity(launchServiceList);
     }
 

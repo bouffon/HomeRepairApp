@@ -16,6 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class SearchByService extends AppCompatActivity {
+    private User homeOwner;
 
     @Nullable
     @Override
@@ -23,6 +24,9 @@ public class SearchByService extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_by_service);
+
+        Intent i = getIntent();
+        homeOwner = (User) i.getSerializableExtra("hO");
 
         ListView listView = (ListView) findViewById(R.id.servicesOffered);   //listView for all services
         DBHandler db = new DBHandler(this);
@@ -54,6 +58,7 @@ public class SearchByService extends AppCompatActivity {
                     Intent launchServiceList = new Intent(getApplicationContext(), ScheduleService.class);
                     launchServiceList.putExtra("serviceName", s.getServiceName());
                     launchServiceList.putExtra("searchType","service");
+                    launchServiceList.putExtra("hO", homeOwner);
                     startActivity(launchServiceList);
                 }
             });

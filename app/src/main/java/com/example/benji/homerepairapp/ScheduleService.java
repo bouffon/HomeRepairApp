@@ -23,6 +23,7 @@ public class ScheduleService extends AppCompatActivity {
     ArrayList<ServiceProvider>searchedServiceProviders;
     String searchType;
     ServiceProvider serviceProvider;
+    User homeOwner;
 
     Intent i;   //public intent so that it can be called in the switch case
 
@@ -39,6 +40,7 @@ public class ScheduleService extends AppCompatActivity {
 
         i = getIntent();
         searchType = (String) i.getSerializableExtra("searchType");
+        homeOwner = (User) i.getSerializableExtra("hO");
 
         switch (searchType) {
             case "service":
@@ -214,7 +216,9 @@ public class ScheduleService extends AppCompatActivity {
 
     private void switchToBooking(){
         Intent i = new Intent(this, BookingPage.class);
+        String yeet = ((Homeowner) homeOwner).getUsername();
         i.putExtra("sp",serviceProvider);
+        i.putExtra("hO", homeOwner);
         startActivity(i);
     }
 }

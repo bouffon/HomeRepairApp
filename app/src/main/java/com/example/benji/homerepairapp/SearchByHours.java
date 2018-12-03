@@ -27,6 +27,7 @@ public class SearchByHours extends AppCompatActivity implements TimePickerDialog
     TextView day1View, day2View;
     String timeSelected = "";
     String dayOfWeek;
+    private User homeOwner;
 
     int dayStart, dayEnd;
 
@@ -36,6 +37,8 @@ public class SearchByHours extends AppCompatActivity implements TimePickerDialog
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_by_hours);
 
+        Intent i = getIntent();
+        homeOwner = (User) i.getSerializableExtra("hO");
 
         ArrayList<String> days = new ArrayList<String>();
 
@@ -139,6 +142,7 @@ public class SearchByHours extends AppCompatActivity implements TimePickerDialog
         launchServiceList.putExtra("startTime", day1View.getText().toString());
         launchServiceList.putExtra("endTime", day2View.getText().toString());
         launchServiceList.putExtra("day", dayOfWeek);
+        launchServiceList.putExtra("hO", homeOwner);
         launchServiceList.putExtra("searchType", "hours");
         startActivity(launchServiceList);
     }

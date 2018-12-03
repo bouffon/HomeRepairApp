@@ -7,12 +7,13 @@
     tools:context=".BookingPage">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
+        android:id="@+id/linearLayout1"
+        android:layout_width="370dp"
         android:layout_height="37dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
@@ -20,19 +21,144 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6">
 
+        <Spinner
+            android:id="@+id/daySpinner"
+            android:layout_width="145dp"
+            android:layout_height="34dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
+
+        <TextView
+            android:id="@+id/day1Time"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="__ : __"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteX="31dp"
+            tools:layout_editor_absoluteY="313dp" />
+
+        <TextView
+            android:id="@+id/-1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="-"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteX="31dp"
+            tools:layout_editor_absoluteY="313dp" />
+
+        <TextView
+            android:id="@+id/day2Time"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="__ : __"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteX="31dp"
+            tools:layout_editor_absoluteY="313dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="235dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.518"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ServiceTimes">
+
         <LinearLayout
             android:id="@+id/dates"
-            android:layout_width="114dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:orientation="vertical"
             tools:layout_editor_absoluteX="27dp"
             tools:layout_editor_absoluteY="346dp">
 
-            <Spinner
-                android:id="@+id/daySpinner"
+            <TextView
+                android:id="@+id/monday"
                 android:layout_width="match_parent"
-                android:layout_height="34dp" />
+                android:layout_height="wrap_content"
+                android:text="Monday"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="313dp" />
+
+            <TextView
+                android:id="@+id/tuesday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tuesday"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="346dp" />
+
+            <TextView
+                android:id="@+id/wednesday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Wednesday"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="386dp" />
+
+            <TextView
+                android:id="@+id/thursday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thursday"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="432dp" />
+
+            <TextView
+                android:id="@+id/friday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Friday"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="477dp" />
+
+            <TextView
+                android:id="@+id/saturday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Saturday"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="522dp" />
+
+            <TextView
+                android:id="@+id/sunday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sunday"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="573dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -46,7 +172,7 @@
             tools:layout_editor_absoluteY="346dp">
 
             <TextView
-                android:id="@+id/day1Time"
+                android:id="@+id/mo1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="__ : __"
@@ -55,6 +181,65 @@
                 tools:layout_editor_absoluteX="31dp"
                 tools:layout_editor_absoluteY="313dp" />
 
+            <TextView
+                android:id="@+id/tu1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="346dp" />
+
+            <TextView
+                android:id="@+id/we1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="386dp" />
+
+            <TextView
+                android:id="@+id/th1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="432dp" />
+
+            <TextView
+                android:id="@+id/fr1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="477dp" />
+
+            <TextView
+                android:id="@+id/sa1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="522dp" />
+
+            <TextView
+                android:id="@+id/su1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="573dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -77,6 +262,65 @@
                 tools:layout_editor_absoluteX="31dp"
                 tools:layout_editor_absoluteY="313dp" />
 
+            <TextView
+                android:id="@+id/-2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="346dp" />
+
+            <TextView
+                android:id="@+id/-3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="386dp" />
+
+            <TextView
+                android:id="@+id/-4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="432dp" />
+
+            <TextView
+                android:id="@+id/-5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="477dp" />
+
+            <TextView
+                android:id="@+id/-6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="522dp" />
+
+            <TextView
+                android:id="@+id/-7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="573dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -89,7 +333,7 @@
             tools:layout_editor_absoluteY="346dp">
 
             <TextView
-                android:id="@+id/day2Time"
+                android:id="@+id/mo2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="__ : __"
@@ -98,6 +342,65 @@
                 tools:layout_editor_absoluteX="31dp"
                 tools:layout_editor_absoluteY="313dp" />
 
+            <TextView
+                android:id="@+id/tu2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="346dp" />
+
+            <TextView
+                android:id="@+id/we2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="386dp" />
+
+            <TextView
+                android:id="@+id/th2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="432dp" />
+
+            <TextView
+                android:id="@+id/fr2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="477dp" />
+
+            <TextView
+                android:id="@+id/sa2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="522dp" />
+
+            <TextView
+                android:id="@+id/su2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="__ : __"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="573dp" />
         </LinearLayout>
 
     </LinearLayout>
@@ -106,27 +409,44 @@
         android:id="@+id/textView6"
         android:layout_width="357dp"
         android:layout_height="73dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:gravity="center"
         android:text="Book a Service Provider"
         android:textSize="24sp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="11dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/book"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Button"
+        android:onClick="book"
+        android:text="book"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="Book" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+    <TextView
+        android:id="@+id/ServiceTimes"
+        android:layout_width="232dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="84dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout1" />
 
 </android.support.constraint.ConstraintLayout>
