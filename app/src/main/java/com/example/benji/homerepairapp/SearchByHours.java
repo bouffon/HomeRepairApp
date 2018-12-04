@@ -28,6 +28,7 @@ public class SearchByHours extends AppCompatActivity implements TimePickerDialog
     String timeSelected = "";
     String dayOfWeek;
     private User homeOwner;
+    Spinner spinner;
 
     int dayStart, dayEnd;
 
@@ -50,7 +51,7 @@ public class SearchByHours extends AppCompatActivity implements TimePickerDialog
         days.add("Saturday");
         days.add("Sunday");
 
-        Spinner spinner = (Spinner) findViewById(R.id.daySpinner);
+        spinner = (Spinner) findViewById(R.id.daySpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, days );
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(adapter);
@@ -96,6 +97,7 @@ public class SearchByHours extends AppCompatActivity implements TimePickerDialog
                     Toast.makeText(getApplicationContext(), "Please enter a start and end time", Toast.LENGTH_LONG).show();
                 }
                 else{
+                    dayOfWeek = (spinner.getSelectedItem().toString());
                     searchServiceByHours(v);
                 }
             }

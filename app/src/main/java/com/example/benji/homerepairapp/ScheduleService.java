@@ -49,6 +49,7 @@ public class ScheduleService extends AppCompatActivity {
                     break;
 
                 case "hours":
+                    Log.d("day of the week", i.getSerializableExtra("day").toString());
                     searchByHours((String) i.getSerializableExtra("startTime"), (String) i.getSerializableExtra("endTime"), (String) i.getSerializableExtra("day"));
                     break;
 
