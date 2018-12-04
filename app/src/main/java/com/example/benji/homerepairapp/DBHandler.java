@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -465,9 +467,11 @@ public class DBHandler extends SQLiteOpenHelper {
         double newRating;
 
         if (cursor2.moveToFirst()){
-
-            newRating = ((cursor2.getDouble(18) + rating)/(cursor2.getInt(19)+1));
-
+            if (cursor2.getInt(19) != 0) {
+                newRating = (((cursor2.getDouble(18) * cursor2.getInt(19)) + rating) / (cursor2.getInt(19) + 1));
+            } else {
+                newRating = rating;
+            }
             //THIS QUERY UPDATES THE RATING IN THE TABLE
             String query2 = "UPDATE " + TABLE_SPINFO + " SET " + COLUMN_RATING + " = '" + newRating + "' WHERE "
                     + COLUMN_SPINFOID + " = '" + id + "'";

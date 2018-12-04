@@ -41,7 +41,6 @@ public class LoginPage extends AppCompatActivity {
                     "23 : 00","__ : __","__ : __","__ : __","__ : __","__ : __","__ : __","__ : __","__ : __",
                     "__ : __","__ : __");
             db.updateRating("guy","guy", 3,"");
-
         }
         //add default service
         if (db.findService("Roofing") == null) {

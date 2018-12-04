@@ -33,13 +33,14 @@ public class SetProviderRating extends AppCompatActivity {
 
         rateButton.setOnClickListener(new View.OnClickListener() {
 
-            //take rating from bar as a double
-            double rating = ratingBar.getRating();
 
             @Override
             public void onClick(View v) {
 
                 TextView comment =  findViewById(R.id.comment);
+
+                //take rating from bar as a double
+                double rating = ratingBar.getRating();
 
                 db.updateRating(sp.getUsername(), sp.getPassword(), rating, comment.getText().toString());
                 Toast.makeText(getApplicationContext(), "Service provider rating successfully added", Toast.LENGTH_LONG).show();

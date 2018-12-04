@@ -40,5 +40,6 @@ public class ServiceProviderInformationTest {
         text.setText("Guy is a legend");
         String fName = text.getText().toString();
         assertNotNull("Brief description", fName);
+
     }
 }
