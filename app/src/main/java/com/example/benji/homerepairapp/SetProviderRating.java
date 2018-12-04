@@ -29,7 +29,10 @@ public class SetProviderRating extends AppCompatActivity {
         View rateButton = findViewById(R.id.rate);
 
         TextView spName = findViewById(R.id.serviceProviderName);
-        spName.setText(sp.getfName() + " " + sp.getlName());
+
+        if(sp != null) {
+            spName.setText(sp.getfName() + " " + sp.getlName());
+        }
 
         rateButton.setOnClickListener(new View.OnClickListener() {
 

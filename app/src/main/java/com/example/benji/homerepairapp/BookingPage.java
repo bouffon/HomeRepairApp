@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,11 +22,11 @@ public class BookingPage extends AppCompatActivity implements TimePickerDialog.O
 
     private TextView day1View, day2View, mo1View, mo2View, tu1View, tu2View, we1View, we2View, th1View, th2View, fr1View, fr2View, sa1View, sa2View, su1View, su2View;
     private TextView serviceProviderView;
-    private String timeSelected = "";
-    private String dayOfWeek;
-    private String hUser, hPassW, sUser, sPassW;
+    private String timeSelected = "", dayOfWeek, hUser, hPassW, sUser, sPassW, spFirstName;
     private User hO;
+    private ServiceProvider sp;
     private Spinner spinner;
+    String [] times;
 
     int dayStart, dayEnd;
 
@@ -37,12 +38,23 @@ public class BookingPage extends AppCompatActivity implements TimePickerDialog.O
 
         Intent i = getIntent();
         hO = (User) i.getSerializableExtra("hO");
-        hUser = hO.getUsername();
-        hPassW = hO.getPassword();
-        sUser = ((ServiceProvider) i.getSerializableExtra("sp")).getUsername();
-        sPassW = ((ServiceProvider) i.getSerializableExtra("sp")).getPassword();
-        String[] times = ((ServiceProvider) i.getSerializableExtra("sp")).getTimes();
+        sp = (ServiceProvider) i.getSerializableExtra("sp");
 
+        //for unit test case
+        if(hO != null && sp != null){
+            hUser = hO.getUsername();
+            hPassW = hO.getPassword();
+            sUser = sp.getUsername();
+            sPassW = sp.getPassword();
+            times = sp.getTimes();
+            spFirstName = sp.getfName();
+        }
+
+        //for unit test case
+        if(sp == null){
+           times = new String[] {"__ : 00","__ : 00","__ : __", "__ : __","__ : __","__ : __","__ : __","__ : __","__ : __","__ : __","__ : __","__ : __", "__ : __","__ : __"};
+           spFirstName = "ERROR";
+        }
 
         serviceProviderView = (TextView) findViewById(R.id.ServiceTimes);
         mo1View = (TextView) findViewById(R.id.mo1);
@@ -60,7 +72,7 @@ public class BookingPage extends AppCompatActivity implements TimePickerDialog.O
         su1View = (TextView) findViewById(R.id.su1);
         su2View = (TextView) findViewById(R.id.su2);
 
-        serviceProviderView.setText(sUser + "'s Weekly Schedule");
+        serviceProviderView.setText(spFirstName + "'s Weekly Schedule");
         mo1View.setText(times[0]);
         mo2View.setText(times[1]);
         tu1View.setText(times[2]);
@@ -112,6 +124,7 @@ public class BookingPage extends AppCompatActivity implements TimePickerDialog.O
             public void onClick(View v){
 
                 if(day1View.getText().equals("__ : __")){
+                    Toast.makeText(getApplicationContext(), "Please enter a start and end time", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -154,15 +167,21 @@ public class BookingPage extends AppCompatActivity implements TimePickerDialog.O
                     day1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
                     dayStart = hourOfDay * 60 + minute;
                 }
-                if (((hourOfDay * 60 + minute) < dayEnd) && day2View.getText().toString() != "__ : __") {
+                else if (((hourOfDay * 60 + minute) < dayEnd) && day2View.getText().toString() != "__ : __") {
                     day1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
                     dayStart = hourOfDay * 60 + minute;
                 }
+                else{
+                    Toast.makeText(getApplicationContext(), "Start time must be before end time!", Toast.LENGTH_LONG).show();
+                }
                 break;
             case "day2Time":
-                if ((hourOfDay * 60 + minute) > dayStart) {
+                 if ((hourOfDay * 60 + minute) > dayStart) {
                     day2View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
                     dayEnd = hourOfDay * 60 + minute;
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "End time must be greater than start time!", Toast.LENGTH_LONG).show();
                 }
                 break;
         }

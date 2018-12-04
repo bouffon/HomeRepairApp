@@ -42,19 +42,20 @@ public class ScheduleService extends AppCompatActivity {
         searchType = (String) i.getSerializableExtra("searchType");
         homeOwner = (User) i.getSerializableExtra("hO");
 
-        switch (searchType) {
-            case "service":
-                searchByService((String) i.getSerializableExtra("serviceName"));
-                break;
+        if(searchType != null){
+            switch (searchType) {
+                case "service":
+                    searchByService((String) i.getSerializableExtra("serviceName"));
+                    break;
 
-            case "hours":
-                searchByHours((String) i.getSerializableExtra("startTime"),(String) i.getSerializableExtra("endTime"),(String) i.getSerializableExtra("day"));
-                break;
+                case "hours":
+                    searchByHours((String) i.getSerializableExtra("startTime"), (String) i.getSerializableExtra("endTime"), (String) i.getSerializableExtra("day"));
+                    break;
 
-            case "rating":
-                searchByRating((Double) i.getSerializableExtra("rating"));
-
-                break;
+                case "rating":
+                    searchByRating((Double) i.getSerializableExtra("rating"));
+                    break;
+            }
         }
 
         ServiceProviderAdapter spAdapter = new ServiceProviderAdapter(this, searchedServiceProviders);
@@ -96,7 +97,7 @@ public class ScheduleService extends AppCompatActivity {
         }
     }
 
-    private int timeConvert(String time){
+    protected int timeConvert(String time){
 
         return (1000*(time.charAt(0)-'0') + 100*(time.charAt(1)-'0') + 10*(time.charAt(5)-'0')+ time.charAt(6)-'0');
     }
