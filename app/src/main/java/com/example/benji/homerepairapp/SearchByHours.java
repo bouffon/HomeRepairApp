@@ -77,6 +77,7 @@ public class SearchByHours extends AppCompatActivity implements TimePickerDialog
             public void onClick(View v){
 
                 if(day1View.getText().equals("__ : __")){
+                    Toast.makeText(getApplicationContext(), "Please enter a start and end time", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -119,9 +120,13 @@ public class SearchByHours extends AppCompatActivity implements TimePickerDialog
                     day1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
                     dayStart = hourOfDay * 60 + minute;
                 }
-                if (((hourOfDay * 60 + minute) < dayEnd) && day2View.getText().toString() != "__ : __") {
+
+                else if (((hourOfDay * 60 + minute) < dayEnd) && day2View.getText().toString() != "__ : __") {
                     day1View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
                     dayStart = hourOfDay * 60 + minute;
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Start time must be before end time!", Toast.LENGTH_LONG).show();
                 }
                 break;
             case "day2Time":
@@ -129,10 +134,13 @@ public class SearchByHours extends AppCompatActivity implements TimePickerDialog
                     day2View.setText(convertTimeToString(hourOfDay, minute, extraMinZero, extraHourZero));
                     dayEnd = hourOfDay * 60 + minute;
                 }
+                else{
+                    Toast.makeText(getApplicationContext(), "End time must be greater than start time!", Toast.LENGTH_LONG).show();
+                }
                 break;
         }
     }
-    private String convertTimeToString(int hourOfDay, int minute, String extraMinZero, String extraHourZero){
+    protected String convertTimeToString(int hourOfDay, int minute, String extraMinZero, String extraHourZero){
 
         return extraHourZero + Integer.toString(hourOfDay) + " : " + extraMinZero + Integer.toString(minute);
     }
