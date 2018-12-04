@@ -18,6 +18,7 @@ public class ServiceProvider extends User {
     private String[] times = new String[14];
     private String [] services;
     private double rating;
+    private String comment;
 
     public ServiceProvider(String username, String password, String fName, String lName, String email, String phone, String address) {
         super(username, password, fName, lName, email, phone, address);
@@ -34,11 +35,12 @@ public class ServiceProvider extends User {
      @param newServices
      @param rating
      */
-    public void additionalInfo(String company, String description, boolean license, String[] newTimes, ArrayList<Service> newServices, double rating) {
+    public void additionalInfo(String company, String description, boolean license, String[] newTimes, ArrayList<Service> newServices, double rating, String comment) {
         this.company = company;
         this.description = description;
         this.license = license;
         this.rating = rating;
+        this.comment = comment;
 
         if (newServices != null) {
             services = new String [newServices.size()];
@@ -98,5 +100,13 @@ public class ServiceProvider extends User {
         for (int i = 0; i<newServices.size(); i++){
             services [i] = newServices.get(i).getServiceName();
         }
+    }
+
+    public void setComment(String comment){
+        this.comment = comment;
+    }
+
+    public String getComment(){
+        return comment;
     }
 }

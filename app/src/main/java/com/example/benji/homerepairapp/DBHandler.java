@@ -47,6 +47,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_SUNDAYEND = "sundayEnd";
     public static final String COLUMN_RATING = "rating";
     public static final String COLUMN_NUMBEROFRATERS = "NumberOfRater";
+    public static final String COLUMN_COMMENTS = "comments";
 
     //CREATES SERVICES TABLE
     public static final String TABLE_SERVICES = "services";
@@ -91,7 +92,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 + " TEXT," + COLUMN_DESCRIPTION + " TEXT," + COLUMN_LICENCED + " BOOLEAN," + COLUMN_MONDAYSTART + " TEXT," + COLUMN_MONDAYEND + " TEXT," + COLUMN_TUESDAYSTART + " TEXT,"
                 + COLUMN_TUESDAYEND + " TEXT," + COLUMN_WEDNESDAYSTART + " TEXT," + COLUMN_WEDNESDAYEND + " TEXT," + COLUMN_THURSDAYSTART + " TEXT," + COLUMN_THURSDAYEND + " TEXT,"
                 + COLUMN_FRIDAYSTART + " TEXT," + COLUMN_FRIDAYEND + " TEXT," + COLUMN_SATURDAYSTART + " TEXT," + COLUMN_SATURDAYEND + " TEXT," + COLUMN_SUNDAYSTART + " TEXT," +
-                COLUMN_SUNDAYEND + " TEXT," + COLUMN_RATING + " DOUBLE," + COLUMN_NUMBEROFRATERS + " INTEGER" + ")";
+                COLUMN_SUNDAYEND + " TEXT," + COLUMN_RATING + " DOUBLE," + COLUMN_NUMBEROFRATERS + " INTEGER," + COLUMN_COMMENTS + " TEXT" + ")";
         db.execSQL(CREATE_SPINFO_TABLE);
 
         String CREATE_SERVICES_TABLE = "CREATE TABLE " +
@@ -184,7 +185,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
                 if (cursor2.moveToFirst()) {
                     ((ServiceProvider) user).additionalInfo(cursor2.getString(1), cursor2.getString(2), cursor.getInt(3) > 0,
-                            this.createTimesArray(cursor.getInt(9)),this.createServiceArray(cursor.getInt(0)),cursor2.getDouble(18));
+                            this.createTimesArray(cursor.getInt(9)),this.createServiceArray(cursor.getInt(0)),cursor2.getDouble(18),cursor2.getString(20));
                 }
 
             } if (Integer.parseInt(cursor.getString(8)) == 2) {
@@ -229,7 +230,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
             if (cursor2.moveToFirst()) {
                 sp.additionalInfo(cursor2.getString(1), cursor2.getString(2), cursor.getInt(3) > 0,
-                        this.createTimesArray(cursor.getInt(9)),this.createServiceArray(cursor.getInt(0)),cursor2.getDouble(18));
+                        this.createTimesArray(cursor.getInt(9)),this.createServiceArray(cursor.getInt(0)),cursor2.getDouble(18),cursor2.getString(20));
             } serviceProviders.add(sp);
             cursor2.close();
         }
@@ -245,7 +246,7 @@ public class DBHandler extends SQLiteOpenHelper {
             Cursor cursor2 = db.rawQuery(query2, null);
             if (cursor2.moveToFirst()) {
                 sp.additionalInfo(cursor2.getString(1), cursor2.getString(2), cursor.getInt(3) > 0,
-                        this.createTimesArray(cursor.getInt(9)),this.createServiceArray(cursor.getInt(0)),cursor2.getDouble(18));
+                        this.createTimesArray(cursor.getInt(9)),this.createServiceArray(cursor.getInt(0)),cursor2.getDouble(18),cursor2.getString(20));
             } serviceProviders.add(sp);
             cursor2.close();
         }
@@ -316,6 +317,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_SUNDAYEND, sundayEnd);
         values.put(COLUMN_RATING,0);
         values.put(COLUMN_NUMBEROFRATERS,0);
+        values.put(COLUMN_COMMENTS,"");
         db.insert(TABLE_SPINFO,null,values);
 
         String selectQuery = "SELECT * FROM " + TABLE_SPINFO +" ORDER BY "+ COLUMN_SPINFOID + " DESC LIMIT 1";
@@ -441,7 +443,7 @@ public class DBHandler extends SQLiteOpenHelper {
      @param rating
 
      */
-    public void updateRating(String username, String password, Double rating) throws NullPointerException{
+    public void updateRating(String username, String password, Double rating, String comment) throws NullPointerException{
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -474,6 +476,9 @@ public class DBHandler extends SQLiteOpenHelper {
             query2 = "UPDATE " + TABLE_SPINFO + " SET " + COLUMN_NUMBEROFRATERS + " = '" + (cursor2.getInt(19)+1) + "' WHERE "
                     + COLUMN_SPINFOID + " = '" + id + "'";
             db.execSQL(query2);
+            query2 = "UPDATE " + TABLE_SERVICES + " SET " + COLUMN_COMMENTS + " = '" + (cursor2.getString(20)+"\n\n"+comment) + "' WHERE "
+                    + COLUMN_SPINFOID + " = '" + id + "'";
+            db.execSQL(query);
         }
         db.close();
     }
