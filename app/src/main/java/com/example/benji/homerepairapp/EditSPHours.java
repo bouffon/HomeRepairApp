@@ -42,7 +42,7 @@ public class EditSPHours extends Fragment implements TimePickerDialog.OnTimeSetL
         SPPassword = spLoginArray[1];
 
         cNameBox = v.findViewById(R.id.companyName);
-        sDescriptionBox = v.findViewById(R.id.description);
+        sDescriptionBox = v.findViewById(R.id.comment);
 
         licenseSwitch = v.findViewById(R.id.licenseSwitch);
 

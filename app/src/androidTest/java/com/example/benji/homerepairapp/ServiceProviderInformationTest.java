@@ -36,7 +36,7 @@ public class ServiceProviderInformationTest {
     @UiThreadTest
     //test for the brief description input when completing service provider profile
     public void checkDescription() throws Exception{
-        text = mActivity2.findViewById(R.id.description);
+        text = mActivity2.findViewById(R.id.comment);
         text.setText("Guy is a legend");
         String fName = text.getText().toString();
         assertNotNull("Brief description", fName);

@@ -19,11 +19,13 @@ import java.util.ArrayList;
 
 public class BookingPage extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, AdapterView.OnItemSelectedListener {
 
-    TextView day1View, day2View, mo1View, mo2View, tu1View, tu2View, we1View, we2View, th1View, th2View, fr1View, fr2View, sa1View, sa2View, su1View, su2View;
-    TextView serviceProviderView;
-    String timeSelected = "";
-    String dayOfWeek;
-    String hUser, hPassW, sUser, sPassW;
+    private TextView day1View, day2View, mo1View, mo2View, tu1View, tu2View, we1View, we2View, th1View, th2View, fr1View, fr2View, sa1View, sa2View, su1View, su2View;
+    private TextView serviceProviderView;
+    private String timeSelected = "";
+    private String dayOfWeek;
+    private String hUser, hPassW, sUser, sPassW;
+    private User hO;
+    private Spinner spinner;
 
     int dayStart, dayEnd;
 
@@ -34,8 +36,9 @@ public class BookingPage extends AppCompatActivity implements TimePickerDialog.O
         setContentView(R.layout.activity_booking_page);
 
         Intent i = getIntent();
-        hUser = ((Homeowner) i.getSerializableExtra("hO")).getUsername();
-        hPassW = ((Homeowner) i.getSerializableExtra("hO")).getPassword();
+        hO = (User) i.getSerializableExtra("hO");
+        hUser = hO.getUsername();
+        hPassW = hO.getPassword();
         sUser = ((ServiceProvider) i.getSerializableExtra("sp")).getUsername();
         sPassW = ((ServiceProvider) i.getSerializableExtra("sp")).getPassword();
         String[] times = ((ServiceProvider) i.getSerializableExtra("sp")).getTimes();
@@ -84,12 +87,10 @@ public class BookingPage extends AppCompatActivity implements TimePickerDialog.O
         days.add("Saturday");
         days.add("Sunday");
 
-        Spinner spinner = (Spinner) findViewById(R.id.daySpinner);
+        spinner = (Spinner) findViewById(R.id.daySpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, days );
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(adapter);
-
-        dayOfWeek = (spinner.getSelectedItem().toString());
 
         View booking = findViewById(R.id.book);
 
@@ -172,13 +173,20 @@ public class BookingPage extends AppCompatActivity implements TimePickerDialog.O
     }
 
     public void book(View view){
+        dayOfWeek = (spinner.getSelectedItem().toString());
         DBHandler db = new DBHandler(this);
-        Intent launchServiceList = new Intent(this, HomeOwnerPage.class);
-        launchServiceList.putExtra("startTime", day1View.getText().toString());
-        launchServiceList.putExtra("endTime", day2View.getText().toString());
-        launchServiceList.putExtra("day", dayOfWeek);
-        db.createNewBooking(sUser, sPassW, hUser, hPassW ,dayOfWeek, day1View.getText().toString(), day2View.getText().toString());
-        startActivity(launchServiceList);
+
+        if(db.createNewBooking(sUser, sPassW, hUser, hPassW ,dayOfWeek, day1View.getText().toString(), day2View.getText().toString())){
+
+            Toast.makeText(getApplicationContext(), "Service provider successfully booked", Toast.LENGTH_LONG).show();
+            Intent launchServiceList = new Intent(this, HomeOwnerPage.class);
+            launchServiceList.putExtra("hO", hO);
+            startActivity(launchServiceList);
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "Service Provider is not available during these hours", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override

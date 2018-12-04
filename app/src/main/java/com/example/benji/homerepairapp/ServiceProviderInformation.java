@@ -31,7 +31,7 @@ public class ServiceProviderInformation extends AppCompatActivity implements Tim
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_provider_info);
         cNameBox = findViewById(R.id.companyName);
-        sDescriptionBox = findViewById(R.id.description);
+        sDescriptionBox = findViewById(R.id.comment);
 
         Intent i = getIntent();
         sp = (ServiceProvider) i.getSerializableExtra("sp");

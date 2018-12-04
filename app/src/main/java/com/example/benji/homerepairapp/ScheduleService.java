@@ -67,8 +67,6 @@ public class ScheduleService extends AppCompatActivity {
 
                 serviceProvider = (ServiceProvider) adapterView.getItemAtPosition(position);    //service provider at selected position
                 addPrompt(findViewById(android.R.id.content));
-
-                //create an intent for the selected service so it can be edited
             }
         });
 
@@ -216,7 +214,6 @@ public class ScheduleService extends AppCompatActivity {
 
     private void switchToBooking(){
         Intent i = new Intent(this, BookingPage.class);
-        String yeet = ((Homeowner) homeOwner).getUsername();
         i.putExtra("sp",serviceProvider);
         i.putExtra("hO", homeOwner);
         startActivity(i);

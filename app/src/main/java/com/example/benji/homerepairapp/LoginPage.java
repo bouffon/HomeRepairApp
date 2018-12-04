@@ -40,7 +40,14 @@ public class LoginPage extends AppCompatActivity {
             db.addSPInfo("guy","guy","defaultCompany","defaultDescription",true,"10 : 00","18 : 00","08 : 00",
                     "23 : 00","__ : __","__ : __","__ : __","__ : __","__ : __","__ : __","__ : __","__ : __",
                     "__ : __","__ : __");
+            db.updateRating("guy","guy", 3,"");
 
+        }
+        //add default service
+        if (db.findService("Roofing") == null) {
+            Service s = new Service("Roofing", 25);
+            db.addService(s);
+            db.addSPService("guy", "guy", s.getServiceName());
         }
     }
 
@@ -62,7 +69,7 @@ public class LoginPage extends AppCompatActivity {
             }
             else{
                 Intent intent = new Intent(this, HomeOwnerPage.class);
-                intent.putExtra("hm", activeUser);
+                intent.putExtra("hO", activeUser);
                 startActivity(intent);
             }
         }

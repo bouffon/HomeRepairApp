@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class SearchByRating extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private User homeOwner;
     double selectedRating;
+    private Spinner spinner;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -33,13 +34,10 @@ public class SearchByRating extends AppCompatActivity implements AdapterView.OnI
             ratings.add(i);
         }
 
-        Spinner spinner = (Spinner) findViewById(R.id.ratingSpinner);
+        spinner = (Spinner) findViewById(R.id.ratingSpinner);
         ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, R.layout.support_simple_spinner_dropdown_item, ratings );
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(adapter);
-
-        selectedRating = Double.parseDouble(spinner.getSelectedItem().toString());
-
 
         View searchHours = findViewById(R.id.searchFromRating);
         searchHours.setOnClickListener(new View.OnClickListener(){
@@ -51,6 +49,7 @@ public class SearchByRating extends AppCompatActivity implements AdapterView.OnI
     }
 
     public void searchServiceByRating(View view){
+        selectedRating = Double.parseDouble(spinner.getSelectedItem().toString());
         Intent launchServiceList = new Intent(this, ScheduleService.class);
         launchServiceList.putExtra("rating", selectedRating);
         launchServiceList.putExtra("searchType", "rating");
