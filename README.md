@@ -42,3 +42,6 @@ Main Testing Device: One Plus 5T (OnePlus ONEPLUSA5010), Android 8.1.0, API 27
 These test cases can be found in HomeRepairApp\app\src\androidTest\java\com\example\benji\homerepairapp
 
 The code is found in GitHub.
+
+Build Status
+[![Build Status](https://circleci.com/gh/bouffon/HomeRepairApp.png?branch=master)](https://circleci.com/gh/bouffon/HomeRepairApp)
