@@ -50,7 +50,10 @@
         <activity android:name=".ServiceProviderList" />
         <activity android:name=".RateProvider" />
         <activity android:name=".ServiceProviderAdapter" />
-        <activity android:name=".BookingPage"></activity>
+        <activity android:name=".BookingPage" />
+        <activity android:name=".SetProviderRating"
+            android:windowSoftInputMode="adjustPan"
+            ></activity>
     </application>
 
 </manifest>

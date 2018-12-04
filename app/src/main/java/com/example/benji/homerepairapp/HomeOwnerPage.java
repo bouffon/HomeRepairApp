@@ -14,7 +14,7 @@ public class HomeOwnerPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_owner_page);
         Intent i = getIntent();
-        hO = (User) i.getSerializableExtra("hm");
+        hO = (User) i.getSerializableExtra("hO");
     }
 
     public void searchByServices(View view){

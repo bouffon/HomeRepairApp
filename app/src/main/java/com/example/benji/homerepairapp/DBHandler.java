@@ -443,7 +443,7 @@ public class DBHandler extends SQLiteOpenHelper {
      @param rating
 
      */
-    public void updateRating(String username, String password, Double rating, String comment) throws NullPointerException{
+    public void updateRating(String username, String password, double rating, String comment) throws NullPointerException{
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -476,9 +476,9 @@ public class DBHandler extends SQLiteOpenHelper {
             query2 = "UPDATE " + TABLE_SPINFO + " SET " + COLUMN_NUMBEROFRATERS + " = '" + (cursor2.getInt(19)+1) + "' WHERE "
                     + COLUMN_SPINFOID + " = '" + id + "'";
             db.execSQL(query2);
-            query2 = "UPDATE " + TABLE_SERVICES + " SET " + COLUMN_COMMENTS + " = '" + (cursor2.getString(20)+"\n\n"+comment) + "' WHERE "
+            query2 = "UPDATE " + TABLE_SPINFO + " SET " + COLUMN_COMMENTS + " = '" + (cursor2.getString(20)+"\n\n"+comment) + "' WHERE "
                     + COLUMN_SPINFOID + " = '" + id + "'";
-            db.execSQL(query);
+            db.execSQL(query2);
         }
         db.close();
     }
