@@ -18,7 +18,16 @@ class ServiceProvider{
   String[] hours;
   company;
   description;
+  comment;
   boolean license;
+  
+  
+  
+public void additionalInfo(String company, String description, boolean liscense, String[] newTimes, ArrayList<Services> newServices, double rating, String comment){
+  }
+  
+  public void updateComment(String newComment){
+  }
 }
 
 class Service{
