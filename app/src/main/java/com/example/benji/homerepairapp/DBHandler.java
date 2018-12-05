@@ -800,12 +800,24 @@ public class DBHandler extends SQLiteOpenHelper {
         String query = "Select * FROM " + TABLE_SERVICES + " WHERE " +
                 COLUMN_SERVICENAME + " = \"" + serviceName + "\"";
         Cursor cursor = db.rawQuery(query, null);
-
+        int id;
         if (cursor.moveToFirst()) {
-            String idStr = cursor.getString(0);
-            db.delete(TABLE_SERVICES, COLUMN_SERVICEID + " = " + idStr, null);
+            id = cursor.getInt(0);
+            db.delete(TABLE_SERVICES, COLUMN_SERVICEID + " = " + id, null);
             cursor.close();
             result = true;
+        } else {
+            throw new NullPointerException("could not find that service to delete!");
+        }
+
+        query = "Select * FROM " + TABLE_SERVICESFORPROVIDERS + " WHERE " +
+                COLUMN_SERVICE + " = \"" + id + "\"";
+        cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()){
+            db.delete(TABLE_SERVICESFORPROVIDERS, COLUMN_SERVICE + " = " + id, null);
+        }
+        while (cursor.moveToNext()){
+            db.delete(TABLE_SERVICESFORPROVIDERS, COLUMN_SERVICE + " = " + id, null);
         }
         db.close();
         return result;

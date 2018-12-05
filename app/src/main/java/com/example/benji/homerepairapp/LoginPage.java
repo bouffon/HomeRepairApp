@@ -48,6 +48,51 @@ public class LoginPage extends AppCompatActivity {
             db.addService(s);
             db.addSPService("guy", "guy", s.getServiceName());
         }
+        if (db.findService("Plumbing") == null) {
+            Service s = new Service("Plumping", 29.75);
+            db.addService(s);
+            db.addSPService("guy", "guy", s.getServiceName());
+        }
+        if (db.findService("Appliance Repair") == null) {
+            Service s = new Service("Appliance Repair", 35);
+            db.addService(s);
+            db.addSPService("guy", "guy", s.getServiceName());
+        }
+        if (db.findService("Landscaping") == null) {
+            Service s = new Service("Landscaping", 21.50);
+            db.addService(s);
+            db.addSPService("guy", "guy", s.getServiceName());
+        }
+        if (db.findService("Gutter Cleaning") == null) {
+            Service s = new Service("Gutter Cleaning", 23);
+            db.addService(s);
+            db.addSPService("guy", "guy", s.getServiceName());
+        }
+        if (db.findService("Painting") == null) {
+            Service s = new Service("Painting", 22.25);
+            db.addService(s);
+            db.addSPService("guy", "guy", s.getServiceName());
+        }
+        if (db.findService("Mold Remediation") == null) {
+            Service s = new Service("Mold Remediation", 33.25);
+            db.addService(s);
+            db.addSPService("guy", "guy", s.getServiceName());
+        }
+        if (db.findService("Pool Maintenance") == null) {
+            Service s = new Service("Pool Maintenance", 27.45);
+            db.addService(s);
+            db.addSPService("guy", "guy", s.getServiceName());
+        }
+        if (db.findService("Extermination") == null) {
+            Service s = new Service("Extermination", 24.99);
+            db.addService(s);
+            db.addSPService("guy", "guy", s.getServiceName());
+        }
+        if (db.findService("Electrical Work") == null) {
+            Service s = new Service("Electrical Work", 24.99);
+            db.addService(s);
+            db.addSPService("guy", "guy", s.getServiceName());
+        }
     }
 
     public void login(View view){
