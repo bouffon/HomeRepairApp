@@ -901,7 +901,6 @@ public class DBHandler extends SQLiteOpenHelper {
                 case "tuesday":
                     spStartTime = cursor.getString(6);
                     spEndTime = cursor.getString(7);
-
                     break;
                 case "wednesday":
                     spStartTime = cursor.getString(8);
@@ -925,6 +924,9 @@ public class DBHandler extends SQLiteOpenHelper {
                     break;
                 default:
                     return false;
+            }
+            if (spStartTime.equals("__ : __") || spEndTime.equals("__ : __")){
+                return false;
             }
             //CONVERTS THE TIME STRING TO A INT SO IT CAN BE COMPARED
             char[] chars3 = {spStartTime.charAt(0), spStartTime.charAt(1), spStartTime.charAt(5), spStartTime.charAt(6)};
