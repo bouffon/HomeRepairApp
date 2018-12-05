@@ -11,6 +11,8 @@ has the ability to view all the accounts in the database.
 *NOV 20, 2018*: The app now has implentation for Service Providers. Service Providers now have associated company name, company description, licensing toggle, and available hours. Service providers can now add or remove what services they provide.
 				"Edit hours" bonus functionality was not implemented, the button will redirect the user into the Service Provider's Service page. 
 
+*Dec 5, 2018*: The app is now fully functional. Homeowners can now search for a service provider by service, hours and rating. They can also book a service provider upon searching and then rate a given service provider.
+
 Authors: Ben Morrison (300025533), Joongho Kim (300043500), Stephen Chen (300033450), Muhammed Izol(300043365), Ethan Lee (300026957)
 
 GitHub Link: https://github.com/bouffon/HomeRepairApp.git
@@ -19,11 +21,28 @@ Admin Login:
 Username: admin
 Password: admin
 
-Default Service Provider Login:
+Default Service Provider Logins:
+
 Username: guy
 password: guy
 
-There are 7 unit test cases for the app:
+Username: jim
+Password: jim
+
+Username: kate
+Username: kate
+
+Default Homeowner Login:
+
+Username: bob
+Password: bob
+
+Default services:
+
+roofing($25), plumbing($29.75), appliance repair($35), landscaping($21.50), gutting cleaning($23), painting($22.25), mold remediation($33.25), pool maintenance($27.45), extermination($24.99), electrical work($24.99)
+
+
+There are 17 unit test cases for this app:
 
 *New for deliverable 2*
 1. Username validation
@@ -36,6 +55,19 @@ There are 7 unit test cases for the app:
 
 6. Company name validation
 7. Brief company description validation
+
+*New for deliverable 4*
+
+8. Unique search hours
+9. Unique booking hours
+10. Second search time is greater than first
+11. Second booking time is greater than first
+12. Check if search time was entered
+13. Check if booking time was entered
+14.	Search time with 2 digits each can be converted to string
+15. Search time with 1 digit each can be converted to string 
+16. Can retrieve comment
+17. Check if convert time to int method works
 
 Main Testing Device: One Plus 5T (OnePlus ONEPLUSA5010), Android 8.1.0, API 27
 
