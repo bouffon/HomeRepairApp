@@ -49,7 +49,7 @@ public class LoginPage extends AppCompatActivity {
             db.addSPService("guy", "guy", s.getServiceName());
         }
         if (db.findService("Plumbing") == null) {
-            Service s = new Service("Plumping", 29.75);
+            Service s = new Service("Plumbing", 29.75);
             db.addService(s);
             db.addSPService("guy", "guy", s.getServiceName());
         }
